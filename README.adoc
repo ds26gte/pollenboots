@@ -10,7 +10,7 @@ Do
 
 and browse to thus created
 
-   lorem.html
+link:./lorem.html[]
 
 == What
 
