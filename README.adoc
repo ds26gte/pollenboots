@@ -1,5 +1,7 @@
 = README
 
+Goal: Controlling https://getbootstrap.com[Bootstrap Web Framework] elements from Pollen.
+
 == How
 
 Ensure you have the Pollen package installed in your Racket.
@@ -14,11 +16,10 @@ link:./lorem.html[]
 
 == What
 
-We want to control Bootstrap Web Framework elements from Pollen.
-
-Pollen allows the use of Racket to create complicated Web pages in
+https://docs.racket-lang.org/pollen[Pollen] allows the use of Racket to create complicated Web pages in
 particular, and also other outputs. Since Bootstrap seems to be
-HTML only, we'll restrict ourselves to HTML. 
+HTML only, we'll restrict ourselves to HTML.  We can go
+`poly`-output later if needed.
 
 Pollen allows multiple input document formats, e.g., HTML,
 Markdown, Pollen Markup. For the most extensibility, we probably
@@ -30,7 +31,7 @@ automatic conversion to smart quotes and dashes, automatic
 creation of external title. (Very likely others as we learn more.)
 
 Also, I'm restricting myself to one input file, but we can add a
-tree of files with interconnecting nav bars later.
+_page tree_ of files with interconnecting nav bars later.
 
 Pollen markup provides all the well-known HTML tags, but with a
 different but easily deducible syntax.  See link:./lorem.html.pm[]
