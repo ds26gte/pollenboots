@@ -24,12 +24,12 @@ Pollen allows multiple input document formats, e.g., HTML,
 Markdown, Pollen Markup. For the most extensibility, we probably
 want Pollen Markup. The input file has extension `.html.pm`. This
 suggests that the input format should be HTML, but we'll add a
-a Pollen Racket file link:./pollen.rkt[] to allow for a more forgiving
-input style, e.g., with blank lines signifgying paragraph separation,
+Pollen Racket file link:./pollen.rkt[] to allow for a more forgiving
+input style, e.g., with blank lines signifying paragraph separation,
 automatic conversion to smart quotes and dashes, automatic
 creation of external title. (Very likely others as we learn more.)
 
-Also, I'm restriciting myself to one input file, but we can add a
+Also, I'm restricting myself to one input file, but we can add a
 tree of files with interconnecting nav bars later.
 
 Pollen markup provides all the well-known HTML tags, but with a
@@ -40,7 +40,7 @@ We can use Pollen markup syntax to include classes and other
 attributes. These can be the Bootstrap-provided classes, as long
 as the template file link:./template.html.p[] adds in the Bootstrap-related CSS and JS.
 
-pollen.rkt can be used to modify existing tags and create new tags
+link:./pollen.rkt[] can be used to modify existing tags and create new tags
 -- examples of both are provided. Crucial Pollen Racket functions
 are: `define-tag-function`, `default-tag-function`,
 `decode-elements`, and `txexpr`. Ideally we should be able to put
