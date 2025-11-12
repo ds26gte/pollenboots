@@ -1,0 +1,9 @@
+Ensure you have the Pollen package installed in your Racket.
+
+Do
+
+   raco pollen render lorem.html.pm
+
+and browse to thus created
+
+   lorem.html
