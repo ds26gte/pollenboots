@@ -1,3 +1,7 @@
+= README
+
+== How
+
 Ensure you have the Pollen package installed in your Racket.
 
 Do
@@ -7,3 +11,43 @@ Do
 and browse to thus created
 
    lorem.html
+
+== What
+
+We want to control Bootstrap Web Framework elements from Pollen.
+
+Pollen allows the use of Racket to create complicated Web pages in
+particular, and also other outputs. Since Bootstrap seems to be
+HTML only, we'll restrict ourselves to HTML. 
+
+Pollen allows multiple input document formats, e.g., HTML,
+Markdown, Pollen Markup. For the most extensibility, we probably
+want Pollen Markup. The input file has extension `.html.pm`. This
+suggests that the input format should be HTML, but we'll add a
+a Pollen Racket file link:./pollen.rkt[] to allow for a more forgiving
+input style, e.g., with blank lines signifgying paragraph separation,
+automatic conversion to smart quotes and dashes, automatic
+creation of external title. (Very likely others as we learn more.)
+
+Also, I'm restriciting myself to one input file, but we can add a
+tree of files with interconnecting nav bars later.
+
+Pollen markup provides all the well-known HTML tags, but with a
+different but easily deducible syntax.  See link:./lorem.html.pm[]
+for some examples.
+
+We can use Pollen markup syntax to include classes and other
+attributes. These can be the Bootstrap-provided classes, as long
+as the template file link:./template.html.p[] adds in the Bootstrap-related CSS and JS.
+
+pollen.rkt can be used to modify existing tags and create new tags
+-- examples of both are provided. Crucial Pollen Racket functions
+are: `define-tag-function`, `default-tag-function`,
+`decode-elements`, and `txexpr`. Ideally we should be able to put
+most of the work on `define-` and `default-tag-function`: the
+former acts like a macro for creating new tags, and the latter
+extracts the original values of tags.
+
+== Time
+
+This is WIP.
