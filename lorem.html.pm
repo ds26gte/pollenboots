@@ -43,3 +43,23 @@ Use dashes --- smart dashes.
 ◊div[#:class "text-center"]{Center aligned text}
 
 ◊div[#:class "w-25 p-3" #:style "background-color: green"]{Width 25%}
+
+◊h2{Forms}
+
+◊div[#:class "form-check"]{
+◊input[#:class "form-check-input" #:type "checkbox" #:value "" #:id "flexCheckDefault"]{
+◊label[#:class "form-check-label" #:for "flexCheckDefault"]{
+Default checkbox
+}}}
+
+◊div[#:class "form-check"]{
+◊input[#:class "form-check-input" #:type "radio" #:value "" #:id "flexRadioDefault"]{
+◊label[#:class "form-check-label" #:for "flexRadioDefault"]{
+Default radio
+}}}
+
+◊div[#:class "form-check form-switch"]{
+◊input[#:class "form-check-input" #:type "checkbox" #:value "" #:id "flexSwitchCheckDefault"]{
+◊label[#:class "form-check-label" #:for "flexSwitchCheckDefault"]{
+Default switch checkbox input
+}}}
