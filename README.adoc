@@ -8,7 +8,7 @@ Ensure you have the Pollen package installed in your Racket.
 
 Do
 
-   raco pollen render lorem.html.pm
+   raco pollen render lorem.poly.pm
 
 and browse to thus created
 
@@ -18,8 +18,13 @@ link:./lorem.html[]
 
 https://docs.racket-lang.org/pollen[Pollen] allows the use of Racket to create complicated Web pages in
 particular, and also other outputs. Since Bootstrap seems to be
-HTML only, we'll restrict ourselves to HTML.  We can go
-`poly`-output later if needed.
+HTML only, we'll restrict ourselves to HTML. However, our source
+is preemptively in `poly` format, so we can go to other output
+formats if needed.
+
+TIP: If we know we're only targeting HTML, we could call our input
+file `lorem.html.pm` instead of `lorem.poly.pm`.
+
 
 Pollen allows multiple input document formats, e.g., HTML,
 Markdown, Pollen Markup. For the most extensibility, we probably
@@ -34,7 +39,7 @@ Also, I'm restricting myself to one input file, but we can add a
 _page tree_ of files with interconnecting nav bars later.
 
 Pollen markup provides all the well-known HTML tags, but with a
-different but easily deducible syntax.  See link:./lorem.html.pm[]
+different but easily deducible syntax.  See link:./lorem.poly.pm[]
 for some examples.
 
 We can use Pollen markup syntax to include classes and other

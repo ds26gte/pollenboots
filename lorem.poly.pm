@@ -37,7 +37,6 @@ Use dashes --- smart dashes.
 
 ◊new-em[#:style "color: red"]{This is emphasized.}
 
-
 ◊h2{Bootstrap classes directly}
 
 ◊div[#:class "text-center"]{Center aligned text}
@@ -63,3 +62,7 @@ Default radio
 ◊label[#:class "form-check-label" #:for "flexSwitchCheckDefault"]{
 Default switch checkbox input
 }}}
+
+◊h2{Arbitrary Racket strings}
+
+Today is ◊(get-date).

@@ -4,6 +4,7 @@
 (require pollen/decode)
 (require pollen/misc/tutorial)
 (require pollen/tag)
+(require racket/date)
 
 (provide (all-defined-out))
 
@@ -23,10 +24,11 @@
 (define-tag-function (new-em attrs elts)
                      `(em ,attrs ,@elts))
 
-
 (define ul
   (default-tag-function 'ul #:class "list-group"))
 
 (define li
   (default-tag-function 'li #:class "list-group-item"))
 
+(define (get-date)
+  (date->string (current-date)))
