@@ -1,0 +1,5 @@
+#lang pollen
+
+◊getting-started.html{
+  platforms/platforms.html
+}

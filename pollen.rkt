@@ -8,15 +8,25 @@
 
 (provide (all-defined-out))
 
+(define (single-newline-is-just-space x)
+  (cond [(and (txexpr? x) (member (get-tag x) '(br))) " "]
+        [(list? x) (map single-newline-is-just-space x)]
+        [else x]))
+
 (define (root . elts)
   (txexpr 'root empty
-          (decode-elements elts
-                           #:txexpr-elements-proc decode-paragraphs
-                           #:string-proc (compose1 smart-quotes smart-dashes))))
+          (single-newline-is-just-space
+            (decode-elements elts
+                             #:txexpr-elements-proc decode-paragraphs
+                             #:string-proc (compose1 smart-quotes smart-dashes)))))
 
 (define (strong . elts)
   ;render strong as em
   (txexpr 'em empty elts))
+
+(define author "ds26gte")
+(define-tag-function (br attrs elts)
+                     `(span ,attrs ,@elts))
 
 (define-tag-function (strong-og attrs elts)
                      `(strong ,attrs ,@elts))
@@ -32,3 +42,8 @@
 
 (define (get-date)
   (date->string (current-date)))
+
+(define (hyperlink url . elts)
+  `(a ((href ,url)) ,@elts))
+
+(define link hyperlink)
