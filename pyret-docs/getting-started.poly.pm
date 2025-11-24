@@ -5,6 +5,8 @@
 The most direct way to Pyret is to visit ◊url["https://code.pyret.org"], which
 runs Pyret entirely within your browser.
 
+◊gloss{getting-started}
+
 There are a few other ways to run Pyret via the command-line and via Visual
 Studio Code, and all of these are summarized in ◊secref["platforms"].
 

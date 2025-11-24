@@ -2,4 +2,4 @@
 
 ◊title{Glossary}
 
-glossary
+◊(output-glossary)
