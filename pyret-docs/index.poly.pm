@@ -4,8 +4,6 @@
 
 ◊title[#:version (number->string ◊VERSION)]{Pyret}
 
-◊h1{Minipyret}
-
 ◊nested{This document has detailed information on the Pyret grammar and the
 behavior of its expression forms and built-in libraries, along with many
 examples and some longer descriptions of language design choices. If you want

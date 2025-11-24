@@ -94,6 +94,9 @@
   (define title-sluggified (sluggify  tytle))
   `(title-1 ([id ,title-sluggified] ) ,tytle))
 
+(define (image file)
+  `(img ([src ,file])))
+
 ; ToC
 
 (define (table-of-contents)
@@ -199,7 +202,7 @@
        (set! toc-used? true)
        (output-toc)]
       [(title-1)
-       `(title ([id ,(attr-ref tx 'id)] [toclevel "1"] [tocentry "yes"])
+       `(h1 ([id ,(attr-ref tx 'id)] [toclevel "1"] [tocentry "yes"])
                ,@(get-elements tx))]
       [(section-1)
        (let ([level (attr-ref tx 'level)])
