@@ -17,7 +17,11 @@
     lang/spies.html
   }
   ◊libraries.html{
-    libraries-general.html
+    ◊libraries-general.html{
+      trove/globals.html
+      builtin/numbers.html
+      builtin/booleans.html
+    }
     libraries-archived.html
     libraries-internal.html
   }

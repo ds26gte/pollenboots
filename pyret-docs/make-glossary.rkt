@@ -49,7 +49,7 @@
 
   (define sorted-glossary
     (sort glossary-entries
-          (lambda (a b)
+          (λ (a b)
             (string<? (second a) (second b)))))
 
   (define glossary-items '())
