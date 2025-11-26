@@ -25,9 +25,9 @@
   <body>
     <div class="container">
     ◊(->html doc)
-    ◊(define top-dir (point-to-top-dir here))
-    ◊(define prev-page (add-top-dir top-dir (previous here)))
-    ◊(define next-page (add-top-dir top-dir (next here)))
+    ◊(define top-dir (point-to-project-root here))
+    ◊(define prev-page (prefix-dir top-dir (previous here)))
+    ◊(define next-page (prefix-dir top-dir (next here)))
     <hr/>
     The current page is ◊|here|.
     ◊when/splice[prev-page]{

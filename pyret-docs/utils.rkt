@@ -1,6 +1,8 @@
 #lang racket
 
 (require txexpr)
+(require pollen/core)
+(require pollen/setup)
 
 (provide (all-defined-out))
 
@@ -38,12 +40,12 @@
 
 (define *distinguishing-part-of-containing-directory* "pyret-docs/")
 
-(define (from-top-dir pname)
-  ; (printf "doing from-top-dir ~s\n" pname)
-  (regexp-replace (string-append ".*" *distinguishing-part-of-containing-directory*)
+(define (from-project-root pname)
+  (regexp-replace (format ".*~a" *distinguishing-part-of-containing-directory*)
                   pname ""))
 
-(define (point-to-top-dir pname)
+
+(define (point-to-project-root pname)
   (when (symbol? pname)
     (set! pname (symbol->string pname)))
   (let ([up-dir ""])
@@ -51,7 +53,7 @@
       (when (char=? c #\/) (set! up-dir (string-append up-dir "../"))))
     up-dir))
 
-(define (add-top-dir up-dir pname)
+(define (prefix-dir up-dir pname)
   (when (symbol? pname)
     (set! pname (symbol->string pname)))
   (if (not pname) pname
@@ -59,3 +61,50 @@
 
 (define (h-tag-at-depth n)
   (string->symbol (format "h~a" n)))
+
+;true globals
+
+(define *saved-items* '(glossary))
+
+(define *project-root* (current-project-root))
+
+(define *globals-file* (build-path *project-root* "globals.rkt"))
+
+(define (read-globals)
+  (if (file-exists? *globals-file*)
+      (call-with-input-file *globals-file* read)
+      empty))
+
+(define (calc-here-path-from-project-root)
+
+
+
+  (define here-path-source (select-from-metas 'here-path (current-metas)))
+  (define here-path-html (regexp-replace "\\.poly.pm$" here-path-source ".html"))
+  (define here-path-from-project-root (from-project-root here-path-html))
+
+  here-path-from-project-root)
+
+(define (pollen-postlude)
+  (call-with-output-file (build-path *project-root* "globals.rkt")
+    (λ (o)
+      (fprintf o "(\n") ;)
+      (for ([item *saved-items*])
+        (define item-file (build-path *project-root* (format "~a.rkt" item)))
+        (when (file-exists? item-file)
+          (fprintf o "(~a\n" item) ;)
+          (call-with-input-file item-file
+            (λ (i)
+              (let loop ()
+                (let ([x (read i)])
+                  (unless (eof-object? x)
+                    (write x o) (newline o)
+                    (loop))))))
+          ;(
+          (fprintf o ")\n")
+          ))
+      ;(
+      (fprintf o ")\n")
+
+      )
+    #:exists 'replace))
