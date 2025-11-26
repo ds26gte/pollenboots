@@ -24,9 +24,8 @@
 
   (define *globals-list* (read-globals))
 
-  (define glossary-entries
-    (let ([a (assoc 'glossary *globals-list*)])
-      (if a (cdr a) '())))
+  (define glossary-entries (let ([a (assoc 'glossary *globals-list*)])
+                             (if a (cdr a) empty)))
 
   (define sorted-glossary
     (sort glossary-entries
@@ -47,7 +46,7 @@
 
   (define here-path-from-project-root (calc-here-path-from-project-root))
 
-  (define glossary-entries  '())
+  (define glossary-entries empty)
 
   (define-values (doc-without-glossary-defs glossary-defs)
     (splitf-txexpr doc
@@ -64,7 +63,7 @@
 
   (when (pair? glossary-entries)
 
-    (call-with-output-file (build-path *project-root* "glossary.rkt")
+    (call-with-output-file (build-path *project-root* "_glossary.rkt")
       (λ (o)
         (for ([x glossary-entries])
           (write x o)

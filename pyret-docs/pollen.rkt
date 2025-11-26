@@ -15,6 +15,7 @@
 
 (require "toc.rkt")
 (require "make-glossary.rkt")
+(require "make-xref.rkt")
 
 ; (printf "## current-metas is ~s\n" (current-metas))
 
@@ -26,7 +27,8 @@
                        "common-tags.rkt"
                        "nice-paragraphs.rkt"
                        "toc.rkt"
-                       "make-glossary.rkt"))
+                       "make-glossary.rkt"
+                       "make-xref.rkt"))
 
 (define (doc-title doc)
   ; (printf "doc is now ~s\n" doc)
@@ -50,29 +52,29 @@
 
 ; sections
 
-(define (section-at-depth n title)
-  (define title-sluggified (sluggify title))
+(define (section-at-depth n title #:tag [tag #f])
+  (define title-sluggified (or tag (sluggify title)))
   (cond [(not (number? n))
          `(h5 ([id ,title-sluggified]) ,title)]
         [else
           (define level (number->string n))
           `(section-1 ([level ,level] [id ,title-sluggified]) ,title)]))
 
-(define (section title) (section-at-depth 2 title))
-(define (subsection title) (section-at-depth 3 title))
-(define (subsubsection title) (section-at-depth 4 title))
+(define (section #:tag [tag #f] title) (section-at-depth #:tag tag 2 title))
+(define (subsection #:tag [tag #f] title) (section-at-depth #:tag tag 3 title))
+(define (subsubsection #:tag [tag #f] title) (section-at-depth #:tag tag 4 title))
 
-(define (subsubsub*section title) (section-at-depth #f title))
+(define (subsubsub*section #:tag [tag #f] title) (section-at-depth #:tag tag #f title))
 
-(define (title tytle #:version [version "0"])
-  ; (printf "doing title of  ~s\n"  tytle)
-  (define title-sluggified (sluggify  tytle))
+(define (title tytle #:tag [tag #f] #:version [version "0"])
+  (define title-sluggified (or tag (sluggify  tytle)))
   `(title-1 ([level "1"] [id ,title-sluggified]) ,tytle))
 
 (define (root . elts)
   (let* ([doc `(root ,@elts)]
          [doc (toc-handler doc)]
-         [doc (glossary-handler doc)])
+         [doc (glossary-handler doc)]
+         [doc (xref-handler doc)])
     ; (printf "starting root decode of ~s\n" doc)
     (decode doc ;decode-elements elts?
             #:txexpr-elements-proc decode-paragraphs-1

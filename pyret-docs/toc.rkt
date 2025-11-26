@@ -51,28 +51,17 @@
          (let ([level (attr-ref tx 'level)]
                [id (attr-ref tx 'id)]
                [title (get-elements tx)])
-           ; (printf "- collecting section-1 ~s ~s\n" level id)
            (toc-entries (cons (list level (string-append "#" id) title) (toc-entries))))]
         [(include-section-1)
          (let ([file (attr-ref tx 'incfile)])
-           ; (printf "- collecting include-section-1 from ~s\n" idoc)
            (collect-toc-entries-from-include-section file))]))
     )
 
-  ; (printf "## calling collect-toc-entries\n")
-
   (collect-toc-entries doc)
-
-  ; (printf "## done with collect-toc-entries = ~s\n" (toc-entries))
-
-  ; (printf "calling replace-sections\n")
-
-  ; (printf "tocentries = ~s\n" (toc-entries))
 
   (define toc-used? false)
 
   (define (replace-sections tx)
-    ; (printf "doing replace-sections ~s\n" tx)
 
     (define (output-toc)
       (let ([tocitems '()])
@@ -103,15 +92,9 @@
                   [idoc (change-tag idoc 'root 'div)]
                   [idoc (change-tag idoc 'title 'h1)]
                   )
-             ; (printf "*** idoc = ~s\n" idoc)
              idoc
-             ; (get-doc incfile)
-             ; `(div () ,@(get-elements idoc))
              ))]
 
       [else tx]))
 
-  ; (printf "calling decode-elements ~s ~s\n" (first doc) (second doc))
-
   (decode doc #:txexpr-proc replace-sections))
-

@@ -44,7 +44,6 @@
   (regexp-replace (format ".*~a" *distinguishing-part-of-containing-directory*)
                   pname ""))
 
-
 (define (point-to-project-root pname)
   (when (symbol? pname)
     (set! pname (symbol->string pname)))
@@ -64,7 +63,7 @@
 
 ;true globals
 
-(define *saved-items* '(glossary))
+(define *saved-items* '(glossary xref))
 
 (define *project-root* (current-project-root))
 
@@ -77,8 +76,6 @@
 
 (define (calc-here-path-from-project-root)
 
-
-
   (define here-path-source (select-from-metas 'here-path (current-metas)))
   (define here-path-html (regexp-replace "\\.poly.pm$" here-path-source ".html"))
   (define here-path-from-project-root (from-project-root here-path-html))
@@ -90,7 +87,7 @@
     (λ (o)
       (fprintf o "(\n") ;)
       (for ([item *saved-items*])
-        (define item-file (build-path *project-root* (format "~a.rkt" item)))
+        (define item-file (build-path *project-root* (format "_~a.rkt" item)))
         (when (file-exists? item-file)
           (fprintf o "(~a\n" item) ;)
           (call-with-input-file item-file
@@ -100,6 +97,7 @@
                   (unless (eof-object? x)
                     (write x o) (newline o)
                     (loop))))))
+          (delete-file item-file)
           ;(
           (fprintf o ")\n")
           ))

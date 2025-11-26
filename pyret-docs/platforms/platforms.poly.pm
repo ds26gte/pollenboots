@@ -1,6 +1,6 @@
 #lang pollen
 
-◊title{Platforms}
+◊title[#:tag "platforms"]{Platforms}
 
 This section summarizes the different ◊emph{platforms} in which Pyret can
 run.  Most features are available across all platforms, there are some that
