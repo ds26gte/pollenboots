@@ -10,7 +10,7 @@
 (define li
   (default-tag-function 'li #:class "list-group-item"))
 
-(define (nested . elts)
+(define (nested #:style [style ""] . elts)
   `(p () ,@elts))
 
 (define (hyperlink url . elts)
@@ -30,6 +30,19 @@
 (define (examples #:show-try-it [show-try-it #f] . elems)
   `(pre () ,@elems))
 
+(define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
+                 . rows)
+  ; (printf "doing tabular of ~s\n" rows)
+  ; (for-each (λ (row) (printf "doing row...\n")
+  ;             (for-each (λ (cell) (printf "cell is ~s\n" cell)) row))
+  ;           rows)
+  `(table ()
+     ,@(for/list ([row (car rows)])
+         `(tr ()
+            ,@(for/list ([cell row])
+                `(td ()
+                     (span () ,(if (list? cell) (car cell) cell))))))))
+
 (define (function #:contract [contract "contract"] #:return [return "return"] #:alt-docstrings [alt-docstrings "alt-docstrings"] . elems)
   ; (printf "function elems are ~s\n" elems)
   `(div ([class "function"]) ,@elems " :: " ,contract))
@@ -40,19 +53,24 @@
         (div ([class "function"]) ,b)
         ,@elems))
 
-
 (define (type-spec type-name . elems)
   `(div ()
         (div ([class "function"]) ,type-name)
         ,@elems))
 
 (define (a-arrow . elems)
+  ; (printf "doing a-arrow ~s\n" elems)
   (let* ([n (length elems)]
         [range (last elems)]
-        [domain (take elems (- n 1))])
+        [domain (take elems (- n 1))]
+        [domain (map (lambda (x) (if (string? x) x (apply string-append (cddr x))))
+                     domain)])
+    ; (printf "domain = ~s\nrange = ~s\n" domain range)
     `(span () "(" ,(string-join domain ", ") ")" " -> " ,range)))
 
+
 (define (a-app base . typs)
+  ; (printf "doing a-app ~s ~s\n" base typs)
   (string-append base "<" (string-join typs ", ") ">"))
 
 ; (define (a-arrow from to)
@@ -71,3 +89,10 @@
 (define eq "EqualityResult")
 (define eqfun `(a-arrow ,A ,A ,B))
 (define eq3fun `(a-arrow ,A ,A ,eq))
+
+(define T "EqualityResult")
+(define EQ "EqualityResult")
+
+(define equal-always-op `(code "=="))
+(define equal-now-op `(code "=~"))
+(define identical-op `(code "<=>"))

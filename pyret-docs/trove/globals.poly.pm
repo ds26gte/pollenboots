@@ -4,7 +4,7 @@
 
 --- ◊hyperlink["https://pyret.org/docs/latest/_global_.html"]{Original doc link}
 
-◊section{Built-in Utility Functions}
+◊section[#:tag "global-builtins"]{Built-in Utility Functions}
 
 ◊function["print" #:contract (a-arrow "a" "a") #:return "a" #:alt-docstrings ""]
 

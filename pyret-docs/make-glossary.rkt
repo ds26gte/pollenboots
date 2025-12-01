@@ -34,6 +34,8 @@
 
   (define glossary-items '())
 
+  ; (printf "*** IV\n")
+
   (for ([entry sorted-glossary])
     (set! glossary-items
       (cons `(li () (a ([href ,(second entry)]) ,(first entry)))

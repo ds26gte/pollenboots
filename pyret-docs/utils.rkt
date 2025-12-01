@@ -26,6 +26,7 @@
 ;   (and (txexpr? tx) (equal? (get-tag tx) tag)))
 
 (define (extract-tags tx tags)
+  ; (printf "doing extract-tags ~s ~s\n" tx tags)
   (define-values (_ txs)
     (splitf-txexpr tx
       (λ (tx) (and (txexpr? tx)

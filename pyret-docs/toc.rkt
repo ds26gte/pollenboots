@@ -41,9 +41,13 @@
                 [title (get-elements tx)])
             (toc-entries (cons (list level sharp-id title) (toc-entries)))))))
 
+    ; (printf "*** doing IV ~s\n" doc)
+
     (define section-txs
       (extract-tags (validate-txexpr doc)
                     '(title-1 section-1 include-section-1)))
+
+    ; (printf "*** doing V\n")
 
     (for ([tx section-txs])
       (case (get-tag tx)
@@ -58,6 +62,8 @@
     )
 
   (collect-toc-entries doc)
+
+  ; (printf "*** done collect-toc-entries\n")
 
   (define toc-used? false)
 

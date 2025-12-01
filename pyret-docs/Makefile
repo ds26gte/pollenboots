@@ -11,6 +11,5 @@ small:
 	raco pollen render small-index.ptree
 
 clean:
-	rm -f glossary.rkt
 	find . -name compiled -type d -exec rm -fr {} \; || true
 	find . -name \*.html -delete || true

@@ -43,6 +43,7 @@
   (define project-root-from-here (point-to-project-root here-path-from-project-root))
 
   (define (replace-secrefs tx)
+    ; (printf "doing replace-secrefs ~s\n" tx)
     (case (get-tag tx)
       [(secref)
        (let* ([name (first (get-elements tx))]
