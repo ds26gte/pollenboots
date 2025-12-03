@@ -44,12 +44,19 @@
 
   (define (replace-secrefs tx)
     ; (printf "doing replace-secrefs ~s\n" tx)
-    (case (get-tag tx)
-      [(secref)
-       (let* ([name (first (get-elements tx))]
+    (define this-tag (get-tag tx))
+    (case this-tag
+      [(secref seclink)
+       (define this-tag-elems (get-elements tx))
+       (define num-this-tag-elems (length this-tag-elems))
+       (let* ([name (first this-tag-elems)]
               [xref (assoc name xref-entries)]
               [url (if xref (second xref) "UnDeFiNeD")]
-              [text (if xref (third xref) "UnDeFiNeD")])
+              [text (cond [(and (eq? this-tag 'seclink)
+                                (>= num-this-tag-elems 1))
+                           `(span () ,@(add-between (cdr this-tag-elems) " "))]
+                          [xref (third xref)]
+                          [else "UnDeFiNeD"])])
          `(a ([href ,url]) ,text))]
       [else tx]))
 

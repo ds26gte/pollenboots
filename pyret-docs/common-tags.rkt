@@ -30,6 +30,11 @@
 (define (examples #:show-try-it [show-try-it #f] . elems)
   `(pre () ,@elems))
 
+(define (verbatim . elems)
+  `(pre () ,@elems))
+
+(define pyret-block verbatim)
+
 (define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
                  . rows)
   ; (printf "doing tabular of ~s\n" rows)
