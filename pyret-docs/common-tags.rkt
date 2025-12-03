@@ -18,7 +18,7 @@
 
 (define link hyperlink)
 
-(define (image file)
+(define (image #:scale [scale 1] file)
   `(img ([src ,file])))
 
 (define (pyret . elems)
