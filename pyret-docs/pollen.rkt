@@ -53,7 +53,7 @@
 ; sections
 
 (define (section-at-depth n title-elems #:tag [tag #f])
-  (define title-sluggified (or tag (sluggify title-elems)))
+  (define title-sluggified (or tag (sluggify* title-elems)))
   (cond [(not (number? n))
          `(h5 ([id ,title-sluggified]) ,@title-elems)]
         [else
@@ -67,7 +67,7 @@
 (define (subsubsub*section #:tag [tag #f] . titlex) (section-at-depth #:tag tag #f titlex))
 
 (define (title #:tag [tag #f] #:version [version "0"] . titlex)
-  (define title-sluggified (or tag (sluggify titlex)))
+  (define title-sluggified (or tag (sluggify* titlex)))
   `(title-1 ([level "1"] [id ,title-sluggified]) ,@titlex))
 
 (define (root . elts)

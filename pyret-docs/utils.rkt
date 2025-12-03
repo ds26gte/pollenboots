@@ -6,15 +6,14 @@
 
 (provide (all-defined-out))
 
-(define (sluggify xxx)
+(define (sluggify* terms)
+  (string-join (map sluggify terms) "-"))
+
+(define (sluggify term)
   (let ([s ""])
-    (let loop ([xxx xxx])
-      (unless (null? xxx)
-        (let ([x (first xxx)])
-          (cond [(string? x) (set! s (string-append s "-" x))]
-                [(list? x) (set! s (string-append s "-" (sluggify (rest x))))]
-                [else #f])
-          (loop (rest xxx)))))
+    (cond [(string? term) (set! s term)]
+          [(list? term) (sluggify* (rest term))]
+          [else #f])
     (string-replace s " " "-")))
 
 (define counter 0)
