@@ -7,7 +7,15 @@
 (provide (all-defined-out))
 
 (define (sluggify xxx)
-  (string-replace xxx " " "-"))
+  (let ([s ""])
+    (let loop ([xxx xxx])
+      (unless (null? xxx)
+        (let ([x (first xxx)])
+          (cond [(string? x) (set! s (string-append s "-" x))]
+                [(list? x) (set! s (string-append s "-" (sluggify (rest x))))]
+                [else #f])
+          (loop (rest xxx)))))
+    (string-replace s " " "-")))
 
 (define counter 0)
 

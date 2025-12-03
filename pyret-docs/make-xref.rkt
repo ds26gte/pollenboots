@@ -21,11 +21,14 @@
 
   (for ([tx name-defs])
     (let ([xref-name (attr-ref tx 'id)])
+      ; (printf "*** calling string-join on ~s\n" (get-elements tx))
       (set! xref-name-entries
         (cons (list xref-name 
                     (string-append
                                 here-path-from-project-root "#" xref-name)
-                    (string-join (get-elements tx) ""))
+                    (get-elements tx)
+                    ; (string-join (get-elements tx) "")
+                    )
               xref-name-entries))))
 
   (when (pair? xref-name-entries)
@@ -54,10 +57,10 @@
               [url (if xref (second xref) "UnDeFiNeD")]
               [text (cond [(and (eq? this-tag 'seclink)
                                 (>= num-this-tag-elems 1))
-                           `(span () ,@(add-between (cdr this-tag-elems) " "))]
+                           (add-between (cdr this-tag-elems) " ")]
                           [xref (third xref)]
-                          [else "UnDeFiNeD"])])
-         `(a ([href ,url]) ,text))]
+                          [else (list "UnDeFiNeD")])])
+         `(a ([href ,url]) ,@text))]
       [else tx]))
 
   (decode doc #:txexpr-proc replace-secrefs)

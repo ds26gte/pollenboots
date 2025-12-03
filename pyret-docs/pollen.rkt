@@ -52,23 +52,23 @@
 
 ; sections
 
-(define (section-at-depth n title #:tag [tag #f])
-  (define title-sluggified (or tag (sluggify title)))
+(define (section-at-depth n title-elems #:tag [tag #f])
+  (define title-sluggified (or tag (sluggify title-elems)))
   (cond [(not (number? n))
-         `(h5 ([id ,title-sluggified]) ,title)]
+         `(h5 ([id ,title-sluggified]) ,@title-elems)]
         [else
           (define level (number->string n))
-          `(section-1 ([level ,level] [id ,title-sluggified]) ,title)]))
+          `(section-1 ([level ,level] [id ,title-sluggified]) ,@title-elems)]))
 
-(define (section #:tag [tag #f] title) (section-at-depth #:tag tag 2 title))
-(define (subsection #:tag [tag #f] title) (section-at-depth #:tag tag 3 title))
-(define (subsubsection #:tag [tag #f] title) (section-at-depth #:tag tag 4 title))
+(define (section #:tag [tag #f] . titlex) (section-at-depth #:tag tag 2 titlex))
+(define (subsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 3 titlex))
+(define (subsubsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 4 titlex))
 
-(define (subsubsub*section #:tag [tag #f] title) (section-at-depth #:tag tag #f title))
+(define (subsubsub*section #:tag [tag #f] . titlex) (section-at-depth #:tag tag #f titlex))
 
-(define (title tytle #:tag [tag #f] #:version [version "0"])
-  (define title-sluggified (or tag (sluggify  tytle)))
-  `(title-1 ([level "1"] [id ,title-sluggified]) ,tytle))
+(define (title #:tag [tag #f] #:version [version "0"] . titlex)
+  (define title-sluggified (or tag (sluggify titlex)))
+  `(title-1 ([level "1"] [id ,title-sluggified]) ,@titlex))
 
 (define (root . elts)
   (let* ([doc `(root ,@elts)]

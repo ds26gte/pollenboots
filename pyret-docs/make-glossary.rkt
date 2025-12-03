@@ -10,7 +10,7 @@
 (provide (all-defined-out))
 
 (define (gloss item)
-  (let ([item-sluggified (string-append (sluggify item) (get-counter))])
+  (let ([item-sluggified (string-append (sluggify (list item)) (get-counter))])
     `(span ()
            (a ([name ,item-sluggified]))
            (gloss-1 ,item-sluggified ,item))))
