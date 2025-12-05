@@ -11,11 +11,14 @@
 (define li
   (default-tag-function 'li #:class "list-group-item"))
 
-(define (nested #:style [style ""] . elts)
-  `(p () ,@elts))
+(define (nested #:style [style ""] . elems)
+  `(p () ,@elems))
 
-(define (hyperlink url . elts)
-  `(a ((href ,url)) ,@elts))
+(define (para . elems)
+  `(p () ,@elems))
+
+(define (hyperlink url . elems)
+  `(a ((href ,url)) ,@elems))
 
 (define link hyperlink)
 
@@ -51,6 +54,18 @@
 (define (margin-note* . elems)
   `(span ([class "margin-note"])
          ,@elems))
+
+(define (cpo-only . elems)
+  `(div ([class "CPO"]) (div ([class "cpo-icon"]) ,@elems)))
+
+(define (vscode-only . elems)
+  `(div ([class "VSCode"]) (div ([class "vscode-icon"]) ,@elems)))
+
+(define (cli-only . elems)
+  `(div ([class "CLI"]) (div ([class "cli-icon"]) ,@elems)))
+
+(define (vscode-cli-only . elems)
+  `(div ([class "VSCodeCLI"]) (div ([class "vscode-cli-icon"]) ,@elems)))
 
 (define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
                  . rows)
