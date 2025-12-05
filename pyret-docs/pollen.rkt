@@ -36,7 +36,8 @@
       (select 'h1 doc)
       "Untitled"))
 
-(define author "ds26gte")
+(define (author . elems)
+  `(div ([class "author"]) "by " ,@elems))
 
 (define-tag-function (strong-og attrs elts)
                      `(strong ,attrs ,@elts))

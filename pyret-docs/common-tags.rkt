@@ -34,17 +34,23 @@
 (define (verbatim . elems)
   `(pre () ,@elems))
 
+(define codedisp verbatim)
+
 (define pyret-block verbatim)
 
 (define (doc-internal #:stack-unsafe [stack-unsafe #f] . elems)
   (if stack-unsafe
       `(div ()
-            (span ((class "margin-note"))
+            (span ([class "margin-note"])
                   "!→ means this function is not stack safe")
             (pre () ,@elems))
       `(div ()
             (pre () ,@elems)
             )))
+
+(define (margin-note* . elems)
+  `(span ([class "margin-note"])
+         ,@elems))
 
 (define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
                  . rows)
