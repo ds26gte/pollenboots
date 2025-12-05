@@ -13,3 +13,4 @@ small:
 clean:
 	find . -name compiled -type d -exec rm -fr {} \; || true
 	find . -name \*.html -delete || true
+	raco pollen render styles.css.pp
