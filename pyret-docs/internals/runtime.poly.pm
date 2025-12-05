@@ -14,7 +14,7 @@ define(["js/runtime-anf"], function(runtimeLib) {
 });
 }
 
-◊pyret-block{
+◊doc-internal{
   RuntimeLib.create(options) → Runtime
 }
 
@@ -45,7 +45,7 @@ object with many useful methods for programmatically interacting with Pyret.
 
 ◊subsection{Running Pyret Programs}
 
-◊pyret-block{
+◊doc-internal[#:stack-unsafe #t]{
   Runtime.runStandalone(
     modules: JSDict<URI, StaticModules>
     dependencies: JSDict<URI, JSDict<String, URI>>
@@ -89,43 +89,43 @@ re-running it.
 
 ◊subsection{Creating Values}
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeNumber(JSNumber) → PyretNumber
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeNumberFromString(JSString) → PyretNumber
 }
 
 Parses the string and creates a representation of the number that avoids float
 overflows and can represent very large and very small rationals exactly.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeString(JSString) → PyretString
 }
 
 The representation of Pyret strings is JS strings, though this may change to
 accommodate better Unicode support in the future.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.pyretTrue :: PyretBoolean
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.pyretFalse :: PyretBoolean
 }
 
 The runtime values for ◊pyret{true} and ◊pyret{false} in Pyret.  Representation
 is JavaScript ◊tt{true} and ◊tt{false}.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeArray(JSArray) → PyretRawArray
 }
 
 Creates a Pyret ◊pyret-id["RawArray" "raw-arrays"] with the given elements.
 Currently the identity function: Pyret raw arrays are JavaScript arrays.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeObject(JSObj) → PyretObject
 }
 
@@ -137,7 +137,7 @@ the JS object has an additional field called ◊tt{brands}, which hold
 information about an object's type information (if it has any).
 ◊pyret-id["StringDict" "string-dict"]s, for example, are branded objects.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeFunction(JSFunction) → PyretFunction
 }
 
@@ -148,33 +148,33 @@ any arity checks need to be done explicitly (see ◊internal-id["Runtime"
 field of the Pyret function, but read the section on ◊internal-id["Runtime"
 "safeCall"] in order to suitably protect calls to Pyret functions.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeMethodN(JSFunction) → PyretMethod
 }
 
 ◊subsection{Interacting with Objects}
 
-◊pyret-block{
+◊doc-internal{
   Runtime.getField(PyretObject, JSString) → PyretValue
 }
 
 Gets the field with the given name from the object.  If the field is a method,
 it is automatically curried over the object, as with dot.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.getColonField(PyretObject, JSString) → PyretValue
 }
 
 Gets the field with the given name from the object.  If the field is a method,
 no additional work is performed.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.getFields(PyretObject) → JSArray<String>
 }
 
 Returns all the field names of the given object.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.hasField(PyretObject, JSString) → JSBoolean
 }
 
@@ -182,7 +182,7 @@ Checks if the given object has the named field.
 
 ◊subsection{Assertions}
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkArity(
     JSNumber
     Arguments
@@ -197,42 +197,42 @@ if they don't match.
 There are a number of checking functions that check that a given argument is of
 a particular type, and throw an exception if not:
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkNumber(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkString(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkBoolean(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkObject(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkFunction(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkMethod(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkArray(Any) → Undefined
 }
 
-◊pyret-block{
+◊doc-internal{
   Runtime.checkPyretVal(Any) → Undefined
 }
 
 ◊subsection[#:tag "runtime:equality"]{Equality}
 
 
-◊pyret-block{
+◊doc-internal{
   Runtime.combineEquality(EqualityResult, EqualityResult) → EqualityResult
 }
 
@@ -244,7 +244,7 @@ two ◊pyret-id["Equal" "equality"] values produce ◊pyret-id["Equal" "equality
 
 ◊subsection{FFI Helpers}
 
-◊pyret-block{
+◊doc-internal{
   Runtime.ffi :: FFIHelpers
 }
 

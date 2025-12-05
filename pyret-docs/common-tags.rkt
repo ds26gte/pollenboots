@@ -1,5 +1,6 @@
 #lang racket
 
+(require txexpr)
 (require pollen/tag)
 
 (provide (all-defined-out))
@@ -34,6 +35,16 @@
   `(pre () ,@elems))
 
 (define pyret-block verbatim)
+
+(define (doc-internal #:stack-unsafe [stack-unsafe #f] . elems)
+  (if stack-unsafe
+      `(div ()
+            (span ((class "margin-note"))
+                  "!→ means this function is not stack safe")
+            (pre () ,@elems))
+      `(div ()
+            (pre () ,@elems)
+            )))
 
 (define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
                  . rows)

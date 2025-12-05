@@ -75,7 +75,7 @@ create programs that simply produce wrong answers.
 Pyret's runtime defines a function called ◊internal-id["Runtime" "safeCall"]
 that allows pure JavaScript to participate in the Pyret stack.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.safeCall((→ a), (a → b)) !→ b
 }
 
@@ -173,7 +173,7 @@ In order to weave the control flow of Pyret through the success and failure
 continuations of callbacks, the runtime provides a way to pause and reify the
 Pyret stack for later resumption.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.pauseStack((Restarter → Undefined)) → Undefined
 }
 
@@ -231,7 +231,7 @@ Some things to note:
   }
 ]
 
-◊pyret-block{
+◊doc-internal{
   Runtime.schedulePause((Restarter → Undefined)) → Undefined
 }
 
@@ -263,7 +263,7 @@ In order for the special ◊tt{PauseExceptions} and ◊tt{StackExceptions} to be
 caught at the top level and correctly restarted, the handlers need to be
 correctly installed.  This is done by ◊internal-id["Runtime" "run"]:
 
-◊pyret-block{
+◊doc-internal{
   Runtime.run(
     (Runtime, Namespace → a)
     Namespace
@@ -312,39 +312,39 @@ pauser the next time the Pyret thread restarts.
 
 ◊subsection[#:tag "s:result-structures"]{Result Data Structures}
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeSuccessResult(a) → SuccessResult<a>
 }
 
 Represents a successful completion of a Pyret execution with
 ◊internal-id["Runtime" "run"].
 
-◊pyret-block{
+◊doc-internal{
   Runtime.isSuccessResult(Any) → Bool
 }
 
 Checks if a value is a ◊tt{SuccessResult}.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.SuccessResult.result :: Any
 }
 
 The field that stores the answer of a ◊tt{SuccessResult}.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.makeFailureResult(a) → FailureResult<a>
 }
 
 Represents a Pyret execution with ◊internal-id["Runtime" "run"] that ended in
 some kind of exception (either from Pyret or an internal JavaScript error).
 
-◊pyret-block{
+◊doc-internal{
   Runtime.isFailureResult(Any) → Bool
 }
 
 Checks if a value is a ◊tt{FailureResult}.
 
-◊pyret-block{
+◊doc-internal{
   Runtime.FailureResult.exn :: Any
 }
 

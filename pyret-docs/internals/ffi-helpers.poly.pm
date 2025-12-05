@@ -11,43 +11,43 @@ growing.
 
 The ffi exposes several utilities related to ◊secref["equality"].
 
-◊pyret-block{
+◊doc-internal{
   FFI.equal :: PyretObject
 }
 
 The ◊pyret-id["Equal" "equality"] value.
 
-◊pyret-block{
+◊doc-internal{
   FFI.unknown :: PyretObject
 }
 
 The ◊pyret-id["Unknown" "equality"] value.
 
-◊pyret-block{
+◊doc-internal{
   FFI.notEqual :: PyretFunction
 }
 
 The ◊pyret-id["NotEqual" "equality"] constructor.
 
-◊pyret-block{
+◊doc-internal{
   FFI.isEqual(Any) → JSBoolean
 }
 
 Checks if the given value is ◊pyret-id["Equal" "equality"].
 
-◊pyret-block{
+◊doc-internal{
   FFI.isNotEqual(Any) → JSBoolean
 }
 
 Checks if the given value is an instance of ◊pyret-id["NotEqual" "equality"].
 
-◊pyret-block{
+◊doc-internal{
   FFI.isUnknown(Any) → JSBoolean
 }
 
 Checks if the given value is a ◊pyret-id["Unknown" "equality"].
 
-◊pyret-block{
+◊doc-internal{
   FFI.isEqualityResult(Any) → JSBoolean
 }
 
@@ -59,14 +59,14 @@ FFI helpers provide the easiest way to programmatically throw Pyret exceptions
 from JavaScript.  Most commonly, user-defined modules will simply throw
 ◊tt{MessageExceptions} that contain a string describing the error.
 
-◊pyret-block{
+◊doc-internal{
   FFI.throwMessageException(PyretString) → Undefined
 }
 
 Throws an exception that Pyret recognizes and reports with a stack trace, using
 the provided string as the message.
 
-◊pyret-block{
+◊doc-internal{
   FFI.makeMessageException(PyretString) → Error
 }
 
@@ -80,14 +80,14 @@ without throwing it.
 Pyret lists are ubiquitous in Pyret's internals and libraries, and this library
 provides a few conveniences for working with them.
 
-◊pyret-block{
+◊doc-internal{
   FFI.makeList(JSArray) → List
 }
 
 Turns a JavaScript array into a Pyret ◊pyret-id["List" "lists"] with the same
 elements in the same order.
 
-◊pyret-block{
+◊doc-internal{
   FFI.toArray(List) → JSArray
 }
 
@@ -96,7 +96,7 @@ order.  For doing computationally heavy work, sometimes it is useful to convert
 a Pyret ◊tt{List} to an array before processing it (and using JavaScript's
 map/filter, etc.), since the Pyret version incurs more overhead.
 
-◊pyret-block{
+◊doc-internal{
   FFI.isList(Any) → JSBoolean
 }
 
@@ -105,29 +105,29 @@ Returns ◊tt{true} if the value is a Pyret ◊pyret-id["List" "lists"] and
 
 ◊section{Other Data Helpers}
 
-◊pyret-block{
+◊doc-internal{
   FFI.makeSome(Any) → Option
 }
 
-◊pyret-block{
+◊doc-internal{
   FFI.makeNone(Any) → Option
 }
 
 Create instances of ◊pyret-id["none" "option"] and ◊pyret-id["some" "option"]
 from ◊secref["option"].
 
-◊pyret-block{
+◊doc-internal{
   FFI.makeLeft(Any) → Either
 }
 
-◊pyret-block{
+◊doc-internal{
   FFI.makeRight(Any) → Either
 }
 
 Create instances of ◊pyret-id["left" "either"] and ◊pyret-id["right" "either"]
 from ◊secref["either"].
 
-◊pyret-block{
+◊doc-internal{
   FFI.cases(
     (Any -> JSBoolean)
     JSString
