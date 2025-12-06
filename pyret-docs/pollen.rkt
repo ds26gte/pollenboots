@@ -67,9 +67,18 @@
 
 (define (subsubsub*section #:tag [tag #f] . titlex) (section-at-depth #:tag tag #f titlex))
 
-(define (title #:tag [tag #f] #:version [version "0"] . titlex)
-  (define title-sluggified (or tag (sluggify* titlex)))
-  `(title-1 ([level "1"] [id ,title-sluggified]) ,@titlex))
+(define (title #:tag [tag #f] #:version [version "0"]
+               #:friendly-title [friendly-title #f]
+               #:noimport [noimport #f]
+               . title-terms)
+  (define title-1
+    (cond [friendly-title (list friendly-title)]
+          [else title-terms]))
+  (define title-sluggified
+    (cond [tag tag]
+          [friendly-title (sluggify friendly-title)]
+          [else (sluggify* title-terms)]))
+  `(title-1 ([level "1"] [id ,title-sluggified]) ,@title-1))
 
 (define (root . elts)
   (let* ([doc `(root ,@elts)]

@@ -14,8 +14,10 @@
 (define (nested #:style [style ""] . elems)
   `(p () ,@elems))
 
-(define (para . elems)
-  `(p () ,@elems))
+(define (para #:style [style #f]. elems)
+  (define attribs
+    (if style `([class ,style]) `()))
+  `(p ,attribs ,@elems))
 
 (define (hyperlink url . elems)
   `(a ((href ,url)) ,@elems))
@@ -34,8 +36,10 @@
 (define (examples #:show-try-it [show-try-it #f] . elems)
   `(pre () ,@elems))
 
-(define (verbatim . elems)
-  `(pre () ,@elems))
+(define (verbatim #:style [style #f] . elems)
+  (define attribs
+    (if style `([class ,style]) `()))
+  `(pre ,attribs ,@elems))
 
 (define codedisp verbatim)
 
