@@ -44,7 +44,9 @@
       trove/image-structs.html
       trove/world.html
     }
-    libraries-internal.html
+    ◊libraries-internal.html{
+      builtin/raw-arrays.html
+    }
   }
   style-guide.html
   ◊internal.html{
