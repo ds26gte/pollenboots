@@ -1,6 +1,6 @@
 #lang pollen
 
-◊title{Numbers}
+◊docmodule["numbers" #:noimport #t #:friendly-title "Numbers"]{
 
 --- ◊hyperlink["https://pyret.org/docs/latest/_global_.html"]{Original doc link}
 
@@ -867,4 +867,6 @@ check:
   num-exact(num-sqrt(2)) is 1.4142135623730951
   num-to-rational(num-sqrt(2)) is 1.4142135623730951
 end
+}
+
 }

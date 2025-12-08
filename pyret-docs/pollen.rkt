@@ -1,13 +1,13 @@
 #lang racket
 
 (require txexpr)
-(require pollen/core)
+; (require pollen/core)
 ; (require pollen/file)
 (require pollen/decode)
 (require pollen/misc/tutorial)
 (require pollen/tag)
 ; (require pollen/setup)
-(require racket/date)
+; (require racket/date)
 
 (require "utils.rkt")
 (require "common-tags.rkt")
@@ -29,56 +29,6 @@
                        "toc.rkt"
                        "make-glossary.rkt"
                        "make-xref.rkt"))
-
-(define (doc-title doc)
-  ; (printf "doc is now ~s\n" doc)
-  (or (select 'title doc)
-      (select 'h1 doc)
-      "Untitled"))
-
-(define (author . elems)
-  `(div ([class "author"]) "by " ,@elems))
-
-(define-tag-function (strong-og attrs elts)
-                     `(strong ,attrs ,@elts))
-
-(define-tag-function (new-em attrs elts)
-                     `(em ,attrs ,@elts))
-
-(define (get-date)
-  (date->string (current-date)))
-
-(define (include-section file)
-  `(include-section-1 ([incfile ,file])))
-
-; sections
-
-(define (section-at-depth n title-elems #:tag [tag #f])
-  (define title-sluggified (or tag (sluggify* title-elems)))
-  (cond [(not (number? n))
-         `(h5 ([id ,title-sluggified]) ,@title-elems)]
-        [else
-          (define level (number->string n))
-          `(section-1 ([level ,level] [id ,title-sluggified]) ,@title-elems)]))
-
-(define (section #:tag [tag #f] . titlex) (section-at-depth #:tag tag 2 titlex))
-(define (subsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 3 titlex))
-(define (subsubsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 4 titlex))
-
-(define (subsubsub*section #:tag [tag #f] . titlex) (section-at-depth #:tag tag #f titlex))
-
-(define (title #:tag [tag #f] #:version [version "0"]
-               #:friendly-title [friendly-title #f]
-               #:noimport [noimport #f]
-               . title-terms)
-  (define title-1
-    (cond [friendly-title (list friendly-title)]
-          [else title-terms]))
-  (define title-sluggified
-    (cond [tag tag]
-          [friendly-title (sluggify friendly-title)]
-          [else (sluggify* title-terms)]))
-  `(title-1 ([level "1"] [id ,title-sluggified]) ,@title-1))
 
 (define (root . elts)
   (let* ([doc `(root ,@elts)]

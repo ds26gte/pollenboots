@@ -93,11 +93,11 @@
 (define (pollen-postlude)
   (call-with-output-file (build-path *project-root* "globals.rkt")
     (λ (o)
-      (fprintf o "(\n") ;)
+      (fprintf o "(\n")
       (for ([item *saved-items*])
         (define item-file (build-path *project-root* (format "_~a.rkt" item)))
         (when (file-exists? item-file)
-          (fprintf o "(~a\n" item) ;)
+          (fprintf o "(~a\n" item)
           (call-with-input-file item-file
             (λ (i)
               (let loop ()
@@ -106,10 +106,8 @@
                     (write x o) (newline o)
                     (loop))))))
           (delete-file item-file)
-          ;(
           (fprintf o ")\n")
           ))
-      ;(
       (fprintf o ")\n")
 
       )

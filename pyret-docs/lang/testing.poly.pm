@@ -18,7 +18,7 @@
 ◊(define (test-pred-use left opname pred right)
   ◊(tt ◊left " " ◊opname "(" ◊pred ")" " " ◊right))
 
-◊title["testing" #:friendly-title "Testing" #:noimport #t]
+◊docmodule["testing" #:friendly-title "Testing" #:noimport #t]{
 
 ◊section[#:tag "testing-blocks"]{◊pyret{check:} and ◊pyret{where:} blocks}
 
@@ -318,6 +318,8 @@ end
 
 Like ◊pyret-id{raises-satisfies}, but the predicate must return
 ◊pyret{false}.  Still fails if no exception is raised.
+
+}
 
 ◊section{Reasons for tests: ◊pyret{because} clauses}
 

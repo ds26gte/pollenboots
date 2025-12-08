@@ -1,6 +1,8 @@
 #lang pollen
 
 
+◊docmodule["equality"]{
+
 ◊section[#:tag "types-of-equality"]{Types of Equality}
 
 Pyret has three notions of equality.  Two values can be ◊emph{equal now},
@@ -1233,4 +1235,4 @@ end
 
 
 
-
+}

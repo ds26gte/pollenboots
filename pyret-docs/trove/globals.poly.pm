@@ -1,6 +1,6 @@
 #lang pollen
 
-◊title{Global Utilities}
+◊docmodule["<global>" #:noimport #t #:friendly-title "Global Utilities"]{
 
 --- ◊hyperlink["https://pyret.org/docs/latest/_global_.html"]{Original doc link}
 
@@ -234,4 +234,6 @@ check:
   is-object({x : 12, y : 7}) is true
   is-object({(y :: Number) -> Number: y + 1}) is false
 end
+}
+
 }

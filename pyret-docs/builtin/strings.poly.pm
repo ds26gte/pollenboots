@@ -1,6 +1,6 @@
 #lang pollen
 
-◊title{Strings}
+◊docmodule["strings" #:noimport #t #:friendly-title "Strings"]{
 
 ◊type-spec["String"]{
 
@@ -398,4 +398,4 @@ check:
 end
 }
 
-
+}

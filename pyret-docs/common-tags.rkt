@@ -1,9 +1,69 @@
 #lang racket
 
 (require txexpr)
+(require pollen/core)
 (require pollen/tag)
 
+(require racket/date)
+
+(require "utils.rkt")
+
 (provide (all-defined-out))
+
+(define (doc-title doc)
+  ; (printf "doc is now ~s\n" doc)
+  (or (select 'title doc)
+      (select 'h1 doc)
+      "Untitled"))
+
+(define (author . elems)
+  `(div ([class "author"]) "by " ,@elems))
+
+(define-tag-function (strong-og attrs elts)
+                     `(strong ,attrs ,@elts))
+
+(define-tag-function (new-em attrs elts)
+                     `(em ,attrs ,@elts))
+
+(define (get-date)
+  (date->string (current-date)))
+
+(define (include-section file)
+  `(include-section-1 ([incfile ,file])))
+
+; sections
+
+(define (section-at-depth n title-elems #:tag [tag #f])
+  (define title-sluggified (or tag (sluggify* title-elems)))
+  (cond [(not (number? n))
+         `(h5 ([id ,title-sluggified]) ,@title-elems)]
+        [else
+          (define level (number->string n))
+          `(section-1 ([level ,level] [id ,title-sluggified]) ,@title-elems)]))
+
+(define (section #:tag [tag #f] . titlex) (section-at-depth #:tag tag 2 titlex))
+(define (subsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 3 titlex))
+(define (subsubsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 4 titlex))
+
+(define (subsubsub*section #:tag [tag #f] . titlex) (section-at-depth #:tag tag #f titlex))
+
+(define (title #:tag [tag #f] #:version [version "0"]
+               #:friendly-title [friendly-title #f]
+               #:noimport [noimport #f]
+               . title-terms)
+  (define title-1
+    (cond [friendly-title (list friendly-title)]
+          [else title-terms]))
+  (define title-sluggified
+    (cond [tag tag]
+          [friendly-title (sluggify friendly-title)]
+          [else (sluggify* title-terms)]))
+  `(title-1 ([level "1"] [id ,title-sluggified]) ,@title-1))
+
+(define (docmodule #:noimport [noimport #f] #:friendly-title [friendly-title #f] tag . body)
+  `(div ()
+       ,(apply title #:tag tag #:friendly-title friendly-title empty)
+       ,@body))
 
 (define ul
   (default-tag-function 'ul #:class "list-group"))
@@ -30,16 +90,26 @@
 (define (pyret . elems)
   `(tt ([class "pyretexpr"]) ,@elems))
 
+(define (pyret-method . ign-for-now)
+  "pyret-method")
+
+(define (collection-doc #:contract [contract #f] 
+                        #:show-ellipses [show-ellipses #f] 
+                        . ign-for-now)
+  "collection-doc")
+
 (define pyret-id pyret)
 (define tt pyret)
 
 (define (examples #:show-try-it [show-try-it #f] . elems)
   `(pre () ,@elems))
 
-(define (verbatim #:style [style #f] . elems)
+(define (verbatim #:style [style #f] #:show-try-it [show-try-it #f] . elems)
   (define attribs
     (if style `([class ,style]) `()))
   `(pre ,attribs ,@elems))
+
+(define (ignore . ign) "")
 
 (define codedisp verbatim)
 
@@ -84,7 +154,11 @@
                 `(td ()
                      (span () ,(if (list? cell) (car cell) cell))))))))
 
-(define (function #:contract [contract "contract"] #:return [return "return"] #:alt-docstrings [alt-docstrings "alt-docstrings"] . elems)
+(define (function #:contract [contract "contract"] #:args [args "args"]
+                  #:return [return "return"]
+                  #:examples [examples "examples"]
+                  #:alt-docstrings [alt-docstrings "alt-docstrings"] 
+                  . elems)
   ; (printf "function elems are ~s\n" elems)
   `(div ([class "function"]) ,@elems " :: " ,contract))
 
@@ -94,12 +168,28 @@
         (div ([class "function"]) ,b)
         ,@elems))
 
-(define (type-spec type-name . elems)
+(define (type-spec #:alias [alias #f] type-name tyvars . body)
+  ; (printf "### type-spec ~s ~s ~s\n" type-name tyvars body)
+  (if (list? tyvars)
+      (set! type-name (string-append type-name
+                        "<"
+                        (apply string-append (add-between tyvars ", "))
+                        ">"))
+      (set! body (cons tyvars body)))
   `(div ()
         (div ([class "function"]) ,type-name)
-        ,@elems))
+        ,@body))
 
-(define (a-arrow . elems)
+(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"] 
+                    #:args [args "args"] #:return [return "return"]
+                    data-name var-name name
+                    . elems)
+  (unless contract (set! contract "contract"))
+  `(div () (tt () ,(string-append "." name) " :: " ,contract))
+  )
+
+
+(define (og-a-arrow . elems)
   ; (printf "doing a-arrow ~s\n" elems)
   (let* ([n (length elems)]
         [range (last elems)]
@@ -109,10 +199,27 @@
     ; (printf "domain = ~s\nrange = ~s\n" domain range)
     `(span () "(" ,(string-join domain ", ") ")" " -> " ,range)))
 
+(define (a-arrow . elems)
+  ; (printf "*** doing a-arrow ~s\n" elems)
+  (let* ([n (length elems)]
+         [ran (last elems)]
+         [dom (take elems (- n 1))])
+    (when (and (list? dom) (= (length dom) 1) (null? (car dom)))
+      (set! dom '()))
+    ; (printf "doing a-arrow ~s -> ~s\n" dom ran)
+  `(span () ,@dom " -> " ,ran)))
 
-(define (a-app base . typs)
+
+(define (a-app base typs . ign-for-now)
   ; (printf "doing a-app ~s ~s\n" base typs)
-  (string-append base "<" (string-join typs ", ") ">"))
+  (when (list? typs)
+    (set! typs (string-join typs ", ")))
+  (string-append base "<" typs ">"))
+
+(define (a-tuple . ign-for-now)
+  "a-tuple")
+
+(define (a-id x . ign) x)
 
 ; (define (a-arrow from to)
 ;   `(span () ,from " -> " ,to))
@@ -133,7 +240,15 @@
 
 (define T "EqualityResult")
 (define EQ "EqualityResult")
+(define TA "Table")
+(define L "List")
 
 (define equal-always-op `(code "=="))
 (define equal-now-op `(code "=~"))
 (define identical-op `(code "<=>"))
+
+(define (data-spec2 . args)
+  `(span () "data-spec2"))
+
+(define (constructor-doc x y z w . elems)
+  `(span () "constructor-doc"))

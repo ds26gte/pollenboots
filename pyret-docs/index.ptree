@@ -20,8 +20,27 @@
     ◊libraries-general.html{
       trove/globals.html
       builtin/numbers.html
+      builtin/strings.html
       builtin/booleans.html
+      trove/pick.html
+      trove/lists.html
+      trove/sets.html
+      trove/arrays.html
+      trove/string-dict.html
+      builtin/tables.html
+      trove/gdrive-sheets.html
+      trove/csv.html
+      trove/color.html
+      trove/image.html
+      builtin/reactors.html
+      trove/statistics.html
+      trove/math.html
+      trove/matrices.html
+      trove/timing.html
+      trove/fetch.html
+      trove/filesystem.html
     }
+
     libraries-archived.html
     libraries-internal.html
   }
