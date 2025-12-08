@@ -1,5 +1,13 @@
 #lang pollen
 
-◊title{Archived Libraries}
+◊title[#:style '(toc)]{Archived Libraries}
 
-testing
+These are libraries of general interest that we have archived: i.e.,
+we recommend you no longer use them, and use a newer substitute instead.
+(Each library will recommend a substitute.)
+
+◊(table-of-contents)
+
+◊; ◊include-section["trove/image-structs.js.rkt"]
+◊include-section["trove/world.html"]
+

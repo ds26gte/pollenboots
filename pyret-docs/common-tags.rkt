@@ -50,6 +50,7 @@
 (define (title #:tag [tag #f] #:version [version "0"]
                #:friendly-title [friendly-title #f]
                #:noimport [noimport #f]
+               #:style [style #f]
                . title-terms)
   (define title-1
     (cond [friendly-title (list friendly-title)]
@@ -93,8 +94,8 @@
 (define (pyret-method . ign-for-now)
   "pyret-method")
 
-(define (collection-doc #:contract [contract #f] 
-                        #:show-ellipses [show-ellipses #f] 
+(define (collection-doc #:contract [contract #f]
+                        #:show-ellipses [show-ellipses #f]
                         . ign-for-now)
   "collection-doc")
 
@@ -157,7 +158,7 @@
 (define (function #:contract [contract "contract"] #:args [args "args"]
                   #:return [return "return"]
                   #:examples [examples "examples"]
-                  #:alt-docstrings [alt-docstrings "alt-docstrings"] 
+                  #:alt-docstrings [alt-docstrings "alt-docstrings"]
                   . elems)
   ; (printf "function elems are ~s\n" elems)
   `(div ([class "function"]) ,@elems " :: " ,contract))
@@ -180,24 +181,13 @@
         (div ([class "function"]) ,type-name)
         ,@body))
 
-(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"] 
+(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]
                     #:args [args "args"] #:return [return "return"]
                     data-name var-name name
                     . elems)
   (unless contract (set! contract "contract"))
   `(div () (tt () ,(string-append "." name) " :: " ,contract))
   )
-
-
-(define (og-a-arrow . elems)
-  ; (printf "doing a-arrow ~s\n" elems)
-  (let* ([n (length elems)]
-        [range (last elems)]
-        [domain (take elems (- n 1))]
-        [domain (map (lambda (x) (if (string? x) x (apply string-append (cddr x))))
-                     domain)])
-    ; (printf "domain = ~s\nrange = ~s\n" domain range)
-    `(span () "(" ,(string-join domain ", ") ")" " -> " ,range)))
 
 (define (a-arrow . elems)
   ; (printf "*** doing a-arrow ~s\n" elems)
@@ -208,7 +198,6 @@
       (set! dom '()))
     ; (printf "doing a-arrow ~s -> ~s\n" dom ran)
   `(span () ,@dom " -> " ,ran)))
-
 
 (define (a-app base typs . ign-for-now)
   ; (printf "doing a-app ~s ~s\n" base typs)

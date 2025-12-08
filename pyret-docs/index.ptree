@@ -40,8 +40,9 @@
       trove/fetch.html
       trove/filesystem.html
     }
-
-    libraries-archived.html
+    ◊libraries-archived.html{
+      trove/world.html
+    }
     libraries-internal.html
   }
   style-guide.html
