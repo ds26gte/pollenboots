@@ -89,7 +89,7 @@
 (define (image #:scale [scale 1] file)
   `(img ([src ,file])))
 
-(define (pyret . elems)
+(define (pyret #:style [style #f] . elems)
   `(tt ([class "pyretexpr"]) ,@elems))
 
 (define (pyret-method . ign-for-now)
@@ -107,6 +107,7 @@
   `(pre () ,@elems))
 
 (define (verbatim #:style [style #f] #:show-try-it [show-try-it #f] . elems)
+  ; (printf "@@@ doing verbatim ~s\n" elems)
   (define attribs
     (if style `([class ,style]) `()))
   `(pre ,attribs ,@elems))
