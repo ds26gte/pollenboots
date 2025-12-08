@@ -41,6 +41,7 @@
       trove/filesystem.html
     }
     ◊libraries-archived.html{
+      trove/image-structs.html
       trove/world.html
     }
     libraries-internal.html
