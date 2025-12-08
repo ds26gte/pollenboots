@@ -49,6 +49,8 @@
       trove/data-source.html
       trove/srcloc.html
       trove/pprint.html
+      trove/s-exp.html
+      trove/s-exp-structs.html
     }
   }
   style-guide.html
