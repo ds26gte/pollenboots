@@ -41,7 +41,8 @@
           (define level (number->string n))
           `(section-1 ([level ,level] [id ,title-sluggified]) ,@title-elems)]))
 
-(define (section #:tag [tag #f] . titlex) (section-at-depth #:tag tag 2 titlex))
+(define (section #:tag [tag #f] #:tag-prefix [tag-prefix #f] . titlex)
+  (section-at-depth #:tag tag 2 titlex))
 (define (subsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 3 titlex))
 (define (subsubsection #:tag [tag #f] . titlex) (section-at-depth #:tag tag 4 titlex))
 
@@ -240,5 +241,6 @@
 (define (data-spec2 . args)
   `(span () "data-spec2"))
 
-(define (constructor-doc x y z w . elems)
+
+(define (constructor-doc #:private [private #f] x y z w . elems)
   `(span () "constructor-doc"))

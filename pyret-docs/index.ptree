@@ -48,6 +48,7 @@
       builtin/raw-arrays.html
       trove/data-source.html
       trove/srcloc.html
+      trove/pprint.html
     }
   }
   style-guide.html

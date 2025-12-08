@@ -11,8 +11,8 @@ the developer team; if you are, ask us for help directly.
 
 ◊include-section["builtin/raw-arrays.html"]
 ◊include-section["trove/data-source.html"]
-◊; ◊include-section["trove/srcloc.js.rkt"]
-◊; ◊include-section["trove/pprint.js.rkt"]
+◊include-section["trove/srcloc.html"]
+◊include-section["trove/pprint.html"]
 ◊; ◊include-section["trove/s-exp.js.rkt"]
 ◊; ◊include-section["trove/s-exp-structs.js.rkt"]
 

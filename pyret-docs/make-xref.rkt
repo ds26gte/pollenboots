@@ -7,6 +7,11 @@
 
 (provide (all-defined-out))
 
+(define (seclink #:tag-prefixes [tag-prefixes #f] . elems)
+  (cond [(not tag-prefixes) `(seclink-1 () ,@elems)]
+        [(list? tag-prefixes) `(seclink-1 ([tag-prefixes ,(car tag-prefixes)]) ,@elems)]
+        [else `(seclink-1 ([tag-prefixes ,tag-prefixes]) ,@elems)]))
+
 (define (xref-handler doc)
 
   (define here-path-from-project-root (calc-here-path-from-project-root))
@@ -49,7 +54,7 @@
     ; (printf "doing replace-secrefs ~s\n" tx)
     (define this-tag (get-tag tx))
     (case this-tag
-      [(secref seclink)
+      [(secref seclink-1)
        (define this-tag-elems (get-elements tx))
        (define num-this-tag-elems (length this-tag-elems))
        (let* ([name (first this-tag-elems)]
@@ -57,9 +62,11 @@
               [url (if xref (second xref) "UnDeFiNeD")]
               [text (cond [(and (eq? this-tag 'seclink)
                                 (>= num-this-tag-elems 1))
+                           ; (printf "this-tag-elems = ~s\n" this-tag-elems)
                            (add-between (cdr this-tag-elems) " ")]
                           [xref (third xref)]
                           [else (list "UnDeFiNeD")])])
+         ; (printf "text is ~s\n" text)
          `(a ([href ,url]) ,@text))]
       [else tx]))
 

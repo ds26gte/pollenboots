@@ -44,8 +44,10 @@
     ; (printf "*** doing IV ~s\n" doc)
 
     (define section-txs
-      (extract-tags (validate-txexpr doc)
-                    '(title-1 section-1 include-section-1)))
+      (extract-tags
+        (begin; (printf "*** validate ~s\n" doc)
+          (validate-txexpr doc))
+        '(title-1 section-1 include-section-1)))
 
     ; (printf "*** doing V\n")
 
