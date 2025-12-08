@@ -46,6 +46,8 @@
     }
     ◊libraries-internal.html{
       builtin/raw-arrays.html
+      trove/data-source.html
+      trove/srcloc.html
     }
   }
   style-guide.html
