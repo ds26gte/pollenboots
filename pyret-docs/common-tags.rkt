@@ -222,6 +222,7 @@
 (define B "Boolean")
 
 (define (L-of typ) (a-app "List" typ))
+(define (O-of typ) (a-app "Option" typ))
 
 (define eq "EqualityResult")
 (define eqfun `(a-arrow ,A ,A ,B))
