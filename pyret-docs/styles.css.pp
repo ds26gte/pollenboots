@@ -1,0 +1,96 @@
+#lang pollen/pre
+
+
+li.indent2 {
+  text-indent: 2em;
+}
+
+ul.toclist {
+  list-style-type: none;
+}
+
+.pyretexpr {
+  color: cornflowerblue;
+}
+
+.function {
+  font-family: monospace;
+  /* background-color: #6bccdf; */
+  background-color: #ffeeee;
+}
+
+.margin-note {
+  float: right;
+  width: 25%;
+  margin: 0 0 1em 1em;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.author {
+  font-family: sans-serif;
+}
+
+.VSCode {
+  position: relative;
+  border: 1px dashed #54a4ec;
+  border-radius: 0.5em;
+}
+
+.VSCode .vscode-icon::after {
+  content: url(platforms/code-stable-small.png);
+  float: right;
+  margin-top: -1em;
+  margin-right: -1em;
+  position: relative;
+  width: 2em;
+  height: 2em;
+}
+
+.VSCodeCLI {
+  position: relative;
+  border: 1px dashed #275278;
+  border-radius: 0.5em;
+}
+
+.VSCodeCLI .vscode-cli-icon::after {
+  content: url(platforms/terminal-vscode.png);
+  float: right;
+  margin-top: -1em;
+  margin-right: -1em;
+  position: relative;
+  width: 2em;
+  height: 2em;
+}
+
+.CLI {
+  position: relative;
+  border: 1px dashed #2b2737;
+  border-radius: 0.5em;
+}
+
+.CLI .cli-icon::after {
+  content: url(platforms/GNOME_Terminal-small.png);
+  float: right;
+  margin-top: -1em;
+  margin-right: -1em;
+  position: relative;
+  width: 2em;
+  height: 2em;
+}
+
+.CPO {
+  position: relative;
+  border: 1px dashed #ee1d0f;
+  border-radius: 0.5em;
+}
+
+.CPO .cpo-icon::after {
+  content: url(platforms/pyret-logo-small.png);
+  float: right;
+  margin-top: -1em;
+  margin-right: -1em;
+  position: relative;
+  width: 2em;
+  height: 2em;
+}
