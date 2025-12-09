@@ -10,8 +10,10 @@
 ; (require racket/date)
 
 (require "utils.rkt")
-(require "common-tags.rkt")
 (require "nice-paragraphs.rkt")
+
+(require "common-tags.rkt")
+(require "verbatim.rkt")
 
 (require "toc.rkt")
 (require "make-glossary.rkt")
@@ -24,8 +26,9 @@
 (provide (all-defined-out))
 
 (provide (all-from-out "utils.rkt"
-                       "common-tags.rkt"
                        "nice-paragraphs.rkt"
+                       "common-tags.rkt"
+                       "verbatim.rkt"
                        "toc.rkt"
                        "make-glossary.rkt"
                        "make-xref.rkt"))

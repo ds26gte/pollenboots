@@ -89,9 +89,6 @@
 (define (image #:scale [scale 1] file)
   `(img ([src ,file])))
 
-(define (pyret #:style [style #f] . elems)
-  `(tt ([class "pyretexpr"]) ,@elems))
-
 (define (pyret-method . ign-for-now)
   "pyret-method")
 
@@ -100,23 +97,7 @@
                         . ign-for-now)
   "collection-doc")
 
-(define pyret-id pyret)
-(define tt pyret)
-
-(define (examples #:show-try-it [show-try-it #f] . elems)
-  `(pre () ,@elems))
-
-(define (verbatim #:style [style #f] #:show-try-it [show-try-it #f] . elems)
-  ; (printf "@@@ doing verbatim ~s\n" elems)
-  (define attribs
-    (if style `([class ,style]) `()))
-  `(pre ,attribs ,@elems))
-
 (define (ignore . ign) "")
-
-(define codedisp verbatim)
-
-(define pyret-block verbatim)
 
 (define (doc-internal #:stack-unsafe [stack-unsafe #f] . elems)
   (if stack-unsafe
@@ -239,34 +220,5 @@
 (define equal-now-op `(code "=~"))
 (define identical-op `(code "<=>"))
 
-
-(define (data-spec2 name deps clauses)
-  ; (printf "doing data-spec3 ~s ~s ~s\n" name deps clauses)
-  `(pre () (tt () ,(format "~a~a:"
-                    name
-                    (if deps (format "<~a>" (add-between deps ", ")) "")))
-          "\n"
-          (div ()
-                ,@(add-between
-                    (map
-                      (λ (clause)
-                        `(tt () "   | " ,clause))
-                      clauses) "\n"))
-          (tt () "end")))
-
-
 (define (constructor-doc #:private [private #f] x y z w . elems)
   `(span () "constructor-doc"))
-
-(define (singleton-spec2 cname name)
-  `(span () "| " ,name))
-
-(define (constructor-spec cname name args)
-  `(span () ,name
-         "(" ,@(add-between
-                 (map (λ (arg) `(span () ,(first arg) " :: "
-                                         ,(second (third arg))))
-                      args)
-                 ", ")
-         ")"))
-
