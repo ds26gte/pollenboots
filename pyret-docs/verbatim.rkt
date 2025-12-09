@@ -11,10 +11,9 @@
 (define (examples #:show-try-it [show-try-it #f] . elems)
   `(pre () ,@elems))
 
-(define (verbatim #:style [style #f] #:show-try-it [show-try-it #f] . elems)
+(define (verbatim #:style [style "nothing_special"] #:show-try-it [show-try-it #f] . elems)
   ; (printf "@@@ doing verbatim ~s\n" elems)
-  (define attribs
-    (if style `([class ,style]) `()))
+  (define attribs `([class ,style]))
   `(pre ,attribs ,@elems))
 
 (define codedisp verbatim)
@@ -46,3 +45,29 @@
                       args)
                  ", ")
          ")"))
+
+(define (function #:contract [contract #f] #:args [args '()]
+                  #:return [return "return"]
+                  #:examples [examples "examples"]
+                  #:alt-docstrings [alt-docstrings "alt-docstrings"]
+                  name . elems)
+  ; (printf "function ~a args are ~s, contract = ~s\n" name args contract)
+  `(div ()
+        (div ([class "pyret-display"])
+             ,name " :: "
+             "(" ,@(add-between (map (λ (arg)
+                                       (let ([arg (first arg)]
+                                             [type (second arg)])
+                                         ; (printf "arg/type are ~s, ~s\n" arg type)
+                                         (cond [type
+                                                 `(span () ,arg " :: " ,type)]
+                                               [(and (list? contract)
+                                                     (>= (length contract) 3))
+                                                `(span () ,arg " :: " ,(third contract))]
+                                               [else
+                                                 arg])))
+                                     args) ", ")
+             ")"
+             " -> "
+             ,return)
+        ,@elems))

@@ -1,6 +1,7 @@
 all:
 	make clean
 	raco pollen render index.ptree
+	raco pollen render index.ptree
 
 tiny:
 	make clean

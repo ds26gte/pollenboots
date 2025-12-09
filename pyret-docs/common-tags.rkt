@@ -138,13 +138,6 @@
                 `(td ()
                      (span () ,(if (list? cell) (car cell) cell))))))))
 
-(define (function #:contract [contract "contract"] #:args [args "args"]
-                  #:return [return "return"]
-                  #:examples [examples "examples"]
-                  #:alt-docstrings [alt-docstrings "alt-docstrings"]
-                  . elems)
-  ; (printf "function elems are ~s\n" elems)
-  `(div ([class "function"]) ,@elems " :: " ,contract))
 
 (define (form a b . elems)
   ; (printf "doing form a = ~s\nb = ~s\nelems = ~s\n" a b elems)
@@ -161,7 +154,7 @@
                         ">"))
       (set! body (cons tyvars body)))
   `(div ()
-        (div ([class "function"]) ,type-name)
+        (div ([class "pyret-display"]) ,type-name)
         ,@body))
 
 (define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]
