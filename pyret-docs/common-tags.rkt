@@ -16,6 +16,12 @@
       (select 'h1 doc)
       "Untitled"))
 
+(define (emph . elems)
+  `(i () ,@elems))
+
+(define (code . elems)
+  `(code ([class "uncolored-code"]) ,@elems))
+
 (define (author . elems)
   `(div ([class "author"]) "by " ,@elems))
 

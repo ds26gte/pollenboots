@@ -13,6 +13,10 @@ ul.toclist {
   color: cornflowerblue;
 }
 
+.uncolored-code {
+  color: unset;
+}
+
 .pyret-display {
   background-color: #eeffff;
 }
@@ -32,6 +36,7 @@ ul.toclist {
 }
 
 .margin-note {
+  background-color: #fbfb88;
   float: right;
   width: 25%;
   margin: 0 0 1em 1em;
