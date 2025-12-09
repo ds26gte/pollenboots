@@ -5,12 +5,16 @@
 ◊(define Image (a-id "Image" (xref "image" "Image")))
 ◊(define Event (a-id "Event" (xref "reactors" "Event")))
 
+
 ◊(define key-args (list `("key"   ("type" "normal") ("contract" ,S))))
 ◊(define mouse-args (list
   `("x" ("type" "normal") ("contract" ,N))
   `("y" ("type" "normal") ("contract" ,N))
   `("kind" ("type" "normal") ("contract" ,S))
   ))
+
+
+
 
 
 ◊docmodule["reactors"]{
@@ -118,7 +122,7 @@ argument starts an interactive event loop as described by the reactor's
 configuration.  In ◊url{https://code.pyret.org}, for a very simple reactor with
 just an initial value, the reactor's display looks like:
 
-◊(image "src/builtin/inert-reactor.png")
+◊(image "inert-reactor.png")
 
 Any value can be used for ◊pyret{init}, and that value will be shown by default
 by ◊pyret-id{interact}.
@@ -150,7 +154,7 @@ default 28 times per second, this can be configured with
 ◊secref["s:seconds-per-tick"].  The value returned by the function becomes the
 new value of the reactor.
 
-◊(image "src/builtin/on-tick.gif")
+◊(image "on-tick.gif")
 
 ◊subsection[#:tag "s:seconds-per-tick"]{◊pyret{seconds-per-tick}}
 

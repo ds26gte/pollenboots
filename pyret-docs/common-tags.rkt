@@ -239,9 +239,34 @@
 (define equal-now-op `(code "=~"))
 (define identical-op `(code "<=>"))
 
-(define (data-spec2 . args)
-  `(span () "data-spec2"))
+
+(define (data-spec2 name deps clauses)
+  ; (printf "doing data-spec3 ~s ~s ~s\n" name deps clauses)
+  `(pre () (tt () ,(format "~a~a:"
+                    name
+                    (if deps (format "<~a>" (add-between deps ", ")) "")))
+          "\n"
+          (div ()
+                ,@(add-between
+                    (map
+                      (λ (clause)
+                        `(tt () "   | " ,clause))
+                      clauses) "\n"))
+          (tt () "end")))
 
 
 (define (constructor-doc #:private [private #f] x y z w . elems)
   `(span () "constructor-doc"))
+
+(define (singleton-spec2 cname name)
+  `(span () "| " ,name))
+
+(define (constructor-spec cname name args)
+  `(span () ,name
+         "(" ,@(add-between
+                 (map (λ (arg) `(span () ,(first arg) " :: "
+                                         ,(second (third arg))))
+                      args)
+                 ", ")
+         ")"))
+

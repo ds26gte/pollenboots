@@ -45,7 +45,7 @@
 
     (define section-txs
       (extract-tags
-        (begin; (printf "*** validate ~s\n" doc)
+        (begin ;(printf "*** validating ~s\n" doc)
           (validate-txexpr doc))
         '(title-1 section-1 include-section-1)))
 
