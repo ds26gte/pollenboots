@@ -9,7 +9,13 @@
 (define tt pyret)
 
 (define (examples #:show-try-it [show-try-it #f] . elems)
-  `(pre () ,@elems))
+  (if show-try-it
+      `(div ()
+            (pre () ,@elems)
+            (a ([class "show-embed"]
+                [code ,(string-join elems " ")])
+               "(Try it!)"))
+      `(pre () ,@elems)))
 
 (define (verbatim #:style [style "nothing_special"] #:show-try-it [show-try-it #f] . elems)
   ; (printf "@@@ doing verbatim ~s\n" elems)
@@ -53,7 +59,7 @@
                   name . elems)
   ; (printf "function ~a args are ~s, contract = ~s\n" name args contract)
   `(div ()
-        (div ([class "pyret-display"])
+        (pre ([class "pyret-display"])
              ,name " :: "
              "(" ,@(add-between (map (λ (arg)
                                        (let ([arg (first arg)]
