@@ -9,6 +9,15 @@
 
 (provide (all-defined-out))
 
+(define (make-generated-tag)
+  (string-append "generated-tag" (get-counter)))
+
+(define (make-index-element style content tag plainseq entryseq desc)
+  (define tag-1 (second tag))
+  `(span ()
+         (a ([name ,tag-1]))
+         (gloss-1 ,tag-1 ,(first entryseq))))
+
 (define (gloss item)
   (let ([item-sluggified (string-append (sluggify item) (get-counter))])
     `(span ()
