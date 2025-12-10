@@ -119,6 +119,8 @@
   `(span ([class "margin-note"])
          ,@elems))
 
+(define note margin-note*)
+
 (define (cpo-only . elems)
   `(div ([class "CPO"]) (div ([class "cpo-icon"]) ,@elems)))
 

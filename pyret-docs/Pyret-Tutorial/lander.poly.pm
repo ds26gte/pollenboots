@@ -817,7 +817,7 @@ Modify each of the above functions, along with their test cases.
 Finally, there’s no need to limit ourselves to only one balloon. How
 many is right? Two? Three? Ten? ... Why ﬁx any one number? It could be
 a balloon festival!◊margin-note*{
-  ◊(image #:scale 1/10 "src/Pyret-Tutorial/balloon-fiesta.png")
+  ◊(image #:scale 1/10 "balloon-fiesta.png")
   ◊(linebreak)
   ◊(emph "Albuquerque Balloon Fiesta")}
 

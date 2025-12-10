@@ -179,7 +179,7 @@ argument should be of the same type as the value given to ◊pyret{init}, and th
 function should return a ◊pyret-id["Image" "image"].  So for a ◊(R-of "a"), the
 type of the to-draw handler is:
 
-◊(image "src/builtin/to-draw.gif")
+◊(image "to-draw.gif")
 
 ◊tt{
 to-draw :: ◊(a-arrow "a" Image)
