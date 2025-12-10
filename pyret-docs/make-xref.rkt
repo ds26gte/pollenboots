@@ -8,6 +8,7 @@
 (provide (all-defined-out))
 
 (define (seclink #:tag-prefixes [tag-prefixes #f] . elems)
+  ; (printf "*** seclink tp= ~s ee= ~s\n" tag-prefixes elems)
   (cond [(not tag-prefixes) `(seclink-1 () ,@elems)]
         [(list? tag-prefixes) `(seclink-1 ([tag-prefixes ,(car tag-prefixes)]) ,@elems)]
         [else `(seclink-1 ([tag-prefixes ,tag-prefixes]) ,@elems)]))
@@ -60,7 +61,7 @@
        (let* ([name (first this-tag-elems)]
               [xref (assoc name xref-entries)]
               [url (if xref (second xref) "UnDeFiNeD")]
-              [text (cond [(and (eq? this-tag 'seclink)
+              [text (cond [(and (eq? this-tag 'seclink-1)
                                 (>= num-this-tag-elems 1))
                            ; (printf "this-tag-elems = ~s\n" this-tag-elems)
                            (add-between (cdr this-tag-elems) " ")]

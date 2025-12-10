@@ -148,7 +148,7 @@
 (define (form a b . elems)
   ; (printf "doing form a = ~s\nb = ~s\nelems = ~s\n" a b elems)
   `(div ()
-        (div ([class "function"]) ,b)
+        (pre ([class "pyret-display"]) ,b)
         ,@elems))
 
 (define (type-spec #:alias [alias #f] type-name tyvars . body)
