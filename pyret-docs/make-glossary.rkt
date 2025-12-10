@@ -13,16 +13,18 @@
   (string-append "generated-tag" (get-counter)))
 
 (define (make-index-element style content tag plainseq entryseq desc)
+  ; (printf "*** make-index-element ~s ~s ~s ~s ~s ~s\n" style content tag plainseq entryseq desc)
+  (define alpha-tag (first plainseq))
   (define tag-1 (second tag))
   `(span ()
          (a ([name ,tag-1]))
-         (gloss-1 ,tag-1 ,(first entryseq))))
+         (gloss-1 ,alpha-tag ,tag-1 ,(first entryseq))))
 
 (define (gloss item)
   (let ([item-sluggified (string-append (sluggify item) (get-counter))])
     `(span ()
            (a ([name ,item-sluggified]))
-           (gloss-1 ,item-sluggified ,item))))
+           (gloss-1 ,item ,item-sluggified ,item))))
 
 (define (output-glossary)
   `(output-glossary-1 ()))
@@ -39,7 +41,7 @@
   (define sorted-glossary
     (sort glossary-entries
           (λ (a b)
-            (string<? (second a) (second b)))))
+            (string<? (first a) (first b)))))
 
   (define glossary-items '())
 
@@ -65,8 +67,8 @@
 
   (for ([tx glossary-defs])
     (let* ([item-values (get-elements tx)]
-           [item-sluggified (car item-values)]
-           [item (cadr item-values)])
+           [item-sluggified (second item-values)]
+           [item (third item-values)])
       (set! glossary-entries
         (cons (list item
                     (string-append here-path-from-project-root "#" item-sluggified))
