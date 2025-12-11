@@ -2,4 +2,4 @@
 
 ◊title{Glossary}
 
-◊(output-glossary)
+◊(custom-index-block)

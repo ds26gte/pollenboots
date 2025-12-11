@@ -71,8 +71,6 @@
 
 ;true globals
 
-(define *saved-items* '(glossary xref))
-
 (define *project-root* (current-project-root))
 
 (define *globals-file* (build-path *project-root* "globals.rkt"))
@@ -80,7 +78,7 @@
 (define (read-globals)
   (if (file-exists? *globals-file*)
       (call-with-input-file *globals-file* read)
-      empty))
+      '()))
 
 (define (calc-here-path-from-project-root)
 
@@ -90,8 +88,9 @@
 
   here-path-from-project-root)
 
-(define (pollen-postlude)
-  (call-with-output-file (build-path *project-root* "globals.rkt")
+(define (write-globals)
+  (define *saved-items* '(glossary xref))
+  (call-with-output-file *globals-file*
     (λ (o)
       (fprintf o "(\n")
       (for ([item *saved-items*])
@@ -112,3 +111,5 @@
 
       )
     #:exists 'replace))
+
+(define pollen-postlude write-globals)

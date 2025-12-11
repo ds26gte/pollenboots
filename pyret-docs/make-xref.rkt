@@ -17,7 +17,7 @@
 
   (define here-path-from-project-root (calc-here-path-from-project-root))
 
-  (define xref-name-entries empty)
+  (define xref-name-entries '())
 
   (define-values (_ name-defs)
     (splitf-txexpr doc
@@ -47,7 +47,7 @@
 
   (define *globals-list* (read-globals))
   (define xref-entries (let ([a (assoc 'xref *globals-list*)])
-                         (if a (cdr a) empty)))
+                         (if a (cdr a) '())))
 
   (define project-root-from-here (point-to-project-root here-path-from-project-root))
 

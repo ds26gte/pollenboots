@@ -4,7 +4,6 @@
 
 ◊title[#:version (number->string ◊VERSION)]{Pyret}
 
-
 ◊nested{This document has detailed information on the Pyret grammar and the
 behavior of its expression forms and built-in libraries, along with many
 examples and some longer descriptions of language design choices. If you want
@@ -30,7 +29,6 @@ updates over time.}
   ◊li{◊hyperlink["https://www.pyret.org/release-notes/v0.5.html"]{Summer 2014}}
 ]
 
-
 ◊include-section{getting-started.poly.pm}
 
 ◊include-section{language-concepts.poly.pm}
@@ -41,10 +39,6 @@ updates over time.}
 
 ◊include-section{internal.poly.pm}
 
-◊; no glosses in this file, and z-glossary has to be alpha last
-
-
-◊include-section{z-glossary.poly.pm}
-
+◊include-section{glossary.poly.pm}
 
 ◊pollen-postlude[]

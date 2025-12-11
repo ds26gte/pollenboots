@@ -70,7 +70,7 @@
 
 (define (docmodule #:noimport [noimport #f] #:friendly-title [friendly-title #f] tag . body)
   `(div ()
-       ,(apply title #:tag tag #:friendly-title friendly-title empty)
+       ,(apply title #:tag tag #:friendly-title friendly-title '())
        ,@body))
 
 (define ul
@@ -146,12 +146,14 @@
                 `(td ()
                      (span () ,(if (list? cell) (car cell) cell))))))))
 
-
 (define (form a b . elems)
   ; (printf "doing form a = ~s\nb = ~s\nelems = ~s\n" a b elems)
-  `(div ()
-        (pre ([class "pyret-display"]) ,b)
-        ,@elems))
+  (let* ([item a]
+         [item-sluggified (string-append (sluggify item) (get-counter))])
+    `(div ()
+          (gloss-1 ,item ,item-sluggified ,item)
+          (pre ([class "pyret-display"]) ,b)
+          ,@elems)))
 
 (define (type-spec #:alias [alias #f] type-name tyvars . body)
   ; (printf "### type-spec ~s ~s ~s\n" type-name tyvars body)

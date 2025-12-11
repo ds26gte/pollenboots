@@ -13,7 +13,8 @@
   (string-append "generated-tag" (get-counter)))
 
 (define (make-index-element style content tag plainseq entryseq desc)
-  ; (printf "*** make-index-element ~s ~s ~s ~s ~s ~s\n" style content tag plainseq entryseq desc)
+  ; using, for now: tag plainseq entryseq
+  ; (printf "*** make-index-element ~s ~s ~s\n" tag plainseq entryseq)
   (define alpha-tag (first plainseq))
   (define tag-1 (second tag))
   `(span ()
@@ -26,7 +27,7 @@
            (a ([name ,item-sluggified]))
            (gloss-1 ,item ,item-sluggified ,item))))
 
-(define (output-glossary)
+(define (custom-index-block)
   `(output-glossary-1 ()))
 
 ;Glossary
@@ -36,7 +37,7 @@
   (define *globals-list* (read-globals))
 
   (define glossary-entries (let ([a (assoc 'glossary *globals-list*)])
-                             (if a (cdr a) empty)))
+                             (if a (cdr a) '())))
 
   (define sorted-glossary
     (sort glossary-entries
@@ -49,7 +50,7 @@
 
   (for ([entry sorted-glossary])
     (set! glossary-items
-      (cons `(li () (a ([href ,(second entry)]) ,(first entry)))
+      (cons `(li () (a ([href ,(third entry)]) ,(second entry)))
             glossary-items)))
 
   `(ul () ,@(reverse glossary-items))
@@ -59,7 +60,7 @@
 
   (define here-path-from-project-root (calc-here-path-from-project-root))
 
-  (define glossary-entries empty)
+  (define glossary-entries '())
 
   (define-values (doc-without-glossary-defs glossary-defs)
     (splitf-txexpr doc
@@ -67,10 +68,11 @@
 
   (for ([tx glossary-defs])
     (let* ([item-values (get-elements tx)]
+           [item-alpha (first item-values)]
            [item-sluggified (second item-values)]
            [item (third item-values)])
       (set! glossary-entries
-        (cons (list item
+        (cons (list item-alpha item
                     (string-append here-path-from-project-root "#" item-sluggified))
               glossary-entries))))
 
