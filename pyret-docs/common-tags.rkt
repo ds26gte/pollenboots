@@ -174,6 +174,7 @@
       (set! body (cons tyvars body)))
   `(div ()
         (div ([class "pyret-display"]) ,type-name)
+        ,(make-gloss type-name)
         ,@body))
 
 (define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]

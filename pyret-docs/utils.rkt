@@ -69,6 +69,15 @@
 (define (h-tag-at-depth n)
   (string->symbol (format "h~a" n)))
 
+(define (make-gloss item-alpha [item-sluggified #f] [item-typeset #f])
+  (unless item-sluggified
+    (set! item-sluggified (string-append (sluggify item-alpha) (get-counter))))
+  (unless item-typeset
+    (set! item-typeset item-alpha))
+  `(span ()
+         (a ([name ,item-sluggified]))
+         (gloss-1 ,item-alpha ,item-sluggified ,item-typeset)))
+
 ;true globals
 
 (define *project-root* (current-project-root))

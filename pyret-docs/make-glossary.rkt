@@ -17,15 +17,9 @@
   ; (printf "*** make-index-element ~s ~s ~s\n" tag plainseq entryseq)
   (define alpha-tag (first plainseq))
   (define tag-1 (second tag))
-  `(span ()
-         (a ([name ,tag-1]))
-         (gloss-1 ,alpha-tag ,tag-1 ,(first entryseq))))
+  (make-gloss alpha-tag tag-1 (first entryseq)))
 
-(define (gloss item)
-  (let ([item-sluggified (string-append (sluggify item) (get-counter))])
-    `(span ()
-           (a ([name ,item-sluggified]))
-           (gloss-1 ,item ,item-sluggified ,item))))
+(define gloss make-gloss)
 
 (define (custom-index-block)
   `(output-glossary-1 ()))
