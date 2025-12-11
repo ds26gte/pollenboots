@@ -148,11 +148,20 @@
 
 (define (form a b . elems)
   ; (printf "doing form a = ~s\nb = ~s\nelems = ~s\n" a b elems)
-  (let* ([item a]
-         [item-sluggified (string-append (sluggify item) (get-counter))])
+  (let ([item-sluggified (string-append (sluggify a) (get-counter))])
     `(div ()
-          (gloss-1 ,item ,item-sluggified ,item)
+          (a ([name ,item-sluggified]))
+          (gloss-1 ,a ,item-sluggified ,a)
           (pre ([class "pyret-display"]) ,b)
+          ,@elems)))
+
+(define (value name typ . elems)
+  (let ([item-sluggified (string-append (sluggify name) (get-counter))])
+    `(div ()
+          (a ([name ,item-sluggified]))
+          (gloss-1 ,name ,item-sluggified ,name)
+          (pre ([class "pyret-display"])
+               ,name " :: " ,typ)
           ,@elems)))
 
 (define (type-spec #:alias [alias #f] type-name tyvars . body)
