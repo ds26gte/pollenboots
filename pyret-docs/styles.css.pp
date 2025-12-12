@@ -1,6 +1,5 @@
 #lang pollen/pre
 
-
 li.indent2 {
   text-indent: 2em;
 }
@@ -10,7 +9,7 @@ ul.toclist {
 }
 
 .pyretexpr {
-  color: cornflowerblue;
+  /* color: cornflowerblue; */
 }
 
 .uncolored-code {
@@ -18,7 +17,7 @@ ul.toclist {
 }
 
 .pyret-display {
-  background-color: #eeffff;
+  background-color: #f2f2f2;
 }
 
 .function {

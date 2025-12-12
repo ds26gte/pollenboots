@@ -173,23 +173,16 @@
         ,(make-gloss type-name)
         ,@body))
 
-(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]
-                    #:args [args "args"] #:return [return "return"]
-                    data-name var-name name
-                    . elems)
-  (unless contract (set! contract "contract"))
-  `(div () (tt () ,(string-append "." name) " :: " ,contract))
-  )
-
-(define (a-arrow . elems)
-  ; (printf "*** doing a-arrow ~s\n" elems)
-  (let* ([n (length elems)]
-         [ran (last elems)]
-         [dom (take elems (- n 1))])
-    (when (and (list? dom) (= (length dom) 1) (null? (car dom)))
-      (set! dom '()))
-    ; (printf "doing a-arrow ~s -> ~s\n" dom ran)
-  `(span () ,@dom " -> " ,ran)))
+(define (a-arrow . typs)
+  ; (printf "*** doing a-arrow of ~s\n" typs)
+  (set! typs
+    (map (λ (typ) (if (null? typ) "()" typ)) typs))
+  (when (= (length typs) 1)
+    (set! typs (cons "()" typs)))
+  (let ([res
+          `(span () ,@(add-between typs ", " #:before-last " -> "))])
+    ; (printf "*** a-arrow produced ~s\n" res)
+    res))
 
 (define (a-app base typs . ign-for-now)
   ; (printf "doing a-app ~s ~s\n" base typs)
@@ -214,6 +207,7 @@
 (define B "Boolean")
 
 (define (L-of typ) (a-app "List" typ))
+(define (A-of typ) (a-app "Array" typ))
 (define (O-of typ) (a-app "Option" typ))
 
 (define eq "EqualityResult")
@@ -244,3 +238,11 @@
              (span () "(" ,(first (first args)) " :: " ,(first (third (first args))) ")")
              " -> " ,typename)
         ,@elems))
+
+(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]
+                    #:args [args "args"] #:return [return "return"]
+                    data-name var-name name
+                    . elems)
+  (unless contract (set! contract "contract"))
+  `(div () (tt () ,(string-append "." name) " :: " ,contract))
+  )
