@@ -22,6 +22,8 @@
       builtin/numbers.html
       builtin/strings.html
       builtin/booleans.html
+      trove/option.html
+      trove/either.html
       trove/pick.html
       trove/lists.html
       trove/sets.html
@@ -33,6 +35,8 @@
       trove/color.html
       trove/image.html
       builtin/reactors.html
+      trove/chart.html
+      trove/plot.html
       trove/statistics.html
       trove/math.html
       trove/matrices.html
