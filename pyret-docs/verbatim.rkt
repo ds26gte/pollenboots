@@ -26,6 +26,52 @@
 
 (define pyret-block verbatim)
 
+(define (data-spec name . elems)
+  ; (printf "*** data-spec ~s ~s \n" name elems)
+  `(div ()
+        (pre () "data-spec")
+        ,@elems))
+
+(define (variants . elems)
+  `(div ()
+        ,@elems))
+
+(define (shared . elems)
+  `(div ()
+        ,@elems))
+
+(define (constr-spec name . elems)
+  `(div ()
+        (pre () ,name)
+        ,@elems))
+
+(define (members . elems)
+  `(div ()
+        ,@elems))
+
+(define (with-members . elems)
+  `(div ()
+        ,@elems))
+
+(define (member-spec #:type [type #f] #:contract [contract #f] fname . elems)
+  `(div ()
+        (pre () ,fname)
+        ,@elems))
+
+; (define (data-spec name type-vars variants shared)
+;   ; (printf "*** data-spec ~s ~s ~s \n" name type-varss variants  shared )
+;   `(pre () (tt () ,(format "~a~a:"
+;                     name
+;                     (if deps (format "<~a>" (add-between deps ", ")) "")))
+;           "\n"
+;           (div ()
+;                 ,@(add-between
+;                     (map
+;                       (λ (clause)
+;                         `(tt () "   | " ,clause))
+;                       clauses) "\n"))
+;           (tt () "end")))
+
 (define (data-spec2 name deps clauses)
   ; (printf "doing data-spec3 ~s ~s ~s\n" name deps clauses)
   `(pre () (tt () ,(format "~a~a:"
