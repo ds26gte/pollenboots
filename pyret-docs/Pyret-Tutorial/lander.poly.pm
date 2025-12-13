@@ -2,8 +2,8 @@
 
 ◊(define (version  t)
    (section (string-append "Version: " t)))
-◊;
-◊; ◊require{lib.rkt}
+
+◊require{lib.rkt}
 
 ◊title{Tutorial: A Flight Lander Game}
 

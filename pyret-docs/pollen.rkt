@@ -23,15 +23,15 @@
 
 ; (printf "## processing ~s\n" here)
 
-(provide (all-defined-out))
+(provide [all-defined-out])
 
-(provide (all-from-out "utils.rkt"
+(provide [all-from-out "utils.rkt"
                        "nice-paragraphs.rkt"
                        "common-tags.rkt"
                        "verbatim.rkt"
                        "toc.rkt"
                        "make-glossary.rkt"
-                       "make-xref.rkt"))
+                       "make-xref.rkt"])
 
 (define (root . elts)
   (let* ([doc `(root ,@elts)]
