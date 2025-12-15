@@ -176,6 +176,8 @@
 (define (a-arrow . typs)
   ; (printf "*** doing a-arrow of ~s\n" typs)
   (set! typs
+    (filter (λ (typ) (not (equal? typ "Brand"))) typs))
+  (set! typs
     (map (λ (typ) (if (null? typ) "()" typ)) typs))
   (when (= (length typs) 1)
     (set! typs (cons "()" typs)))
@@ -195,8 +197,6 @@
 
 (define (a-id x . ign) x)
 
-; (define (a-arrow from to)
-;   `(span () ,from " -> " ,to))
 
 (define A "Any")
 (define N "Number")
@@ -246,3 +246,27 @@
   (unless contract (set! contract "contract"))
   `(div () (tt () ,(string-append "." name) " :: " ,contract))
   )
+
+(define (method-spec #:params [params #f] #:contract [contract #f] #:return [return #f]
+                     #:doc [doc #f]
+                     #:args [args #f] #:alt-docstrings [alt-docstrings #f]
+                     #:examples [examples '()] name . elems)
+  ; (printf "*** method-spec ~s ~s\n" name elems)
+  `(div () (tt () ,(string-append "." name)) ,@elems))
+
+(define (repl-examples . elems)
+  ; (printf "*** repl-examples ~s\n" elems)
+  `(div ()
+        ,@(map (λ (elem)
+                 `(div ()
+                      (pre () (caar elem))
+                      ,(cadr elem)))
+               elems)))
+
+(define (colorful-function-series)
+  ; (printf "*** colorful-function-series\n")
+  `(pre () "colorful-function-series"))
+
+(define (a-chart-window)
+  ; (printf "*** a-chart-window\n")
+  `(pre () "a-chart-window"))
