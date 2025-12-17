@@ -73,6 +73,12 @@
        ,(apply title #:tag tag #:friendly-title friendly-title '())
        ,@body))
 
+(define (itemlist . elems)
+  `(ul () ,@elems))
+
+(define (item . elems)
+  `(li () ,@elems))
+
 (define ul
   (default-tag-function 'ul #:class "list-group"))
 

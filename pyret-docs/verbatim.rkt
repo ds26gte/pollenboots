@@ -73,10 +73,11 @@
 ;           (tt () "end")))
 
 (define (data-spec2 name deps clauses)
-  ; (printf "doing data-spec3 ~s ~s ~s\n" name deps clauses)
-  `(pre () (tt () ,(format "~a~a:"
+  ; (printf "doing data-spec2 ~s ~s ~s\n" name deps clauses)
+  `(pre ([class "pyret-display"])
+        (span () ,(format "data ~a~a:"
                     name
-                    (if deps (format "<~a>" (add-between deps ", ")) "")))
+                    (if (and deps (cons? deps)) (format "<~a>" (add-between deps ", ")) "")))
           "\n"
           (div ()
                 ,@(add-between
