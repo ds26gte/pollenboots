@@ -78,6 +78,10 @@
          (a ([name ,item-sluggified]))
          (gloss-1 ,item-alpha ,item-sluggified ,item-typeset)))
 
+; (define (in-link item)
+;   (printf "*** in-link ~s\n" item)
+;   `(xxref-1 () ,item))
+
 ;true globals
 
 (define *project-root* (current-project-root))

@@ -189,14 +189,17 @@
 (define (a-app base typs . ign-for-now)
   ; (printf "doing a-app ~s ~s\n" base typs)
   (when (list? typs)
-    (set! typs (string-join typs ", ")))
-  (string-append base "<" typs ">"))
+    (unless (and (>= (length typs) 1)
+                 (eq? (first typs) 'span))
+      (set! typs `(span () ,@(add-between typs ", ")))))
+  (let ([x `(span () ,base "<" ,typs ">")])
+    ; (printf "a-app ~s ~s ==> ~s\n" base typs x)
+    x))
 
 (define (a-tuple . ign-for-now)
   "a-tuple")
 
 (define (a-id x . ign) x)
-
 
 (define A "Any")
 (define N "Number")

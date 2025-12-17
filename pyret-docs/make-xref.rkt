@@ -13,6 +13,10 @@
         [(list? tag-prefixes) `(seclink-1 ([tag-prefixes ,(car tag-prefixes)]) ,@elems)]
         [else `(seclink-1 ([tag-prefixes ,tag-prefixes]) ,@elems)]))
 
+(define (xxref attribs . elems)
+  (let ([item (first elems)])
+    `(xxref-1 () ,item)))
+
 (define (xref-handler doc)
 
   (define here-path-from-project-root (calc-here-path-from-project-root))
@@ -55,7 +59,8 @@
     ; (printf "doing replace-secrefs ~s\n" tx)
     (define this-tag (get-tag tx))
     (case this-tag
-      [(secref seclink-1)
+      [(secref seclink-1 ;xxref-1
+               )
        (define this-tag-elems (get-elements tx))
        (define num-this-tag-elems (length this-tag-elems))
        (let* ([name (first this-tag-elems)]
