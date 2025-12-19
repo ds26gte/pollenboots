@@ -17,6 +17,8 @@ ul.toclist {
 }
 
 .pyret-display {
+  border-top: 0.055em solid black;
+  font-style: monospace;
   background-color: #f2f2f2;
 }
 
@@ -109,4 +111,9 @@ ul.toclist {
   position: relative;
   width: 2em;
   height: 2em;
+}
+
+.insetpara {
+  margin-left: 1em;
+  margin-right: 1em;
 }

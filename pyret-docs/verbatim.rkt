@@ -73,11 +73,13 @@
 ;           (tt () "end")))
 
 (define (data-spec2 name deps clauses)
-  ; (printf "doing data-spec2 ~s ~s ~s\n" name deps clauses)
+  ; (printf "*** doing data-spec2 ~s deps=~s ~s\n" name deps clauses)
   `(pre ([class "pyret-display"])
         (span () ,(format "data ~a~a:"
                     name
-                    (if (and deps (cons? deps)) (format "<~a>" (add-between deps ", ")) "")))
+                    (if (and deps (cons? deps))
+                        (format "<~a>" (apply string-append (add-between deps ", ")))
+                        "")))
           "\n"
           (div ()
                 ,@(add-between
@@ -91,13 +93,20 @@
   `(span () "| " ,name))
 
 (define (constructor-spec cname name args)
-  `(span () ,name
-         "(" ,@(add-between
-                 (map (λ (arg) `(span () ,(first arg) " :: "
-                                         ,(second (third arg))))
-                      args)
-                 ", ")
-         ")"))
+  ; (printf "*** constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)
+  (let ([x
+          `(span () ,name
+                 "(" ,@(add-between
+                         (map (λ (arg)
+                                (define fname (first arg))
+                                (define contract (second (third arg)))
+                                ; (printf "fname= ~s contract= ~s\n" fname contract)
+                                `(span () ,fname " :: " ,contract))
+                              args)
+                         ", ")
+                 ")")])
+    ; (printf "*** x= ~s\n" x)
+    x))
 
 (define (function #:contract [contract ""] #:args [args #f]
                   #:return [return "return"]

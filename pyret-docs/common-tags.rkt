@@ -85,8 +85,10 @@
 (define li
   (default-tag-function 'li #:class "list-group-item"))
 
-(define (nested #:style [style ""] . elems)
-  `(p () ,@elems))
+(define (nested #:style [style #f] . elems)
+  (define attribs
+    (if style `([class "insetpara"]) `()))
+  `(div ,attribs ,@elems))
 
 (define (para #:style [style #f]. elems)
   (define attribs
@@ -192,12 +194,16 @@
     ; (printf "*** a-arrow produced ~s\n" res)
     res))
 
-(define (a-app base typs . ign-for-now)
-  ; (printf "doing a-app ~s ~s\n" base typs)
-  (when (list? typs)
-    (unless (and (>= (length typs) 1)
-                 (eq? (first typs) 'span))
-      (set! typs `(span () ,@(add-between typs ", ")))))
+(define (a-app base . typs)
+  ; (printf "doing a-app base= ~s typs= ~s\n" base typs )
+  (set! typs (map (λ (typ)
+                    (if (list? typ)
+                        (if (and (> (length typ) 1) (eq? (first typ) 'span))
+                            typ
+                            `(span () ,@(add-between typ ", ")))
+                        typ)) typs))
+  ; (printf "*** typs is now ~s\n" typs)
+  (set! typs `(span () ,@(add-between typs ", ")))
   (let ([x `(span () ,base "<" ,typs ">")])
     ; (printf "a-app ~s ~s ==> ~s\n" base typs x)
     x))
@@ -218,6 +224,7 @@
 (define (L-of typ) (a-app "List" typ))
 (define (A-of typ) (a-app "Array" typ))
 (define (O-of typ) (a-app "Option" typ))
+(define (E-of typ1 typ2) (a-app "Either" typ1 typ2))
 
 (define eq "EqualityResult")
 (define eqfun `(a-arrow ,A ,A ,B))
@@ -239,21 +246,24 @@
         ,@elems))
 
 (define (constructor-doc #:private [private #f] typename1 fieldname args typename . elems)
-  ; (printf "constructor-doc args = ~s\n" args)
+  ; (printf "constructor-doc typename1= ~s fieldname= ~s args= ~s typename= ~s elems= ~s\n" typename1 fieldname args typename elems)
   `(div ()
         ,(make-gloss fieldname)
         (div ([class "pyret-display"])
              ,fieldname " :: "
-             (span () "(" ,(first (first args)) " :: " ,(first (third (first args))) ")")
+             (span () "(" ,(first (first args)) " :: " ,(second (third (first args))) ")")
              " -> " ,typename)
-        ,@elems))
+        ,@elems
+        (p) ;make-gloss seems to insert p on top, so match it with one on bottom
+        ))
 
 (define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]
                     #:args [args "args"] #:return [return "return"]
                     data-name var-name name
                     . elems)
+  ; (printf "*** method-doc\n")
   (unless contract (set! contract "contract"))
-  `(div () (tt () ,(string-append "." name) " :: " ,contract))
+  `(div ([class "pyret-display"]) (tt () ,(string-append "." name) " :: " ,contract))
   )
 
 (define (method-spec #:params [params #f] #:contract [contract #f] #:return [return #f]
