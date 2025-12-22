@@ -2,6 +2,18 @@
 
 Goal: Controlling https://getbootstrap.com[Bootstrap Web Framework] elements from Pollen.
 
+
+== Pyret doc
+
+The WIP Pollen version of the pyret documentation is in this
+repo's link:./pyret-docs[] subdirectory.
+
+(To browse directly in GitHub:
+https://github.com/ds26gte/pollenboots/tree/main/pyret-docs).
+
+The rendered version of the Pollenized Pyret doc is at
+https://ds26gte.github.io/attic/pyret-docs.
+
 == How
 
 Ensure you have the Pollen package installed in your Racket.
