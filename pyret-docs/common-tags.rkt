@@ -88,7 +88,7 @@
 (define (nested #:style [style #f] . elems)
   (define attribs
     (if style `([class "insetpara"]) `()))
-  `(div ,attribs ,@elems))
+  `(p ,attribs ,@elems))
 
 (define (para #:style [style #f]. elems)
   (define attribs
