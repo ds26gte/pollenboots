@@ -134,7 +134,7 @@
                                                            (let ([n (length contract)])
                                                              (let ([res
                                                                      (if (>= n 3)
-                                                                         `(span () ,arg " -> " ,(third contract))
+                                                                         `(span () ,arg " :: " ,(third contract))
                                                                          `(span () "() -> " ,(second contract)))])
                                                                ; (printf "done V\n")
                                                                res

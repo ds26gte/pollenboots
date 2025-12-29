@@ -17,8 +17,8 @@
   ◊singleton-doc["Pick" "pick-none" (P-of "a" "b")]
   ◊constructor-doc["Pick" "pick-some" s-pick-args (P-of "a" "b")]
 
-  ◊function["is-pick-none" #:alt-docstrings ""]
-  ◊function["is-pick-some" #:alt-docstrings ""]
+  ◊function["is-pick-none" #:contract (a-arrow (p-a-var-type "val" A) B)]
+  ◊function["is-pick-some" #:contract (a-arrow (p-a-var-type "val" A) B)]
   }
   
 The primary use of ◊pyret{pick} is as a way of obtaining values from sets.

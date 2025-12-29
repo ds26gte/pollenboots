@@ -111,6 +111,13 @@
                         . ign-for-now)
   "collection-doc")
 
+
+(define (collection-doc-2 name #:contract [contract ""] #:return [return ""])
+  `(pre ([class "pyret-display"])
+        "[" ,name ": " ,contract ", ...] -> "
+        ,return))
+
+
 (define (ignore . ign) "")
 
 (define (doc-internal #:stack-unsafe [stack-unsafe #f] . elems)
@@ -128,6 +135,8 @@
          ,@elems))
 
 (define note margin-note*)
+
+(define margin-note margin-note*)
 
 (define (cpo-only . elems)
   `(div ([class "CPO"]) (div ([class "cpo-icon"]) ,@elems)))
@@ -177,9 +186,20 @@
                         ">"))
       (set! body (cons tyvars body)))
   `(div ()
-        (div ([class "pyret-display"]) ,type-name)
+        (pre ([class "pyret-display"]) ,type-name)
         ,(make-gloss type-name)
         ,@body))
+
+(define (a-ftype . typs)
+  (let ([arg-typs (drop-right typs 1)]
+        [ret-typ (car (take-right typs 1))])
+    (cond [ (> (length arg-typs) 1)
+           `(span () "(" (span () ,@(add-between arg-typs ", ")) ") -> "
+                  ,ret-typ)]
+          [else `(span () (span () ,@(add-between arg-typs ", ")) " -> " ,ret-typ)])))
+
+(define (p-a-ftype . typs)
+  `(span () "(" ,(apply a-ftype typs) ")"))
 
 (define (a-arrow . typs)
   ; (printf "*** doing a-arrow of ~s\n" typs)
@@ -208,8 +228,8 @@
     ; (printf "a-app ~s ~s ==> ~s\n" base typs x)
     x))
 
-(define (a-tuple . ign-for-now)
-  "a-tuple")
+(define (a-tuple . fields)
+  `(span () "{" ,@(add-between fields ", ") "}"))
 
 (define (a-id x . ign) x)
 
@@ -242,7 +262,7 @@
 (define (singleton-doc typename1 fieldname typename . elems)
   `(div ()
         ,(make-gloss fieldname)
-        (div ([class "pyret-display"]) ,fieldname " :: " ,typename)
+        (pre ([class "pyret-display"]) ,fieldname " :: " ,typename)
         ,@elems))
 
 (define (a-var-type val typ)
@@ -253,15 +273,21 @@
 
 (define (constructor-doc #:private [private #f] typename1 fieldname args typename . elems)
   ; (printf "constructor-doc typename1= ~s fieldname= ~s args= ~s typename= ~s elems= ~s\n" typename1 fieldname args typename elems)
-  `(div ()
-        ,(make-gloss fieldname)
-        (div ([class "pyret-display"])
-             ,fieldname " :: "
-             (span () "(" ,(first (first args)) " :: " ,(second (third (first args))) ")")
-             " -> " ,typename)
-        ,@elems
-        (p) ;make-gloss seems to insert p on top, so match it with one on bottom
-        ))
+  (let ([x
+          `(div ()
+                ,(make-gloss fieldname)
+                (pre ([class "pyret-display"])
+                     ,fieldname " :: ("
+                     ,@(add-between
+                         (map (lambda (arg)
+                                `(span () ,(first arg) " :: " ,(second (third arg))))
+                              args) ", ")
+                     ") -> " ,typename)
+                ,@elems
+                (p) ;make-gloss seems to insert p on top, so match it with one on bottom
+                )])
+    ; (printf "x = ~s\n" x)
+    x))
 
 (define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract #f]
                     #:args [args "args"] #:return [return "return"]
@@ -295,3 +321,4 @@
 (define (a-chart-window)
   ; (printf "*** a-chart-window\n")
   `(pre () "a-chart-window"))
+
