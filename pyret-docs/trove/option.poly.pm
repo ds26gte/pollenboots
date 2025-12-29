@@ -16,8 +16,8 @@
   ◊singleton-doc["Option" "none" (O-of "a")]
   ◊constructor-doc["Option" "some" s-some-args (O-of "a")]
 
-  ◊function["is-none" #:alt-docstrings ""]
-  ◊function["is-some" #:alt-docstrings ""]
+  ◊function["is-none" #:contract (a-arrow (p-a-var-type "val" A) B)]
+  ◊function["is-some" #:contract (a-arrow (p-a-var-type "val" A) B)]
   }
 
 ◊pyret{Option} implements a functional programming idiom that is often used
@@ -81,7 +81,8 @@ end
 }
 
 ◊section{Option Methods}
-  ◊method-doc["Option" "some" "and-then" #:alt-docstrings ""]
+  ◊method-doc["Option" "some" "and-then"
+     #:contract (a-arrow (p-a-var-type "f" (p-a-var-type "a" "b")) (O-of "b")) ]
 
   For ◊pyret-id{none}, returns ◊pyret-id{none}.  For ◊pyret-id{some}, applies
   ◊pyret{f} to the ◊pyret{value} field and returns a new ◊pyret-id{some} with the
@@ -97,7 +98,8 @@ check:
 end
 }
 
-  ◊method-doc["Option" "some" "or-else" #:alt-docstrings ""]
+  ◊method-doc["Option" "some" "or-else"
+    #:contract (a-arrow (p-a-var-type "v" "a") "a") ]
 
   For ◊pyret-id{none}, returns ◊pyret{v}.  For ◊pyret-id{some}, returns the
   ◊pyret{value} field.  Useful for providing default values.
@@ -113,7 +115,7 @@ end
 }
 
 Therefore, our example above of ◊tt{set-angle}, which defaults to ◊tt{0}, could be
-writen this way:
+written this way:
 
 ◊examples{
 fun set-angle(s :: String) -> Number:

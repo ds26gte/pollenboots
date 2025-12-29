@@ -87,8 +87,8 @@
 
 (define (nested #:style [style #f] . elems)
   (define attribs
-    (if style `([class "insetpara"]) `()))
-  `(p ,attribs ,@elems))
+    (if style `([class "insetpara nested"]) `([class "nested"])))
+  `(div ,attribs ,@elems))
 
 (define (para #:style [style #f]. elems)
   (define attribs
@@ -245,6 +245,12 @@
         (div ([class "pyret-display"]) ,fieldname " :: " ,typename)
         ,@elems))
 
+(define (a-var-type val typ)
+  `(span ([class "pyret-display"]) ,val " :: " ,typ))
+
+(define (p-a-var-type val typ)
+  `(span ([class "pyret-display"]) "(" ,val " :: " ,typ ")"))
+
 (define (constructor-doc #:private [private #f] typename1 fieldname args typename . elems)
   ; (printf "constructor-doc typename1= ~s fieldname= ~s args= ~s typename= ~s elems= ~s\n" typename1 fieldname args typename elems)
   `(div ()
@@ -257,7 +263,7 @@
         (p) ;make-gloss seems to insert p on top, so match it with one on bottom
         ))
 
-(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract "contract"]
+(define (method-doc #:alt-docstrings [alt-docstrings #f] #:contract [contract #f]
                     #:args [args "args"] #:return [return "return"]
                     data-name var-name name
                     . elems)

@@ -11,11 +11,14 @@
 (define (examples #:show-try-it [show-try-it #f] . elems)
   (if show-try-it
       `(div ()
+            (p () (b () "Examples:"))
             (pre () ,@elems)
             (a ([class "show-embed"]
                 [code ,(string-join elems " ")])
                "(Try it!)"))
-      `(pre () ,@elems)))
+      `(div ()
+            (p () (b () "Examples:"))
+            (pre () ,@elems))))
 
 (define (verbatim #:style [style "nothing_special"] #:show-try-it [show-try-it #f] . elems)
   ; (printf "@@@ doing verbatim ~s\n" elems)
@@ -77,11 +80,12 @@
   `(pre ([class "pyret-display"])
         (span () ,(format "data ~a~a:"
                     name
+                    ; (make-gloss name)
                     (if (and deps (cons? deps))
                         (format "<~a>" (apply string-append (add-between deps ", ")))
                         "")))
           "\n"
-          (div ()
+         (div ()
                 ,@(add-between
                     (map
                       (λ (clause)
@@ -90,7 +94,7 @@
           (tt () "end")))
 
 (define (singleton-spec2 cname name)
-  `(span () "| " ,name))
+  `(span () ,name))
 
 (define (constructor-spec cname name args)
   ; (printf "*** constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)

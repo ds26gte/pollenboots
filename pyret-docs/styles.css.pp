@@ -113,6 +113,11 @@ ul.toclist {
   height: 2em;
 }
 
+.nested {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 .insetpara {
   margin-left: 1em;
   margin-right: 1em;
