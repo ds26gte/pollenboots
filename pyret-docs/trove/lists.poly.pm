@@ -25,9 +25,9 @@
   ◊constructor-doc["List" "link" (list `("first" ("type" "normal") ("contract" ,(a-id "a"))) `("rest" ("type" "normal") ("contract" ,(L-of "a")))) (L-of "a")]{
   }
 
-  ◊function["is-empty" #:contract (a-arrow (p-a-var-type "val" A) B)]
+  ◊function["is-empty" #:contract (a-ftype (p-a-var-type "val" A) B)]
 
-  ◊function["is-link" #:contract (a-arrow (p-a-var-type "val" A) B)]
+  ◊function["is-link" #:contract (a-ftype (p-a-var-type "val" A) B)]
 
 A ◊pyret{List} is an immutable, fixed-length collection indexed by
 non-negative integers.
@@ -76,7 +76,7 @@ end
 
 ◊section{List Creation Functions}
 
-◊collection-doc-2["list" #:contract (a-var-type "elt" "a") #:return (L-of "a")]
+◊collection-doc-2["list" #:args (a-var-type "elt" "a") #:return (L-of "a")]
 
 ◊margin-note{This illustrates the underlying structure created when
 you define a ◊pyret{List} with ◊pyret{[list: ...]}}
@@ -110,7 +110,7 @@ end
 }
 
 ◊function["build-list"
-  #:contract (a-ftype (a-var-type "f" (a-arrow N "a"))
+  #:contract (a-ftype (a-var-type "f" (a-ftype N "a"))
                       (a-var-type "size" N)
                       (L-of "a") )
 ]
@@ -149,7 +149,7 @@ end
 
 These methods are available on all ◊pyret{List}s whether empty or a link.
 
-◊list-method["length" #:contract (a-arrow N)]
+◊list-method["length" #:contract (a-ftype N)]
 
 Returns the number of elements in the ◊pyret{List}.
 
@@ -164,7 +164,7 @@ end
 }
 
 ◊list-method["map"
-  #:contract (a-arrow (p-a-var-type "f" (p-a-ftype "a" "b")) (L-of "b")) ]
+  #:contract (a-ftype (p-a-var-type "f" (p-a-ftype "a" "b")) (L-of "b")) ]
 
 
 Applies function ◊pyret{f} to each element of the list from left to right, and
@@ -283,7 +283,7 @@ end
 }
 
 ◊list-method["take"
- #:contract (a-arrow (p-a-var-type "n" N) (L-of "a"))]
+ #:contract (a-ftype (p-a-var-type "n" N) (L-of "a"))]
 Given a length ◊tt{n}, returns a new ◊pyret{List} containing the first
 ◊tt{n} items of the ◊pyret{List}.
 
@@ -299,7 +299,7 @@ end
 }
 
 ◊list-method["drop"
- #:contract (a-arrow (p-a-var-type "n" N) (L-of "a"))]
+ #:contract (a-ftype (p-a-var-type "n" N) (L-of "a"))]
 ]
 Given a length ◊tt{n}, returns a ◊pyret{List} containing all but the first ◊tt{n} items of the ◊pyret{List}.
 
@@ -312,7 +312,7 @@ end
 }
 
 ◊list-method["get"
-  #:contract (a-arrow (p-a-var-type "n" N) "a")
+  #:contract (a-ftype (p-a-var-type "n" N) "a")
 ]
 Returns the ◊tt{n}th element of the given ◊pyret{List}.
 
@@ -400,7 +400,7 @@ end
 }
 
 ◊list-method["member"
-  #:contract (a-arrow (p-a-var-type "elt" "a") B)]
+  #:contract (a-ftype (p-a-var-type "elt" "a") B)]
 ◊margin-note{Passing a ◊pyret{Roughnum} as an argument will raise
 an error.}
 Returns true if the current ◊pyret{List} contains the given value, as compared
@@ -425,7 +425,7 @@ end
 }
 
 ◊list-method["append"
-  #:contract (a-arrow (p-a-var-type "other" (L-of "a")) (L-of "a"))
+  #:contract (a-ftype (p-a-var-type "other" (L-of "a")) (L-of "a"))
 ]
 Produces a new ◊pyret{List} with all the elements of the current ◊pyret{List},
 followed by all the elements of the ◊tt{other} ◊pyret{List}.
@@ -441,7 +441,7 @@ end
 }
 
 ◊list-method["last"
-  #:contract (a-arrow "a")
+  #:contract (a-ftype "a")
 ]
 Returns the last item of the ◊pyret{List}.
 ◊examples[#:show-try-it #t]{
@@ -454,7 +454,7 @@ end
 }
 
 ◊list-method["reverse"
-  #:contract (a-arrow (L-of "a"))
+  #:contract (a-ftype (L-of "a"))
 ]
 Produces a new ◊pyret{List} with the items of the original ◊pyret{List} in reversed order.
 ◊examples[#:show-try-it #t]{
@@ -467,7 +467,7 @@ end
 }
 
 ◊list-method["sort"
-  #:contract (a-arrow (L-of "a"))
+  #:contract (a-ftype (L-of "a"))
 ]
 Produces a new ◊pyret{List} whose contents are the same as those of the
 current ◊pyret{List}, sorted by ◊pyret-id["<" "equality"] and
@@ -512,7 +512,7 @@ end
 }
 
 ◊list-method["join-str"
-#:contract (a-arrow (p-a-var-type "sep" S) S)
+#:contract (a-ftype (p-a-var-type "sep" S) S)
 ]
 Combines the values of the current ◊pyret{List} by converting them to strings
 with ◊pyret{tostring} and joining them with the given separator ◊pyret{sep}.
@@ -556,7 +556,7 @@ end
   ◊pyret{import}ed, as indicated in the examples.
 
   ◊function["length"
-    #:contract (a-arrow (p-a-var-type "lst" (L-of "a")) N)
+    #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) N)
   ]{
 
   Returns the number of elements in the ◊pyret{List}.
@@ -610,7 +610,7 @@ end
     }
 
 ◊function["sort"
-  #:contract (a-arrow (L-of "A") (L-of "A"))
+  #:contract (a-ftype (L-of "A") (L-of "A"))
   #:args '(("lst" #f))
   #:return (L-of "A")]{
 Produces a new ◊pyret{List} whose contents are the same as those of the
@@ -629,7 +629,7 @@ end
 }
 
 ◊function["sort-by"
-  #:contract (a-arrow (L-of "A") (a-arrow "A" "A" (a-id "Boolean" (xref "<global>" "Boolean"))) (a-arrow "A" "A" (a-id "Boolean" (xref "<global>" "Boolean"))) (L-of "A"))
+  #:contract (a-ftype (L-of "A") (a-ftype "A" "A" (a-id "Boolean" (xref "<global>" "Boolean"))) (a-ftype "A" "A" (a-id "Boolean" (xref "<global>" "Boolean"))) (L-of "A"))
   #:args '(("lst" #f) ("cmp" #f) ("eq" #f))
   #:return (L-of "A")]{
 Like ◊pyret-id{sort}, but the comparison and equality operators can be
@@ -712,7 +712,7 @@ end
     }
 
   ◊function["distinct"
-    #:contract (a-arrow (p-a-var-type "lst" (L-of "a")) (L-of "a"))
+    #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) (L-of "a"))
   ]{
 
   Given a ◊pyret{List}, returns a new ◊pyret{List} containing only one copy of each element
@@ -823,7 +823,7 @@ end
     }
 
   ◊function["last"
-    #:contract (a-arrow (a-var-type "lst" (L-of "A")) "A")
+    #:contract (a-ftype (a-var-type "lst" (L-of "A")) "A")
     #:return "A"
     #:args '(("lst" #f))]{
 
@@ -843,7 +843,7 @@ end
   }
 
 ◊function["push"
-#:contract (a-arrow (a-var-type "l" (L-of "A")) (a-var-type "elt" "A") (L-of "A"))
+#:contract (a-ftype (a-var-type "l" (L-of "A")) (a-var-type "elt" "A") (L-of "A"))
 #:args '(("l" #f) ("elt" #f))
 #:return (L-of "A")]{
 Constructs a list with the given element prepended to the front of the given
@@ -859,7 +859,7 @@ end
 }
 
   ◊function["append"
-    #:contract (a-arrow (a-var-type "front" (L-of "A")) (a-var-type "back" (L-of "A")) (L-of "A"))
+    #:contract (a-ftype (a-var-type "front" (L-of "A")) (a-var-type "back" (L-of "A")) (L-of "A"))
     #:return (L-of "A")
     #:args '(("front" #f) ("back" #f))]{
 

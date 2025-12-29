@@ -112,11 +112,10 @@
   "collection-doc")
 
 
-(define (collection-doc-2 name #:contract [contract ""] #:return [return ""])
+(define (collection-doc-2 name #:args [args ""] #:return [return ""])
   `(pre ([class "pyret-display"])
-        "[" ,name ": " ,contract ", ...] -> "
+        "[" ,name ": " ,args ", ...] -> "
         ,return))
-
 
 (define (ignore . ign) "")
 
@@ -191,9 +190,12 @@
         ,@body))
 
 (define (a-ftype . typs)
-  (let ([arg-typs (drop-right typs 1)]
-        [ret-typ (car (take-right typs 1))])
-    (cond [ (> (length arg-typs) 1)
+  (let* ([arg-typs (drop-right typs 1)]
+        [ret-typ (car (take-right typs 1))]
+        [length-args (length arg-typs)])
+    (cond [(= length-args 0)
+           `(span () "() -> " ,ret-typ)]
+          [(> length-args 1)
            `(span () "(" (span () ,@(add-between arg-typs ", ")) ") -> "
                   ,ret-typ)]
           [else `(span () (span () ,@(add-between arg-typs ", ")) " -> " ,ret-typ)])))
@@ -242,9 +244,11 @@
 (define B "Boolean")
 
 (define (L-of typ) (a-app "List" typ))
+(define (S-of typ) (a-app "Set" typ))
 (define (A-of typ) (a-app "Array" typ))
 (define (O-of typ) (a-app "Option" typ))
 (define (E-of typ1 typ2) (a-app "Either" typ1 typ2))
+(define (P-of typ1 typ2) (a-app "Pick" typ1 typ2))
 
 (define eq "EqualityResult")
 (define eqfun `(a-arrow ,A ,A ,B))
