@@ -103,14 +103,14 @@
 (define (image #:scale [scale 1] file)
   `(img ([src ,file])))
 
-(define (pyret-method . ign-for-now)
-  "pyret-method")
+(define (pyret-method ign1 x . z)
+  (define name (if (null? z) x (car z)))
+  `(tt () ,(string-append "." name)))
 
 (define (collection-doc #:contract [contract #f]
                         #:show-ellipses [show-ellipses #f]
                         . ign-for-now)
   "collection-doc")
-
 
 (define (collection-doc-2 name #:args [args ""] #:return [return ""])
   `(pre ([class "pyret-display"])
@@ -179,10 +179,11 @@
 (define (type-spec #:alias [alias #f] type-name tyvars . body)
   ; (printf "### type-spec ~s ~s ~s\n" type-name tyvars body)
   (if (list? tyvars)
-      (set! type-name (string-append type-name
-                        "<"
-                        (apply string-append (add-between tyvars ", "))
-                        ">"))
+      (when (cons? tyvars)
+        (set! type-name (string-append type-name
+                          "<"
+                          (apply string-append (add-between tyvars ", "))
+                          ">")))
       (set! body (cons tyvars body)))
   `(div ()
         (pre ([class "pyret-display"]) ,type-name)
@@ -325,4 +326,3 @@
 (define (a-chart-window)
   ; (printf "*** a-chart-window\n")
   `(pre () "a-chart-window"))
-
