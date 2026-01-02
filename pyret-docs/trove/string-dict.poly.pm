@@ -35,7 +35,7 @@ functions below.
 }
 ◊section{StringDict Constructor}
 
-◊collection-doc["string-dict" #:contract `(a-arrow ("key" ,S) ("elt" "a") ,(SD-of "a"))]
+◊collection-doc-2["string-dict" #:args (list (a-var-type "key" S) (a-var-type "elt" "a")) #:return (SD-of "a")]
 
 Creates a string-dict with the given ◊pyret{elt}s.
 
@@ -46,7 +46,7 @@ Creates a string-dict with the given ◊pyret{elt}s.
 ◊section{StringDict Methods}
 
 ◊sd-method["get"
-  #:contract (a-arrow (SD-of "a") S (O-of "a"))
+  #:contract (a-arrow (p-a-var-type "key" S) (O-of "a"))
   #:args (list (list "self" #f) (list "key" #f))
   #:return (O-of "a")
 ]
@@ -63,7 +63,7 @@ end
 }
 
 ◊sd-method["get-value"
-  #:contract (a-arrow (SD-of "a") S "a")
+  #:contract (a-arrow (p-a-var-type "key" S) "a")
   #:args (list (list "self" #f) (list "key" #f))
   #:return "a"
 ]
@@ -79,7 +79,7 @@ end
 }
 
 ◊sd-method["set"
-  #:contract (a-arrow (SD-of "a") S "a" (SD-of "a"))
+  #:contract (a-ftype (a-var-type "key" S) (a-var-type "value" "a") (SD-of "a"))
   #:args (list (list "self" #f) (list "key" #f) (list "value" #f))
   #:return (SD-of "a")
 ]
@@ -110,7 +110,7 @@ end
 }
 
 ◊sd-method["has-key"
-  #:contract (a-arrow (SD-of "a") S B)
+  #:contract (a-ftype (p-a-var-type "key" S) B)
   #:args (list (list "self" #f) (list "key" #f))
   #:return B
 ]
@@ -126,7 +126,7 @@ end
 }
 
 ◊sd-method["keys"
-  #:contract (a-arrow (SD-of "a") (S-of S))
+  #:contract (a-ftype (S-of S))
   #:args (list (list "self" #f))
   #:return (S-of S)
 ]
@@ -142,7 +142,7 @@ end
 }
 
 ◊sd-method["remove"
-  #:contract (a-arrow (SD-of "a") S (SD-of "a"))
+  #:contract (a-ftype (p-a-var-type "key" S) (SD-of "a"))
   #:args (list (list "self" #f) (list "key" #f))
   #:return (SD-of "a")
 ]
@@ -162,7 +162,7 @@ end
 }
 
 ◊sd-method["count"
-  #:contract (a-arrow (SD-of "a") N)
+  #:contract (a-ftype N)
   #:args (list (list "self" #f))
   #:return N
 ]
@@ -181,7 +181,7 @@ end
 }
 
 ◊sd-method["unfreeze"
-  #:contract (a-arrow (SD-of "a") (MSD-of "a"))
+  #:contract (a-ftype (MSD-of "a"))
   #:args (list (list "self" #f))
   #:return (MSD-of "a")
 ]
@@ -219,7 +219,7 @@ functions below.
 }
 ◊section{MutableStringDict Constructor}
 
-◊collection-doc["mutable-string-dict" #:contract `(a-arrow ("elt" "a") ,(MSD-of "a"))]
+◊collection-doc-2["mutable-string-dict" #:args (a-var-type "elt" "a") #:return (MSD-of "a")]
 
 Creates an mutable string-dict with the given ◊pyret{elt}s.
 
@@ -230,7 +230,7 @@ Creates an mutable string-dict with the given ◊pyret{elt}s.
 ◊section{MutableStringDict Methods}
 
 ◊msd-method["get-now"
-  #:contract (a-arrow (MSD-of "a") S (O-of "a"))
+  #:contract (a-arrow (p-a-var-type "key" S) (O-of "a"))
   #:args (list (list "self" #f) (list "key" #f))
   #:return (O-of "a")
 ]
@@ -247,7 +247,7 @@ end
 }
 
 ◊msd-method["get-value-now"
-  #:contract (a-arrow (MSD-of "a") S "a")
+  #:contract (a-arrow (p-a-var-type "key" S) "a")
   #:args (list (list "self" #f) (list "key" #f))
   #:return "a"
 ]
@@ -263,7 +263,7 @@ end
 }
 
 ◊msd-method["set-now"
-  #:contract (a-arrow (MSD-of "a") S "a" No)
+  #:contract (a-ftype (a-var-type "key" S) (a-var-type "value" "a") No)
   #:args (list (list "self" #f) (list "key" #f) (list "value" #f))
   #:return No
 ]
@@ -284,7 +284,7 @@ end
 }
 
 ◊msd-method["has-key-now"
-  #:contract (a-arrow (MSD-of "a") S B)
+  #:contract (a-arrow (p-a-var-type "key" S) B)
   #:args (list (list "self" #f) (list "key" #f))
   #:return B
 ]
@@ -300,7 +300,7 @@ end
 }
 
 ◊msd-method["keys-now"
-  #:contract (a-arrow (MSD-of "a") (S-of S))
+  #:contract (a-ftype (S-of S))
   #:args (list (list "self" #f))
   #:return (S-of S)
 ]
@@ -316,7 +316,7 @@ end
 }
 
 ◊msd-method["remove-now"
-  #:contract (a-arrow (MSD-of "a") S No)
+  #:contract (a-arrow  (p-a-var-type "key" S) No)
   #:args (list (list "self" #f) (list "key" #f))
   #:return No
 ]
@@ -336,7 +336,7 @@ end
 }
 
 ◊msd-method["count-now"
-  #:contract (a-arrow (MSD-of "a") N)
+  #:contract (a-ftype  N)
   #:args (list (list "self" #f))
   #:return N
 ]
@@ -355,7 +355,7 @@ end
 }
 
 ◊msd-method["freeze"
-  #:contract (a-arrow (MSD-of "a") (SD-of "a"))
+  #:contract (a-ftype  (SD-of "a"))
   #:args (list (list "self" #f))
   #:return (SD-of "a")
 ]
@@ -374,7 +374,7 @@ end
 }
 
 ◊msd-method["seal"
-  #:contract (a-arrow (MSD-of "a") (MSD-of "a"))
+  #:contract (a-ftype   (MSD-of "a"))
   #:args (list (list "self" #f))
   #:return (MSD-of "a")
 ]

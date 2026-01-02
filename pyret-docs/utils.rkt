@@ -25,8 +25,8 @@
 (define (change-tag tx from to)
   (define-values (tx1 _)
     (splitf-txexpr tx
-      (λ (tx) (and (txexpr? tx) (eq? (get-tag tx) from)))
-      (λ (tx) (txexpr to (get-attrs tx) (get-elements tx)))))
+      (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) from)))
+      (lambda (tx) (txexpr to (get-attrs tx) (get-elements tx)))))
   tx1)
 
 ; (define (tag=? tx tag)
@@ -36,14 +36,14 @@
   ; (printf "doing extract-tags ~s ~s\n" tx tags)
   (define-values (_ txs)
     (splitf-txexpr tx
-      (λ (tx) (and (txexpr? tx)
+      (lambda (tx) (and (txexpr? tx)
                    (member (get-tag tx) tags)))))
   txs)
 
 (define (remove-tag tx tag)
   (define-values (tx1 _)
     (splitf-txexpr tx
-      (λ (tx) (and (txexpr? tx) (eq? (get-tag tx) tag)))))
+      (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) tag)))))
   tx1)
 
 (define *distinguishing-part-of-containing-directory* "pyret-docs/")
@@ -51,6 +51,16 @@
 (define (from-project-root pname)
   (regexp-replace (format ".*~a" *distinguishing-part-of-containing-directory*)
                   pname ""))
+
+(define (to-project-root pname)
+  ; (printf "*** to-project-root ~s\n" pname)
+  (let ([x ""])
+    (let loop ([i (- (string-length pname) 1)])
+      (unless (< i 0)
+        (when (char=? (string-ref pname i) #\/)
+          (set! x (string-append x "../")))
+        (loop (- i 1))))
+    x))
 
 (define (point-to-project-root pname)
   (when (symbol? pname)
@@ -78,6 +88,10 @@
          (a ([name ,item-sluggified]))
          (gloss-1 ,item-alpha ,item-sluggified ,item-typeset)))
 
+(define (ref-gloss item-alpha item)
+  ; (printf "*** ref-gloss ~s ~s\n" item-alpha item)
+  `(ref-gloss-1 () ,item-alpha ,item))
+
 ; (define (in-link item)
 ;   (printf "*** in-link ~s\n" item)
 ;   `(xxref-1 () ,item))
@@ -102,16 +116,17 @@
   here-path-from-project-root)
 
 (define (write-globals)
+  ; (printf "*** write-globals\n")
   (define *saved-items* '(glossary xref))
   (call-with-output-file *globals-file*
-    (λ (o)
+    (lambda (o)
       (fprintf o "(\n")
       (for ([item *saved-items*])
         (define item-file (build-path *project-root* (format "_~a.rkt" item)))
         (when (file-exists? item-file)
           (fprintf o "(~a\n" item)
           (call-with-input-file item-file
-            (λ (i)
+            (lambda (i)
               (let loop ()
                 (let ([x (read i)])
                   (unless (eof-object? x)

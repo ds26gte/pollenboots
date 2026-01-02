@@ -26,39 +26,22 @@
 
 ;Glossary
 
-(define (output-glossary-func)
 
-  (define *globals-list* (read-globals))
-
-  (define glossary-entries (let ([a (assoc 'glossary *globals-list*)])
-                             (if a (cdr a) '())))
-
-  (define sorted-glossary
-    (sort glossary-entries
-          (λ (a b)
-            (string<? (first a) (first b)))))
-
-  (define glossary-items '())
-
-  ; (printf "*** IV\n")
-
-  (for ([entry sorted-glossary])
-    (set! glossary-items
-      (cons `(li () (a ([href ,(third entry)]) ,(second entry)))
-            glossary-items)))
-
-  `(ul () ,@(reverse glossary-items))
-  )
 
 (define (glossary-handler doc)
 
   (define here-path-from-project-root (calc-here-path-from-project-root))
 
+  (define project-root-from-here-path (to-project-root here-path-from-project-root))
+
   (define glossary-entries '())
 
   (define-values (doc-without-glossary-defs glossary-defs)
     (splitf-txexpr doc
-      (λ (tx) (and (txexpr? tx) (eq? (get-tag tx) 'gloss-1)))))
+      (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) 'gloss-1)))))
+
+  ; (printf "*** here-path-from-project-root = ~s\n" here-path-from-project-root)
+  ; (printf "*** project-root-from-here-path = ~s\n" project-root-from-here-path)
 
   (for ([tx glossary-defs])
     (let* ([item-values (get-elements tx)]
@@ -73,7 +56,7 @@
   (when (pair? glossary-entries)
 
     (call-with-output-file (build-path *project-root* "_glossary.rkt")
-      (λ (o)
+      (lambda (o)
         (for ([x glossary-entries])
           (write x o)
           (newline o)))
@@ -81,11 +64,56 @@
 
     )
 
-  (define (replace-output-glossary tx)
+  (define *sorted-glossary* '())
+
+  (define (read-glossary)
+    (define globals-list (read-globals))
+
+    (define saved-glossary-entries
+      (let ([a (assoc 'glossary globals-list)])
+        (if a (cdr a) '())))
+
+    (set! *sorted-glossary*
+      (sort saved-glossary-entries
+            (lambda (a b)
+              (string<? (first a) (first b))))))
+
+  (read-glossary)
+
+  (define (output-glossary-func)
+
+    (define glossary-items '())
+
+    ; (printf "*** IV\n")
+
+    (for ([entry *sorted-glossary*])
+      (set! glossary-items
+        (cons `(li () (a ([href ,(third entry)]) ,(second entry)))
+              glossary-items)))
+
+    `(ul () ,@(reverse glossary-items))
+
+    )
+
+  (define (output-ref-gloss xx)
+    ; (printf "*** output-ref-gloss ~s\n" xx)
+    ; (printf "*** *sorted-glossary* = ~s\n" *sorted-glossary*)
+    (let* ([item-alpha (first xx)]
+           [item (second xx)]
+           [items-gloss (assoc item-alpha *sorted-glossary*)]
+           [href (if (list? items-gloss) (third items-gloss) "missing_gloss")]
+           )
+      (set! href (string-append project-root-from-here-path href))
+      ; (printf "*** items-gloss = ~s\n" items-gloss)
+      ; (printf "*** href = ~s\n" href)
+      `(a ([href ,href]) ,item)))
+
+  (define (process-glossary tx)
     (case (get-tag tx)
       [(output-glossary-1)
        (output-glossary-func)]
+      [(ref-gloss-1) (output-ref-gloss (get-elements tx))]
       [else tx]))
 
-  (decode doc-without-glossary-defs #:txexpr-proc replace-output-glossary)
+  (decode doc-without-glossary-defs #:txexpr-proc process-glossary)
   )

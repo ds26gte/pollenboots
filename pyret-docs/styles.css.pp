@@ -22,6 +22,10 @@ ul.toclist {
   background-color: #f2f2f2;
 }
 
+.pyret-content {
+  font-style: monospace;
+}
+
 .function {
   /* font-family: monospace; */
   /* background-color: #6bccdf; */

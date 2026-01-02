@@ -113,9 +113,14 @@
   "collection-doc")
 
 (define (collection-doc-2 name #:args [args ""] #:return [return ""])
-  `(pre ([class "pyret-display"])
-        "[" ,name ": " ,args ", ...] -> "
-        ,return))
+  ; (printf "collection-doc-2 args = ~s\n" args)
+  (if (and (list? args) (list? (car args)))
+      `(pre ([class "pyret-display"])
+            "[" ,name ": " ,@(add-between args ", ") ", ...] -> "
+            ,return)
+      `(pre ([class "pyret-display"])
+            "[" ,name ": " ,args ", ...] -> "
+            ,return)))
 
 (define (ignore . ign) "")
 
@@ -152,8 +157,8 @@
 (define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
                  . rows)
   ; (printf "doing tabular of ~s\n" rows)
-  ; (for-each (λ (row) (printf "doing row...\n")
-  ;             (for-each (λ (cell) (printf "cell is ~s\n" cell)) row))
+  ; (for-each (lambda (row) (printf "doing row...\n")
+  ;             (for-each (lambda (cell) (printf "cell is ~s\n" cell)) row))
   ;           rows)
   `(table ()
      ,@(for/list ([row (car rows)])
@@ -177,17 +182,18 @@
         ,@elems))
 
 (define (type-spec #:alias [alias #f] type-name tyvars . body)
-  ; (printf "### type-spec ~s ~s ~s\n" type-name tyvars body)
+  ; (printf "### type-spec ~s ~s \n" type-name tyvars )
+  (define og-type-name type-name)
   (if (list? tyvars)
       (when (cons? tyvars)
         (set! type-name (string-append type-name
                           "<"
                           (apply string-append (add-between tyvars ", "))
                           ">")))
-      (set! body (cons tyvars body)))
+      (set! body (cons  tyvars body)))
   `(div ()
-        (pre ([class "pyret-display"]) ,type-name)
-        ,(make-gloss type-name)
+        ,(make-gloss og-type-name)
+        (pre ([class "pyret-display"]) ,(ref-gloss og-type-name type-name))
         ,@body))
 
 (define (a-ftype . typs)
@@ -207,9 +213,9 @@
 (define (a-arrow . typs)
   ; (printf "*** doing a-arrow of ~s\n" typs)
   (set! typs
-    (filter (λ (typ) (not (equal? typ "Brand"))) typs))
+    (filter (lambda (typ) (not (equal? typ "Brand"))) typs))
   (set! typs
-    (map (λ (typ) (if (null? typ) "()" typ)) typs))
+    (map (lambda (typ) (if (null? typ) "()" typ)) typs))
   (when (= (length typs) 1)
     (set! typs (cons "()" typs)))
   (let ([res
@@ -219,7 +225,7 @@
 
 (define (a-app base . typs)
   ; (printf "doing a-app base= ~s typs= ~s\n" base typs )
-  (set! typs (map (λ (typ)
+  (set! typs (map (lambda (typ)
                     (if (list? typ)
                         (if (and (> (length typ) 1) (eq? (first typ) 'span))
                             typ
@@ -271,10 +277,10 @@
         ,@elems))
 
 (define (a-var-type val typ)
-  `(span ([class "pyret-display"]) ,val " :: " ,typ))
+  `(span ([class "pyret-content"]) ,val " :: " ,typ))
 
 (define (p-a-var-type val typ)
-  `(span ([class "pyret-display"]) "(" ,val " :: " ,typ ")"))
+  `(span ([class "pyret-content"]) "(" ,val " :: " ,typ ")"))
 
 (define (constructor-doc #:private [private #f] typename1 fieldname args typename . elems)
   ; (printf "constructor-doc typename1= ~s fieldname= ~s args= ~s typename= ~s elems= ~s\n" typename1 fieldname args typename elems)
@@ -313,7 +319,7 @@
 (define (repl-examples . elems)
   ; (printf "*** repl-examples ~s\n" elems)
   `(div ()
-        ,@(map (λ (elem)
+        ,@(map (lambda (elem)
                  `(div ()
                       (pre () (caar elem))
                       ,(cadr elem)))
