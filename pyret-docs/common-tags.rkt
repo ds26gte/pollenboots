@@ -241,7 +241,7 @@
   ; (printf "doing a-app base= ~s typs= ~s\n" base typs )
   (set! typs (map (lambda (typ)
                     (if (list? typ)
-                        (if (and (> (length typ) 1) (eq? (first typ) 'span))
+                        (if (and (> (length typ) 1) (memq (first typ) '(ref-gloss-1 span)))
                             typ
                             `(span () ,@(add-between typ ", ")))
                         typ)) typs))
@@ -254,21 +254,21 @@
 (define (a-tuple . fields)
   `(span () "{" ,@(add-between fields ", ") "}"))
 
-(define (a-id x . ign) x)
+(define (a-id x . ign) (ref-gloss x))
 
 (define A "Any")
-(define N "Number")
+(define N (ref-gloss "Number"))
 (define EN "Exactnum")
 (define RN "Roughnum")
-(define S "String")
+(define S (ref-gloss "String"))
 (define No "Nothing")
-(define B "Boolean")
+(define B (ref-gloss "Boolean"))
 
 (define (L-of typ) (a-app "List" typ))
 (define (S-of typ) (a-app "Set" typ))
 (define (A-of typ) (a-app "Array" typ))
 (define (O-of typ) (a-app "Option" typ))
-(define (E-of typ1 typ2) (a-app "Either" typ1 typ2))
+(define (E-of typ1 typ2) (a-app (ref-gloss "Either") typ1 typ2))
 (define (P-of typ1 typ2) (a-app "Pick" typ1 typ2))
 
 (define eq "EqualityResult")
@@ -302,7 +302,7 @@
           `(div ()
                 ,(make-gloss fieldname)
                 (pre ([class "pyret-display"])
-                     ,fieldname " :: ("
+                     ,(ref-gloss fieldname) " :: ("
                      ,@(add-between
                          (map (lambda (arg)
                                 `(span () ,(first arg) " :: " ,(second (third arg))))

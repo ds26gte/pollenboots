@@ -1,11 +1,17 @@
 #lang racket
 
+(require "utils.rkt")
+
 (provide (all-defined-out))
 
 (define (pyret #:style [style #f] . elems)
   `(tt ([class "pyretexpr"]) ,@elems))
 
-(define pyret-id pyret)
+(define (pyret-id item . desc)
+  (pyret item))
+
+
+
 (define tt pyret)
 
 (define (examples #:show-try-it [show-try-it #f] . elems)
@@ -78,12 +84,12 @@
 (define (data-spec2 #:no-toc [no-toc #f] name deps clauses)
   ; (printf "*** doing data-spec2 ~s deps=~s ~s\n" name deps clauses)
   `(pre ([class "pyret-display"])
-        (span () ,(format "data ~a~a:"
-                    name
-                    ; (make-gloss name)
-                    (if (and deps (cons? deps))
-                        (format "<~a>" (apply string-append (add-between deps ", ")))
-                        "")))
+        ,(make-gloss name)
+        (span ()
+              "data " ,(ref-gloss name)
+              ,@(if (and deps (cons? deps))
+                    (append (list "<") (add-between deps ", ")  (list ">"))
+                    '()))
           "\n"
          (div ()
                 ,@(add-between
@@ -99,7 +105,7 @@
 (define (constructor-spec cname name args)
   ; (printf "*** constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)
   (let ([x
-          `(span () ,name
+          `(span () ,(ref-gloss name)
                  "(" ,@(add-between
                          (map (lambda (arg)
                                 (define fname (first arg))
@@ -119,29 +125,33 @@
                   name . elems)
   ; (printf "function ~a args are ~s, contract = ~s\n" name args contract)
   `(div ()
+        ,(make-gloss name)
         (pre ([class "pyret-display"])
-             ,name " :: "
+             ,(ref-gloss name) " :: "
              ,(if args
                   `(span ()
-                        "(" ,@(add-between (map (lambda (arg)
-                                                  (let ([arg (first arg)]
-                                                        [type (second arg)])
-                                                    ; (printf "arg/type are ~s, ~s\n" arg type)
-                                                    (cond [type
-                                                            `(span () ,arg " :: " ,type)]
-                                                          [(list? contract)
-                                                           ; (printf "contract = ~s\n" contract)
-                                                           (let ([n (length contract)])
-                                                             (let ([res
-                                                                     (if (>= n 3)
-                                                                         `(span () ,arg " :: " ,(third contract))
-                                                                         `(span () "() -> " ,(second contract)))])
-                                                               ; (printf "done V\n")
-                                                               res
-                                                               ))]
-                                                          [else
-                                                            arg])))
-                                                args) ", ")
+                        "(" ,@(add-between
+                                (map (lambda (arg)
+                                       (let ([arg (first arg)]
+                                             [type (second arg)])
+                                         ; (printf "arg/type are ~s, ~s\n" arg type)
+                                         (cond [type
+                                                 `(span () ,arg " :: " ,type)]
+                                               [(list? contract)
+                                                ; (printf "contract = ~s\n" contract)
+                                                (let ([n (length contract)])
+                                                  (let ([res
+                                                          (if (>= n 3)
+                                                              `(span () ,arg " :: "
+                                                                     ,(third contract))
+                                                              `(span () "() -> "
+                                                                     ,(second contract)))])
+                                                    ; (printf "done V\n")
+                                                    res
+                                                    ))]
+                                               [else
+                                                 arg])))
+                                     args) ", ")
                         ")"
                         )
                   contract))

@@ -88,7 +88,8 @@
          (a ([name ,item-sluggified]))
          (gloss-1 ,item-alpha ,item-sluggified ,item-typeset)))
 
-(define (ref-gloss item-alpha item)
+(define (ref-gloss item-alpha [item #f])
+  (unless item (set! item item-alpha))
   ; (printf "*** ref-gloss ~s ~s\n" item-alpha item)
   `(ref-gloss-1 () ,item-alpha ,item))
 
