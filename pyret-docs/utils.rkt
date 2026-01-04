@@ -12,8 +12,8 @@
 (define (sluggify term)
   (let ([s ""])
     (cond [(string? term) (set! s term)]
-          [(list? term) (sluggify* (rest term))]
-          [else #f])
+          [(list? term) (set! s (sluggify* (rest term)))]
+          [else (set! s "unnamed")])
     (string-replace s " " "-")))
 
 (define counter 0)

@@ -66,8 +66,11 @@ end
 }
 
 ◊function["stat"
-  #:contract (a-arrow S (a-record `((mtime ,N) (ctime ,N) (size ,N))))
-  #:args '(("path" ""))
+  #:contract (a-ftype (p-a-var-type "path" S)
+                      (a-record
+                          (a-var-type "mtime" N)
+                          (a-var-type "ctime" N)
+                          (a-var-type "size" N)))
   ]
 
 ◊margin-note{There is also an optional field called ◊pyret{native} that may have

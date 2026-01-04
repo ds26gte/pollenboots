@@ -70,12 +70,12 @@
 ;           (div ()
 ;                 ,@(add-between
 ;                     (map
-;                       (λ (clause)
+;                       (lambda (clause)
 ;                         `(tt () "   | " ,clause))
 ;                       clauses) "\n"))
 ;           (tt () "end")))
 
-(define (data-spec2 name deps clauses)
+(define (data-spec2 #:no-toc [no-toc #f] name deps clauses)
   ; (printf "*** doing data-spec2 ~s deps=~s ~s\n" name deps clauses)
   `(pre ([class "pyret-display"])
         (span () ,(format "data ~a~a:"
@@ -88,7 +88,7 @@
          (div ()
                 ,@(add-between
                     (map
-                      (λ (clause)
+                      (lambda (clause)
                         `(tt () "   | " ,clause))
                       clauses) "\n"))
           (tt () "end")))
@@ -101,7 +101,7 @@
   (let ([x
           `(span () ,name
                  "(" ,@(add-between
-                         (map (λ (arg)
+                         (map (lambda (arg)
                                 (define fname (first arg))
                                 (define contract (second (third arg)))
                                 ; (printf "fname= ~s contract= ~s\n" fname contract)
@@ -123,7 +123,7 @@
              ,name " :: "
              ,(if args
                   `(span ()
-                        "(" ,@(add-between (map (λ (arg)
+                        "(" ,@(add-between (map (lambda (arg)
                                                   (let ([arg (first arg)]
                                                         [type (second arg)])
                                                     ; (printf "arg/type are ~s, ~s\n" arg type)

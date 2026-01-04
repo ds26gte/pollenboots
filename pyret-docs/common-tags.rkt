@@ -103,6 +103,8 @@
 (define (image #:scale [scale 1] file)
   `(img ([src ,file])))
 
+
+
 (define (pyret-method ign1 x . z)
   (define name (if (null? z) x (car z)))
   `(tt () ,(string-append "." name)))
@@ -154,7 +156,10 @@
 (define (vscode-cli-only . elems)
   `(div ([class "VSCodeCLI"]) (div ([class "vscode-cli-icon"]) ,@elems)))
 
-(define (tabular #:sep [sep #f] #:column-properties [column-properties #f] #:style [style #f]
+(define (tabular #:sep [sep #f]
+                 #:column-properties [column-properties #f]
+                 #:row-properties [row-properties #f]
+                 #:style [style #f]
                  . rows)
   ; (printf "doing tabular of ~s\n" rows)
   ; (for-each (lambda (row) (printf "doing row...\n")
@@ -174,27 +179,36 @@
         (pre ([class "pyret-display"]) ,b)
         ,@elems))
 
-(define (value name typ . elems)
+(define (value #:style [style ""] name typ . elems)
   `(div ()
         ,(make-gloss name)
         (pre ([class "pyret-display"])
              ,name " :: " ,typ)
         ,@elems))
 
-(define (type-spec #:alias [alias #f] type-name tyvars . body)
+(define (type-spec #:alias [alias #f] #:private [private #f] type-name tyvars . body)
   ; (printf "### type-spec ~s ~s \n" type-name tyvars )
   (define og-type-name type-name)
-  (if (list? tyvars)
-      (when (cons? tyvars)
-        (set! type-name (string-append type-name
-                          "<"
-                          (apply string-append (add-between tyvars ", "))
-                          ">")))
-      (set! body (cons  tyvars body)))
-  `(div ()
-        ,(make-gloss og-type-name)
-        (pre ([class "pyret-display"]) ,(ref-gloss og-type-name type-name))
-        ,@body))
+  (cond [alias
+          ; (printf "alias = ~s\n" alias)
+          ; (set! type-name (string-append type-name " = " alias))
+          ; (set! type-name (format "~a = ~a" type-name alias))
+          `(div () ,(make-gloss og-type-name)
+                (pre ([class "pyret-display"])
+                     ,(ref-gloss og-type-name type-name))
+                ,@body) ]
+        [else
+          (if (list? tyvars)
+              (when (cons? tyvars)
+                (set! type-name (string-append type-name
+                                  "<"
+                                  (apply string-append (add-between tyvars ", "))
+                                  ">")))
+              (set! body (cons  tyvars body)))
+          `(div ()
+                ,(make-gloss og-type-name)
+                (pre ([class "pyret-display"]) ,(ref-gloss og-type-name type-name))
+                ,@body)]))
 
 (define (a-ftype . typs)
   (let* ([arg-typs (drop-right typs 1)]
@@ -270,7 +284,7 @@
 (define equal-now-op `(code "=~"))
 (define identical-op `(code "<=>"))
 
-(define (singleton-doc typename1 fieldname typename . elems)
+(define (singleton-doc #:style [style ""] typename1 fieldname typename . elems)
   `(div ()
         ,(make-gloss fieldname)
         (pre ([class "pyret-display"]) ,fieldname " :: " ,typename)
@@ -282,7 +296,7 @@
 (define (p-a-var-type val typ)
   `(span ([class "pyret-content"]) "(" ,val " :: " ,typ ")"))
 
-(define (constructor-doc #:private [private #f] typename1 fieldname args typename . elems)
+(define (constructor-doc #:private [private #f] #:style [style #f] typename1 fieldname args typename . elems)
   ; (printf "constructor-doc typename1= ~s fieldname= ~s args= ~s typename= ~s elems= ~s\n" typename1 fieldname args typename elems)
   (let ([x
           `(div ()
@@ -321,7 +335,7 @@
   `(div ()
         ,@(map (lambda (elem)
                  `(div ()
-                      (pre () (caar elem))
+                      (pre () ,(caar elem))
                       ,(cadr elem)))
                elems)))
 
@@ -332,3 +346,22 @@
 (define (a-chart-window)
   ; (printf "*** a-chart-window\n")
   `(pre () "a-chart-window"))
+
+(define (a-record . fields)
+  ; (printf "*** a-record ~s\n" fields)
+  (append  '(span ())
+           (list "{")
+           (add-between fields ", ")
+           (list "}")))
+
+  ; (string-append "{"
+  ;   (apply string-append (add-between fields ", ")) "}")
+
+(define (a-field name type . desc)
+  ; (printf "*** a-field ~s ~s ~s\n" name type desc)
+  `(span () ,name " :: " ,type))
+
+  ; (string-append name " :: " type)
+
+(define (append-gen-docs . desc)
+  "")

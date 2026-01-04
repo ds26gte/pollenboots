@@ -1,13 +1,13 @@
 #lang pollen
 
-◊(define (make-paint-swatch r g b a)
-  ◊; (printf "*** make-paint-swatch ~a ~a ~a ~a\n" r g b a)
+◊(define (make-paint-swatch name css-color)
+  ◊; (printf "*** make-paint-swatch ~a ~a \n" name css-color)
   `(span ([style "font-size: initial"])
          (img ([class "paintBrush"] [src "brush.svg"]))
          (span ([class "paintSpan"])
                (span ([class "checkersBlob"]))
-               (span ([style ,(format "background-color: rgba(~a,~a,~a,~a); margin-right: 0.25em"
-                                r g b a)]
+               (span ([style ,(format "background-color: ~a; margin-right: 0.25em"
+               css-color)]
                       [class "paintBlob"])))))
 
 ◊(define (left-zero-pad s n)
@@ -30,9 +30,10 @@
          "abc123"))
 
 ◊(define (render-color name r g b a)
+   (define css-color (format "rgba(~a,~a,~a,~a)" r g b a))
 ◊; (printf "*** render-color ~a ~a ~a ~a ~a\n" name r g b a)
          `(li ()
-           ,(make-paint-swatch  r g b a)
+           ,(make-paint-swatch name css-color)
            ,name
            ": "
            ,(make-fg-element r g b)
