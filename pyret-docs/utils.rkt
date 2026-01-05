@@ -122,6 +122,25 @@
 
   here-path-from-project-root)
 
+(define (read-entries item)
+  (let ([item-file (build-path *project-root* (format "_~a.rkt" item))]
+        [res '()])
+    (when (file-exists? item-file)
+      (call-with-input-file item-file
+        (lambda (i)
+          (let loop ()
+            (let ([x (read i)])
+              (unless (eof-object? x)
+                (set! res (cons x res))
+                (loop))))))
+      (delete-file item-file))
+    (if (eq? item 'glossary)
+        (let ([sorted-res (sort res
+                                (lambda (a b)
+                                  (string-ci<? (second a) (second b))))])
+          sorted-res)
+        (reverse res))))
+
 (define (write-globals)
   ; (printf "*** write-globals\n")
   (define *saved-items* '(glossary xref))
@@ -129,22 +148,13 @@
     (lambda (o)
       (fprintf o "(\n")
       (for ([item *saved-items*])
-        (define item-file (build-path *project-root* (format "_~a.rkt" item)))
-        (when (file-exists? item-file)
+        (let ([entries (read-entries item)])
           (fprintf o "(~a\n" item)
-          (call-with-input-file item-file
-            (lambda (i)
-              (let loop ()
-                (let ([x (read i)])
-                  (unless (eof-object? x)
-                    (write x o) (newline o)
-                    (loop))))))
-          (delete-file item-file)
+          (for ([entry entries])
+            (write entry o) (newline o))
           (fprintf o ")\n")
           ))
-      (fprintf o ")\n")
-
-      )
+      (fprintf o ")\n"))
     #:exists 'replace))
 
 (define pollen-postlude write-globals)

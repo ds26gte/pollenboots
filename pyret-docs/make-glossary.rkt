@@ -81,14 +81,10 @@
   (define (read-glossary)
     (define globals-list (read-globals))
 
-    (define saved-glossary-entries
-      (let ([a (assoc 'glossary globals-list)])
-        (if a (cdr a) '())))
+    (let ([a (assoc 'glossary globals-list)])
+      (when a (set! *sorted-glossary* (cdr a))))
 
-    (set! *sorted-glossary*
-      (sort saved-glossary-entries
-            (lambda (a b)
-              (string<? (second a) (second b))))))
+    )
 
   (read-glossary)
 
