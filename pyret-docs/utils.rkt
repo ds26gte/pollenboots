@@ -6,6 +6,7 @@
 
 (provide (all-defined-out))
 
+
 (define (sluggify* terms)
   (string-join (map sluggify terms) "-"))
 
@@ -79,6 +80,7 @@
 (define (h-tag-at-depth n)
   (string->symbol (format "h~a" n)))
 
+
 (define (make-gloss item-alpha [item-sluggified #f] [item-typeset #f])
   (unless item-sluggified
     (set! item-sluggified (string-append (sluggify item-alpha) (get-counter))))
@@ -88,10 +90,14 @@
          (a ([name ,item-sluggified]))
          (gloss-1 ,item-alpha ,item-sluggified ,item-typeset)))
 
-(define (ref-gloss item-alpha [item #f])
+(define (ref-gloss item-alpha [item #f] #:mod [mod #f])
+  (unless mod (set! mod "nodoc"))
   (unless item (set! item item-alpha))
   ; (printf "*** ref-gloss ~s ~s\n" item-alpha item)
-  `(ref-gloss-1 () ,item-alpha ,item))
+  `(ref-gloss-1 () ,item-alpha ,mod ,item))
+
+(define (ref-mod-gloss mod item)
+  (ref-gloss item #:mod mod))
 
 ; (define (in-link item)
 ;   (printf "*** in-link ~s\n" item)

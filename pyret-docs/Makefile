@@ -21,4 +21,4 @@ clean:
 	raco pollen render styles.css.pp
 
 cleanglob:
-	rm globals.rkt
+	rm globals.rkt _glossary.rkt

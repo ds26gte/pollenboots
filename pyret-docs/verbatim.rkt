@@ -7,8 +7,8 @@
 (define (pyret #:style [style #f] . elems)
   `(tt ([class "pyretexpr"]) ,@elems))
 
-(define (pyret-id item . desc)
-  (pyret item))
+(define (pyret-id item [mod #f])
+  (ref-gloss item (pyret item) #:mod mod))
 
 
 

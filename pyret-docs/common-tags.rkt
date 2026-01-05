@@ -68,8 +68,10 @@
           [else (sluggify* title-terms)]))
   `(title-1 ([level "1"] [id ,title-sluggified]) ,@title-1))
 
+
 (define (docmodule #:noimport [noimport #f] #:friendly-title [friendly-title #f] tag . body)
   `(div ()
+        (module-tag-1 () ,tag)
        ,(apply title #:tag tag #:friendly-title friendly-title '())
        ,@body))
 
@@ -254,22 +256,22 @@
 (define (a-tuple . fields)
   `(span () "{" ,@(add-between fields ", ") "}"))
 
-(define (a-id x . ign) (ref-gloss x))
+(define (a-id x . ign4now) x)
 
 (define A "Any")
-(define N (ref-gloss "Number"))
-(define EN "Exactnum")
+(define N (ref-mod-gloss "<global>" "Number"))
+(define EN (ref-mod-gloss "numbers" "Exactnum"))
 (define RN "Roughnum")
-(define S (ref-gloss "String"))
-(define No "Nothing")
-(define B (ref-gloss "Boolean"))
+(define S (ref-mod-gloss  "<global>" "String"))
+(define No (ref-mod-gloss "<global>" "Nothing"))
+(define B (ref-mod-gloss  "<global>" "Boolean"))
 
-(define (L-of typ) (a-app "List" typ))
-(define (S-of typ) (a-app "Set" typ))
-(define (A-of typ) (a-app "Array" typ))
-(define (O-of typ) (a-app "Option" typ))
-(define (E-of typ1 typ2) (a-app (ref-gloss "Either") typ1 typ2))
-(define (P-of typ1 typ2) (a-app "Pick" typ1 typ2))
+(define (L-of typ) (a-app (ref-mod-gloss "lists" "List") typ))
+(define (S-of typ) (a-app (ref-mod-gloss "sets" "Set") typ))
+(define (A-of typ) (a-app (ref-mod-gloss "arrays" "Array") typ))
+(define (O-of typ) (a-app (ref-mod-gloss "option" "Option") typ))
+(define (E-of typ1 typ2) (a-app (ref-mod-gloss "either" "Either") typ1 typ2))
+(define (P-of typ1 typ2) (a-app (ref-mod-gloss "pick" "Pick") typ1 typ2))
 
 (define eq "EqualityResult")
 (define eqfun `(a-arrow ,A ,A ,B))

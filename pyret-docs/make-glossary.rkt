@@ -30,11 +30,23 @@
 
 (define (glossary-handler doc)
 
+  (define curr-mod "nodoc")
+
   (define here-path-from-project-root (calc-here-path-from-project-root))
 
   (define project-root-from-here-path (to-project-root here-path-from-project-root))
 
   (define glossary-entries '())
+
+  (define-values (doc-without-module-tag module-tag)
+    (splitf-txexpr doc
+      (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) 'module-tag-1)))))
+
+  (unless (null? module-tag)
+    (set! curr-mod
+      (car (get-elements (car module-tag)))))
+
+  (set! doc doc-without-module-tag)
 
   (define-values (doc-without-glossary-defs glossary-defs)
     (splitf-txexpr doc
@@ -49,7 +61,7 @@
            [item-sluggified (second item-values)]
            [item (third item-values)])
       (set! glossary-entries
-        (cons (list item-alpha item
+        (cons (list (string-append curr-mod ":" item-alpha) item-alpha item
                     (string-append here-path-from-project-root "#" item-sluggified))
               glossary-entries))))
 
@@ -76,7 +88,7 @@
     (set! *sorted-glossary*
       (sort saved-glossary-entries
             (lambda (a b)
-              (string<? (first a) (first b))))))
+              (string<? (second a) (second b))))))
 
   (read-glossary)
 
@@ -88,7 +100,7 @@
 
     (for ([entry *sorted-glossary*])
       (set! glossary-items
-        (cons `(li () (a ([href ,(third entry)]) ,(second entry)))
+        (cons `(li () (a ([href ,(fourth entry)]) ,(third entry)))
               glossary-items)))
 
     `(ul () ,@(reverse glossary-items))
@@ -96,13 +108,17 @@
     )
 
   (define (output-ref-gloss xx)
-    ; (printf "*** output-ref-gloss ~s\n" xx)
+    ; (printf "*** output-ref-gloss ~s ~s\n" xx curr-mod)
     ; (printf "*** *sorted-glossary* = ~s\n" *sorted-glossary*)
     (let* ([item-alpha (first xx)]
-           [item (second xx)]
-           [items-gloss (assoc item-alpha *sorted-glossary*)]
-           [href (if (list? items-gloss) (third items-gloss) "missing_gloss")]
+           [item-mod (let ([y (second xx)])
+                       (if (string=? y "nodoc") curr-mod y))]
+           [item (third xx)]
+           [mod:item (string-append item-mod ":" item-alpha)]
+           [items-gloss (assoc mod:item *sorted-glossary*)]
+           [href (if (list? items-gloss) (fourth items-gloss) "missing_gloss")]
            )
+      ; (printf "(*** mod:item = ~s\n" mod:item)
       (set! href (string-append project-root-from-here-path href))
       ; (printf "*** items-gloss = ~s\n" items-gloss)
       ; (printf "*** href = ~s\n" href)
