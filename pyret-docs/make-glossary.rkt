@@ -26,8 +26,6 @@
 
 ;Glossary
 
-
-
 (define (glossary-handler doc)
 
   (define curr-mod "nodoc")
@@ -89,19 +87,104 @@
   (read-glossary)
 
   (define (output-glossary-func)
+    ; (printf "### output-glossary-func\n")
 
-    (define glossary-items '())
+    (if (null? *sorted-glossary*) `(div ())
+        (let ()
 
-    ; (printf "*** IV\n")
+            (define (get-item-first-letter item)
+              (let ([n (string-length item)])
+                (if (= n 0) #\_
+                    (let ([c0 (string-ref item 0)])
+                      (if (char-alphabetic? c0)
+                          (if (char-lower-case? c0) c0 (char-downcase c0))
+                          #\_)))))
 
-    (for ([entry *sorted-glossary*])
-      (set! glossary-items
-        (cons `(li () (a ([href ,(fourth entry)]) ,(third entry)))
-              glossary-items)))
+            (define list-of-subglossaries
+              (group-by
+                (lambda (x)
+                  (let* ([item (second x)])
+                    (get-item-first-letter item)))
+                *sorted-glossary*))
 
-    `(ul () ,@(reverse glossary-items))
+            (define glossary-cell-alist
+              (let ([the-letters (cons #\_ (string->list "abcdefghijklmnopqrstuvwxyz"))])
+                (map (lambda (c) (list c (box #f) (box #f))) the-letters)))
 
-    )
+            (define glossary-exp '())
+
+            (define alpha-row-exp '())
+
+            ; (printf "### starting main stuff\n")
+
+            (for ([subglossary list-of-subglossaries])
+              (let* ([any-entry (first subglossary)] ;guaranteed to have >= 1 entry
+                     [any-item (second any-entry)]
+                     [any-item-first-letter (get-item-first-letter any-item)]
+                     [c (assoc any-item-first-letter glossary-cell-alist)]
+                     [cb (second c)]
+                     [alpha-link (third c)])
+                (unless (unbox cb)
+                  (set-box! cb subglossary)
+                  (set-box! alpha-link (string-append "glossary-alpha" (get-counter)))
+                  )))
+
+            ; (printf "### main stuff II\n")
+            ; (printf "### glossary-cell-alist = ~s\n" glossary-cell-alist)
+
+            ; discard empty subglossaries
+            (set! glossary-cell-alist
+              (filter (lambda (glossary-cell)
+                        (unbox (second glossary-cell))) glossary-cell-alist))
+
+            (for ([glossary-cell glossary-cell-alist])
+              ; (printf "### doing a glossary-cell ~s\n" glossary-cell)
+              (let* ([glossary-anchor (unbox (third glossary-cell))]
+                     [glossary (unbox (second glossary-cell))]
+                     [first-glossary-entry (first glossary)])
+                ; (printf "### glossary-anchor = ~s\n" glossary-anchor)
+                ; (printf "### glossary = ~s\n" glossary)
+                ; (printf "### first-glossary-entry = ~s\n" first-glossary-entry)
+                (set! glossary-exp
+                  (cons `(div ([class "glossary-sep"]) (a ([name ,glossary-anchor])))
+                        glossary-exp))
+                (set! glossary-exp
+                  (cons `(li ()  (a ([href ,(fourth first-glossary-entry)])
+                                ,(third first-glossary-entry)))
+                        glossary-exp))
+                (for ([glossary-entry (rest glossary)])
+                  (set! glossary-exp
+                    (cons `(li () (a ([href ,(fourth glossary-entry)])
+                                     ,(third glossary-entry)))
+                          glossary-exp)))))
+
+            ; (printf "### glossary-exp = ~s\n" glossary-exp)
+
+            (set! glossary-exp (reverse glossary-exp))
+
+            (set! alpha-row-exp
+              (map (lambda (glossary-cell)
+                     `(a ([href ,(string-append "#" (unbox (third glossary-cell)))])
+                         ,(string (char-upcase (first glossary-cell)))))
+                   glossary-cell-alist))
+
+            ; (printf "### alpha-row-exp = ~s\n" alpha-row-exp)
+
+            ; `(div ())
+
+            `(div ()
+                  (div ([class "nested"])
+                       ,@(add-between alpha-row-exp '(span ([class "quad"]) " · ")))
+                  (ul ([class "glossary"])
+                      ,@glossary-exp))
+
+            ; `(div ()
+            ;       (ul ()
+            ;           ,@glossary-exp))
+
+            )
+
+    ))
 
   (define (output-ref-gloss xx)
     ; (printf "*** output-ref-gloss ~s ~s\n" xx curr-mod)
