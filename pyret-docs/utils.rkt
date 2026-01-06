@@ -6,7 +6,6 @@
 
 (provide (all-defined-out))
 
-
 (define (sluggify* terms)
   (string-join (map sluggify terms) "-"))
 
@@ -80,7 +79,6 @@
 (define (h-tag-at-depth n)
   (string->symbol (format "h~a" n)))
 
-
 (define (make-gloss item-alpha [item-sluggified #f] [item-typeset #f])
   (unless item-sluggified
     (set! item-sluggified (string-append (sluggify item-alpha) (get-counter))))
@@ -98,6 +96,38 @@
 
 (define (ref-mod-gloss mod item)
   (ref-gloss item #:mod mod))
+
+(define xref ref-mod-gloss)
+
+(define (a-id name . args)
+  (if (cons? args) (first args) name)) ;autoinclude tt?
+
+(define (a-arrow . typs)
+  ; (printf "### doing a-arrow of ~s\n" typs)
+  (set! typs
+    (filter (lambda (typ) (not (equal? typ "Brand"))) typs))
+  (set! typs
+    (map (lambda (typ) (if (null? typ) "()" typ)) typs))
+  (when (= (length typs) 1)
+    (set! typs (cons "()" typs)))
+  (let ([res
+          `(span () ,@(add-between typs ", " #:before-last " -> "))])
+    ; (printf "### a-arrow produced ~s\n" res)
+    res))
+
+(define (a-app base . typs)
+  ; (printf "doing a-app base= ~s typs= ~s\n" base typs )
+  (set! typs (map (lambda (typ)
+                    (if (list? typ)
+                        (if (and (> (length typ) 1) (memq (first typ) '(ref-gloss-1 span)))
+                            typ
+                            `(span () ,@(add-between typ ", ")))
+                        typ)) typs))
+  ; (printf "### typs is now ~s\n" typs)
+  (set! typs `(span () ,@(add-between typs ", ")))
+  (let ([x `(span () ,base "<" ,typs ">")])
+    ; (printf "a-app ~s ~s ==> ~s\n" base typs x)
+    x))
 
 ; (define (in-link item)
 ;   (printf "*** in-link ~s\n" item)

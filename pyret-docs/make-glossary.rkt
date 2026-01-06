@@ -94,11 +94,11 @@
 
             (define (get-item-first-letter item)
               (let ([n (string-length item)])
-                (if (= n 0) #\_
+                (if (= n 0) #\*
                     (let ([c0 (string-ref item 0)])
                       (if (char-alphabetic? c0)
                           (if (char-lower-case? c0) c0 (char-downcase c0))
-                          #\_)))))
+                          #\*)))))
 
             (define list-of-subglossaries
               (group-by
@@ -108,7 +108,7 @@
                 *sorted-glossary*))
 
             (define glossary-cell-alist
-              (let ([the-letters (cons #\_ (string->list "abcdefghijklmnopqrstuvwxyz"))])
+              (let ([the-letters (cons #\* (string->list "abcdefghijklmnopqrstuvwxyz"))])
                 (map (lambda (c) (list c (box #f) (box #f))) the-letters)))
 
             (define glossary-exp '())

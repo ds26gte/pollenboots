@@ -9,15 +9,15 @@
 ; (require pollen/setup)
 ; (require racket/date)
 
+; remember to provide everything from here:
 (require "utils.rkt")
 (require "nice-paragraphs.rkt")
-
 (require "common-tags.rkt")
 (require "verbatim.rkt")
-
 (require "toc.rkt")
 (require "make-glossary.rkt")
 (require "make-xref.rkt")
+(require "abbrevs.rkt")
 
 ; (printf "## current-metas is ~s\n" (current-metas))
 
@@ -31,7 +31,8 @@
                        "verbatim.rkt"
                        "toc.rkt"
                        "make-glossary.rkt"
-                       "make-xref.rkt"])
+                       "make-xref.rkt"
+                       "abbrevs.rkt"])
 
 (define (root . elts)
   (let* ([doc `(root ,@elts)]

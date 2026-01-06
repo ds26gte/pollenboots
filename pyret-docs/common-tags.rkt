@@ -68,7 +68,6 @@
           [else (sluggify* title-terms)]))
   `(title-1 ([level "1"] [id ,title-sluggified]) ,@title-1))
 
-
 (define (docmodule #:noimport [noimport #f] #:friendly-title [friendly-title #f] tag . body)
   `(div ()
         (module-tag-1 () ,tag)
@@ -104,8 +103,6 @@
 
 (define (image #:scale [scale 1] file)
   `(img ([src ,file])))
-
-
 
 (define (pyret-method ign1 x . z)
   (define name (if (null? z) x (car z)))
@@ -226,61 +223,8 @@
 (define (p-a-ftype . typs)
   `(span () "(" ,(apply a-ftype typs) ")"))
 
-(define (a-arrow . typs)
-  ; (printf "*** doing a-arrow of ~s\n" typs)
-  (set! typs
-    (filter (lambda (typ) (not (equal? typ "Brand"))) typs))
-  (set! typs
-    (map (lambda (typ) (if (null? typ) "()" typ)) typs))
-  (when (= (length typs) 1)
-    (set! typs (cons "()" typs)))
-  (let ([res
-          `(span () ,@(add-between typs ", " #:before-last " -> "))])
-    ; (printf "*** a-arrow produced ~s\n" res)
-    res))
-
-(define (a-app base . typs)
-  ; (printf "doing a-app base= ~s typs= ~s\n" base typs )
-  (set! typs (map (lambda (typ)
-                    (if (list? typ)
-                        (if (and (> (length typ) 1) (memq (first typ) '(ref-gloss-1 span)))
-                            typ
-                            `(span () ,@(add-between typ ", ")))
-                        typ)) typs))
-  ; (printf "*** typs is now ~s\n" typs)
-  (set! typs `(span () ,@(add-between typs ", ")))
-  (let ([x `(span () ,base "<" ,typs ">")])
-    ; (printf "a-app ~s ~s ==> ~s\n" base typs x)
-    x))
-
 (define (a-tuple . fields)
   `(span () "{" ,@(add-between fields ", ") "}"))
-
-(define (a-id x . ign4now) x)
-
-(define A "Any")
-(define N (ref-mod-gloss "<global>" "Number"))
-(define EN (ref-mod-gloss "numbers" "Exactnum"))
-(define RN "Roughnum")
-(define S (ref-mod-gloss  "<global>" "String"))
-(define No (ref-mod-gloss "<global>" "Nothing"))
-(define B (ref-mod-gloss  "<global>" "Boolean"))
-
-(define (L-of typ) (a-app (ref-mod-gloss "lists" "List") typ))
-(define (S-of typ) (a-app (ref-mod-gloss "sets" "Set") typ))
-(define (A-of typ) (a-app (ref-mod-gloss "arrays" "Array") typ))
-(define (O-of typ) (a-app (ref-mod-gloss "option" "Option") typ))
-(define (E-of typ1 typ2) (a-app (ref-mod-gloss "either" "Either") typ1 typ2))
-(define (P-of typ1 typ2) (a-app (ref-mod-gloss "pick" "Pick") typ1 typ2))
-
-(define eq "EqualityResult")
-(define eqfun `(a-arrow ,A ,A ,B))
-(define eq3fun `(a-arrow ,A ,A ,eq))
-
-(define T "EqualityResult")
-(define EQ "EqualityResult")
-(define TA "Table")
-(define L "List")
 
 (define equal-always-op `(code "=="))
 (define equal-now-op `(code "=~"))
