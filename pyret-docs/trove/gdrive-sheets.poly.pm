@@ -27,7 +27,7 @@ load them into tables.
 
 ◊section{Spreadsheet Functions}
 ◊function["create-spreadsheet"
-  #:contract (a-ftype (p-a-var-type "name" S) SS)
+  #:contract (a-ftype (a-var-type "name" S) SS)
   ]{
   Creates a new Google Sheets document with the given name, in the currently
   logged-in user's Google Documents account.  The newly created file will not
@@ -35,7 +35,7 @@ load them into tables.
   }
 
 ◊function["my-spreadsheet"
-  #:contract (a-ftype (p-a-var-type "name" S) SS)
+  #:contract (a-ftype (a-var-type "name" S) SS)
   #:return SS
   ]{
   Accesses a private Google Sheets file and produces a ◊pyret-id{Spreadsheet}.
@@ -44,7 +44,7 @@ load them into tables.
   }
 
 ◊function["load-spreadsheet"
-  #:contract (a-ftype (p-a-var-type "id" S) SS)
+  #:contract (a-ftype (a-var-type "id" S) SS)
   #:return SS
   ]{
   Accesses a publicly shared Google sheets file and produces a

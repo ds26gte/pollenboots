@@ -25,9 +25,9 @@
   ◊constructor-doc["List" "link" (list `("first" ("type" "normal") ("contract" ,(a-id "a"))) `("rest" ("type" "normal") ("contract" ,(L-of "a")))) (L-of "a")]{
   }
 
-  ◊function["is-empty" #:contract (a-ftype (p-a-var-type "val" A) B)]
+  ◊function["is-empty" #:contract (a-ftype (a-var-type "val" A) B)]
 
-  ◊function["is-link" #:contract (a-ftype (p-a-var-type "val" A) B)]
+  ◊function["is-link" #:contract (a-ftype (a-var-type "val" A) B)]
 
 A ◊pyret{List} is an immutable, fixed-length collection indexed by
 non-negative integers.
@@ -164,7 +164,7 @@ end
 }
 
 ◊list-method["map"
-  #:contract (a-ftype (p-a-var-type "f" (p-a-ftype "a" "b")) (L-of "b")) ]
+  #:contract (a-ftype (a-var-type "f" (p-a-ftype "a" "b")) (L-of "b")) ]
 
 
 Applies function ◊pyret{f} to each element of the list from left to right, and
@@ -185,7 +185,7 @@ end
 }
 
 ◊list-method["each"
- #:contract (a-ftype (p-a-var-type "f" (p-a-ftype "a" No)) No)
+ #:contract (a-ftype (a-var-type "f" (p-a-ftype "a" No)) No)
 ]
 
 Applies ◊pyret{f} to each element of the ◊pyret{List} from left to right, and
@@ -204,7 +204,7 @@ end
 }
 
 ◊list-method["filter"
-  #:contract (a-ftype (p-a-var-type "f" (p-a-ftype "a" B)) (L-of "a"))
+  #:contract (a-ftype (a-var-type "f" (p-a-ftype "a" B)) (L-of "a"))
 ]
 
 Applies function ◊pyret{f} to each element of ◊pyret{List} from left to right,
@@ -228,7 +228,7 @@ end
 }
 
 ◊list-method["push"
-  #:contract (a-ftype (p-a-var-type "elt" "a") (L-of "a"))]
+  #:contract (a-ftype (a-var-type "elt" "a") (L-of "a"))]
 
 Returns ◊tt{link(elt, self)}.
 
@@ -254,7 +254,7 @@ end
 
 
 ◊list-method["split-at"
-  #:contract (a-ftype (p-a-var-type "n" N)
+  #:contract (a-ftype (a-var-type "n" N)
               (a-tuple
                 (a-var-type "prefix" (L-of "a"))
                 (a-var-type "suffix" (L-of "a"))))
@@ -283,7 +283,7 @@ end
 }
 
 ◊list-method["take"
- #:contract (a-ftype (p-a-var-type "n" N) (L-of "a"))]
+ #:contract (a-ftype (a-var-type "n" N) (L-of "a"))]
 Given a length ◊tt{n}, returns a new ◊pyret{List} containing the first
 ◊tt{n} items of the ◊pyret{List}.
 
@@ -299,7 +299,7 @@ end
 }
 
 ◊list-method["drop"
- #:contract (a-ftype (p-a-var-type "n" N) (L-of "a"))]
+ #:contract (a-ftype (a-var-type "n" N) (L-of "a"))]
 ]
 Given a length ◊tt{n}, returns a ◊pyret{List} containing all but the first ◊tt{n} items of the ◊pyret{List}.
 
@@ -312,7 +312,7 @@ end
 }
 
 ◊list-method["get"
-  #:contract (a-ftype (p-a-var-type "n" N) "a")
+  #:contract (a-ftype (a-var-type "n" N) "a")
 ]
 Returns the ◊tt{n}th element of the given ◊pyret{List}.
 
@@ -400,7 +400,7 @@ end
 }
 
 ◊list-method["member"
-  #:contract (a-ftype (p-a-var-type "elt" "a") B)]
+  #:contract (a-ftype (a-var-type "elt" "a") B)]
 ◊margin-note{Passing a ◊pyret{Roughnum} as an argument will raise
 an error.}
 Returns true if the current ◊pyret{List} contains the given value, as compared
@@ -425,7 +425,7 @@ end
 }
 
 ◊list-method["append"
-  #:contract (a-ftype (p-a-var-type "other" (L-of "a")) (L-of "a"))
+  #:contract (a-ftype (a-var-type "other" (L-of "a")) (L-of "a"))
 ]
 Produces a new ◊pyret{List} with all the elements of the current ◊pyret{List},
 followed by all the elements of the ◊tt{other} ◊pyret{List}.
@@ -512,7 +512,7 @@ end
 }
 
 ◊list-method["join-str"
-#:contract (a-ftype (p-a-var-type "sep" S) S)
+#:contract (a-ftype (a-var-type "sep" S) S)
 ]
 Combines the values of the current ◊pyret{List} by converting them to strings
 with ◊pyret{tostring} and joining them with the given separator ◊pyret{sep}.
@@ -556,7 +556,7 @@ end
   ◊pyret{import}ed, as indicated in the examples.
 
   ◊function["length"
-    #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) N)
+    #:contract (a-ftype (a-var-type "lst" (L-of "a")) N)
   ]{
 
   Returns the number of elements in the ◊pyret{List}.
@@ -653,7 +653,7 @@ end
 }
 
 ◊function["join-str"
-  #:contract (a-ftype (p-a-var-type "sep" S) S)
+  #:contract (a-ftype (a-var-type "sep" S) S)
           ]
 
 ◊examples{
@@ -712,7 +712,7 @@ end
     }
 
   ◊function["distinct"
-    #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) (L-of "a"))
+    #:contract (a-ftype (a-var-type "lst" (L-of "a")) (L-of "a"))
   ]{
 
   Given a ◊pyret{List}, returns a new ◊pyret{List} containing only one copy of each element

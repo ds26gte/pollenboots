@@ -66,7 +66,7 @@ end
 }
 
 ◊function["stat"
-  #:contract (a-ftype (p-a-var-type "path" S)
+  #:contract (a-ftype (a-var-type "path" S)
                       (a-record
                           (a-var-type "mtime" N)
                           (a-var-type "ctime" N)

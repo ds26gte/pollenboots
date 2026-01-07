@@ -126,8 +126,7 @@ end
 }
 
 ◊function["build-array"
-  #:contract (a-arrow (a-var-type "f" (a-arrow N "a")) (a-var-type "size" N) (A-of "a"))
-  #:args (list (list "f" #f) (list "size" #f))
+  #:contract (a-ftype (a-var-type "f" (a-arrow N "a")) (a-var-type "size" N) (A-of "a"))
   #:return (A-of "a")
 ]
 
@@ -278,7 +277,7 @@ end
 }
 
 ◊a-method["filter"
-    #:contract (a-ftype (p-a-var-type "f" (p-a-ftype "a" B)) (A-of "a"))
+    #:contract (a-ftype (a-var-type "f" (p-a-ftype "a" B)) (A-of "a"))
     #:args (list (list "self" #f) (list "f" #f))
     #:return (A-of "a")]
     
@@ -299,7 +298,7 @@ end
   }
   
 ◊a-method["map"
-    #:contract (a-ftype  (p-a-var-type "f" (p-a-ftype "a" "b")) (A-of "b"))
+    #:contract (a-ftype  (a-var-type "f" (p-a-ftype "a" "b")) (A-of "b"))
     #:args (list (list "self" #f) (list "f" #f))
     #:return (A-of "b")]
     
@@ -365,7 +364,7 @@ end
   }
 
 ◊a-method["concat"
-    #:contract (a-ftype (p-a-var-type "other" (A-of "a")) (A-of "a"))
+    #:contract (a-ftype (a-var-type "other" (A-of "a")) (A-of "a"))
     #:args (list (list "self" #f) (list "other" #f))
     #:return (A-of "a")]
 
@@ -418,7 +417,7 @@ end
 }
 
 ◊a-method["sort-nums"
-    #:contract (a-ftype (p-a-var-type "asc" B) (A-of "a"))
+    #:contract (a-ftype (a-var-type "asc" B) (A-of "a"))
     #:args (list (list "self" #f) (list "asc" #f))
     #:return (A-of "a")]
 
@@ -546,7 +545,7 @@ end
 }
 
 ◊function["array-length"
-  #:contract (a-ftype (p-a-var-type "array" (A-of "a")) N)
+  #:contract (a-ftype (a-var-type "array" (A-of "a")) N)
   #:return N
 ]
 

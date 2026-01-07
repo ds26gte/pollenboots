@@ -113,7 +113,7 @@ An empty set, represented as a tree.
 Another name for ◊pyret-id{list-set}.
 
 ◊function["list-to-list-set"
-  #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) (S-of "a"))
+  #:contract (a-ftype (a-var-type "lst" (L-of "a")) (S-of "a"))
 ]
 
 Constructs a list-set out of the elements in the list.
@@ -130,7 +130,7 @@ end
 
 
 ◊function["list-to-tree-set"
-  #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) (S-of "a"))
+  #:contract (a-ftype (a-var-type "lst" (L-of "a")) (S-of "a"))
 ]
 
 Constructs a tree-set out of the elements in the list.
@@ -147,14 +147,14 @@ end
 
 
 ◊function["list-to-set"
-  #:contract (a-ftype (p-a-var-type "lst" (L-of "a")) (S-of "a"))
+  #:contract (a-ftype (a-var-type "lst" (L-of "a")) (S-of "a"))
 ]
 
 Another name for ◊pyret-id["list-to-list-set"].
 
 ◊section{Set Methods}
 
-◊set-method["add" #:contract (a-ftype (p-a-var-type "elt" "a") (S-of "a"))]
+◊set-method["add" #:contract (a-ftype (a-var-type "elt" "a") (S-of "a"))]
 
 Constructs a new set containing the added element if it was not already present.
 
@@ -173,7 +173,7 @@ check:
 end
 }
 
-◊set-method["remove" #:contract (a-ftype (p-a-var-type "elt" "a") (S-of "a"))]
+◊set-method["remove" #:contract (a-ftype (a-var-type "elt" "a") (S-of "a"))]
 
 Constructs a new set removing the element if it was present. It is ◊emph{not} an error to
 remove an element that is not in the set; it simply leaves the set unchanged.
@@ -207,7 +207,7 @@ check:
 end
 }
 
-◊set-method["member" #:contract (a-ftype (p-a-var-type "elt" "a") B)]
+◊set-method["member" #:contract (a-ftype (a-var-type "elt" "a") B)]
 
 Checks if ◊pyret{elt} is contained within this set (checking membership with
 ◊pyret-id["equal-always" "equality"]).
@@ -285,7 +285,7 @@ check:
 end
 }
 
-◊set-method["union" #:contract (a-ftype (p-a-var-type "other" (S-of "a")) (S-of "a"))]
+◊set-method["union" #:contract (a-ftype (a-var-type "other" (S-of "a")) (S-of "a"))]
 
 Computes the union of two sets.
 
@@ -301,7 +301,7 @@ check:
 end
 }
 
-◊set-method["intersect" #:contract (a-ftype (p-a-var-type "other" (S-of "a")) (S-of "a"))]
+◊set-method["intersect" #:contract (a-ftype (a-var-type "other" (S-of "a")) (S-of "a"))]
 
 Computes the intersection of two sets.
 
@@ -317,7 +317,7 @@ check:
 end
 }
 
-◊set-method["difference" #:contract (a-ftype (p-a-var-type "other" (S-of "a")) (S-of "a"))]
+◊set-method["difference" #:contract (a-ftype (a-var-type "other" (S-of "a")) (S-of "a"))]
 
 Computes the difference of two sets.
 
@@ -333,7 +333,7 @@ check:
 end
 }
 
-◊set-method["symmetric-difference" #:contract (a-ftype (p-a-var-type "other" (S-of "a")) (S-of "a"))]
+◊set-method["symmetric-difference" #:contract (a-ftype (a-var-type "other" (S-of "a")) (S-of "a"))]
 
 Computes the symmetric difference of two sets.
 

@@ -221,14 +221,9 @@
 
 (define (a-ftype . typs)
   (let* ([arg-typs (drop-right typs 1)]
-        [ret-typ (car (take-right typs 1))]
-        [length-args (length arg-typs)])
-    (cond [(= length-args 0)
-           `(span () "() -> " ,ret-typ)]
-          [(> length-args 1)
-           `(span () "(" (span () ,@(add-between arg-typs ", ")) ") -> "
-                  ,ret-typ)]
-          [else `(span () (span () ,@(add-between arg-typs ", ")) " -> " ,ret-typ)])))
+         [ret-typ (car (take-right typs 1))])
+    `(span () "(" (span () ,@(add-between arg-typs ", ")) ") -> "
+           ,ret-typ)))
 
 (define (p-a-ftype . typs)
   `(span () "(" ,(apply a-ftype typs) ")"))

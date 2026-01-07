@@ -110,7 +110,7 @@ end
 }
 
 ◊sd-method["has-key"
-  #:contract (a-ftype (p-a-var-type "key" S) B)
+  #:contract (a-ftype (a-var-type "key" S) B)
   #:args (list (list "self" #f) (list "key" #f))
   #:return B
 ]
@@ -142,7 +142,7 @@ end
 }
 
 ◊sd-method["remove"
-  #:contract (a-ftype (p-a-var-type "key" S) (SD-of "a"))
+  #:contract (a-ftype (a-var-type "key" S) (SD-of "a"))
   #:args (list (list "self" #f) (list "key" #f))
   #:return (SD-of "a")
 ]
