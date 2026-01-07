@@ -128,7 +128,7 @@
         ,(make-gloss name)
         (pre ([class "pyret-display"])
              ,(ref-gloss name) " :: "
-             ,(if (not contract)
+             ,(if (and args (not contract))
                   `(span ()
                         "(" ,@(add-between
                                 (map (lambda (arg)
@@ -154,5 +154,7 @@
                                      args) ", ")
                         ")"
                         )
-                  contract))
+                  ; contract
+                  (or contract "unspecified_contract")
+                  ))
         ,@elems))

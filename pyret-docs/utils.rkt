@@ -7,12 +7,16 @@
 (provide (all-defined-out))
 
 (define (sluggify* terms)
+  ; (printf "### sluggify* ~s\n" terms)
   (string-join (map sluggify terms) "-"))
 
 (define (sluggify term)
+  ; (printf "### sluggify ~s\n" term)
   (let ([s ""])
     (cond [(string? term) (set! s term)]
-          [(list? term) (set! s (sluggify* (rest term)))]
+          [(list? term)
+           (if (null? term) (set! s "-")
+               (set! s (sluggify* (rest term))))]
           [else (set! s "unnamed")])
     (string-replace s " " "-")))
 
