@@ -12,8 +12,13 @@
 
 (define (doc-title doc)
   ; (printf "doc is now ~s\n" doc)
+  ; (printf "title = ~s\n" (select 'title doc))
+  ; (printf "h1 = ~s\n" (select 'h1 doc))
   (or (select 'title doc)
       (select 'h1 doc)
+      (let ([div1 (select 'div doc)])
+        ; (printf "div1 = ~s\n" div1)
+        (and div1 (txexpr? div1) (attr-ref div1 'id)))
       "Untitled"))
 
 (define (emph . elems)
@@ -68,10 +73,15 @@
           [else (sluggify* title-terms)]))
   `(title-1 ([level "1"] [id ,title-sluggified]) ,@title-1))
 
-(define (docmodule #:noimport [noimport #f] #:friendly-title [friendly-title #f] tag . body)
+(define (docmodule name #:friendly-title [friendly-title #f] #:noimport [noimport #f] . body)
   `(div ()
-        (module-tag-1 () ,tag)
-       ,(apply title #:tag tag #:friendly-title friendly-title '())
+        (module-tag-1 () ,name)
+       ,(apply title #:tag name #:friendly-title friendly-title '())
+       ,(if noimport `(span ())
+            `(div ()
+                  (p () "Usage:")
+                  (p () (tt () "include " ,name))
+                  (p () (tt () "import " ,name " as ..."))))
        ,@body))
 
 (define (itemlist . elems)
