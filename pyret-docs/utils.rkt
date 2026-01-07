@@ -81,7 +81,7 @@
 
 (define (make-gloss item-alpha [item-sluggified #f] [item-typeset #f])
   (unless item-sluggified
-    (set! item-sluggified (string-append (sluggify item-alpha) (get-counter))))
+    (set! item-sluggified (sluggify item-alpha)))
   (unless item-typeset
     (set! item-typeset item-alpha))
   `(span ()

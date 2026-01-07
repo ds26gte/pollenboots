@@ -9,9 +9,6 @@
 
 (provide (all-defined-out))
 
-(define (make-generated-tag)
-  (string-append "generated-tag" (get-counter)))
-
 (define (make-index-element style content tag plainseq entryseq desc)
   ; using, for now: tag plainseq entryseq
   ; (printf "*** make-index-element ~s ~s ~s\n" tag plainseq entryseq)
@@ -126,7 +123,7 @@
                      [alpha-link (third c)])
                 (unless (unbox cb)
                   (set-box! cb subglossary)
-                  (set-box! alpha-link (string-append "glossary-alpha" (get-counter)))
+                  (set-box! alpha-link (format "_glossary-alpha-index-~a" (first c)))
                   )))
 
             ; (printf "### main stuff II\n")

@@ -2,8 +2,6 @@
 
 ◊docmodule["<global>" #:noimport #t #:friendly-title "Global Utilities"]{
 
---- ◊hyperlink["https://pyret.org/docs/latest/_global_.html"]{Original doc link}
-
 ◊section[#:tag "global-builtins"]{Built-in Utility Functions}
 
 ◊function["print" #:contract (a-arrow (p-a-var-type "val" "a") "a") #:return "a" #:alt-docstrings ""]

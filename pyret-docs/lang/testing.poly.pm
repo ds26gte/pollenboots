@@ -1,22 +1,27 @@
 #lang pollen
 
 ◊(define (test-doc opname left right)
-  ◊para[#:style "boxed pyret-header"]{
-    ◊(tt ◊left " " ◊opname " " ◊right)
-  })
+         `(div ()
+               ,(make-gloss opname)
+               (pre ([class "pyret-display"]) ,left " " ,(ref-gloss opname) " " ,right)))
 
 ◊(define (test-doc1 opname left)
-  ◊para[#:style "boxed pyret-header"]{
-    ◊(tt ◊left " " ◊opname)
-  })
+         `(div ()
+               ,(make-gloss opname)
+               (pre ([class "pyret-display"]) ,left " " ,(ref-gloss opname))))
 
 ◊(define (test-doc-pred opname pred left right)
-  ◊para[#:style "boxed pyret-header"]{
-    ◊(tt ◊left " " ◊opname "(" ◊pred ")" " " ◊right)
-  })
+         `(div ()
+               ,(make-gloss opname)
+               (pre ([class "pyret-display"]) ,left " " ,(ref-gloss opname) "(" ,pred ")" " " ,right)))
 
 ◊(define (test-pred-use left opname pred right)
-  ◊(tt ◊left " " ◊opname "(" ◊pred ")" " " ◊right))
+         `(tt ([class "pyret-display"])
+              ,left " " ,(ref-gloss opname) "("
+              ,(if (string? pred) (ref-gloss pred) pred)
+              ")" " " ,right))
+
+◊(define (test-index-tag . elems) (void))
 
 ◊docmodule["testing" #:friendly-title "Testing" #:noimport #t]{
 
