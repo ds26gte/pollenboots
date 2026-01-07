@@ -24,6 +24,12 @@
 (define (emph . elems)
   `(i () ,@elems))
 
+(define (bold . elems)
+  `(b () ,@elems))
+
+(define (centered . elems)
+  `(div ([align "center"]) ,@elems))
+
 (define (code . elems)
   `(code ([class "uncolored-code"]) ,@elems))
 
@@ -209,14 +215,14 @@
         [else
           (if (list? tyvars)
               (when (cons? tyvars)
-                (set! type-name (string-append type-name
+                (set! type-name `(span () ,(ref-gloss og-type-name)
                                   "<"
-                                  (apply string-append (add-between tyvars ", "))
+                                  ,(apply string-append (add-between tyvars ", "))
                                   ">")))
               (set! body (cons  tyvars body)))
           `(div ()
                 ,(make-gloss og-type-name)
-                (pre ([class "pyret-display"]) ,(ref-gloss og-type-name type-name))
+                (pre ([class "pyret-display"]) ,type-name)
                 ,@body)]))
 
 (define (a-ftype . typs)
@@ -316,3 +322,6 @@
 
 (define (append-gen-docs . desc)
   "")
+
+(define (py-prod e)
+  `(ref-gloss ,(format "‹~a›" e)))

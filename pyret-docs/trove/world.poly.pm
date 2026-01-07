@@ -29,9 +29,9 @@ move to ◊pyret{reactors} if you need their advanced features.
 ◊section{Starting a big-bang}
 
  ◊function["big-bang"
-            #:contract (a-arrow "a"
-                                (a-app L
-                                       (a-app WC "a"))
+            #:contract (a-ftype (a-var-type "init" "a")
+                                (a-var-type "handlers" (a-app L
+                                       (a-app WC "a")))
                                 "a")
             #:return "a"
             #:args (list '("init" "")
@@ -97,50 +97,47 @@ big-bang(10, on-tick(increment))
   ◊section[#:tag "functions-world"]{Functions}
 
   ◊function["on-tick"
-            #:contract (a-arrow (a-arrow "a"
-                                         "a")
-                                WC)
+            #:contract (a-ftype (a-var-type "handler" (p-a-arrow "a" "a"))
+                                (a-app WC "a"))
             #:return (a-app WC "a")
             #:args (list '("handler" ""))]{
     Consumes a function and returns a handler that, when passed to
-    ◊secref[(tag-name "world" "big-bang")], will be called each program tick
+    ◊pyret-id[  "world" "big-bang"], will be called each program tick
     with the current world state.
   }
   ◊function["on-tick-n"
-            #:contract (a-arrow (a-arrow "a"
-                                         "a")
-                                N
-                                WC)
+            #:contract (a-ftype (a-var-type "handler" (p-a-arrow "a" "a"))
+                                (a-var-type "n"  N)
+                                (a-app WC "a"))
             #:return (a-app WC "a")
             #:args (list '("handler" "")
                          '("n" ""))]{
     Consumes a function and returns a handler that, when passed to
-    ◊secref[(tag-name "world" "big-bang")], will be called every ◊pyret{n}
+    ◊pyret-id["big-bang" "world"], will be called every ◊pyret{n}
     program ticks with the current world state.
   }
   
   ◊function["to-draw"
-            #:contract (a-arrow (a-arrow "a"
-                                         (a-id "Scene" (xref "image" "Scene")))
-                                WC)
+            #:contract (a-ftype (a-var-type "drawer" (p-a-arrow "a"
+                                         (a-id "Scene" (xref "image" "Scene"))))
+                                (a-app WC "a"))
             #:return (a-app WC "a")
             #:args (list '("drawer" ""))]{
     Consumes a function and returns a handler that, when passed to
-    ◊secref[(tag-name "world" "big-bang")], will inform the world program
+    ◊pyret-id[ "big-bang" "world" ], will inform the world program
     what to draw.
   }
 
   ◊function["on-key"
-            #:contract (a-arrow (a-arrow "a"
-                                         S
-                                         "a")
-                                WC)
+            #:contract (a-ftype (a-var-type "onKey"
+                                            (p-a-arrow "a" S "a"))
+                                (a-app WC "a"))
             #:return (a-app WC "a")
             #:args (list '("onKey" ""))]{
     Consumes a function and returns a handler that, when passed to
-    ◊secref[(tag-name "world" "big-bang")], will be called every time a
+    ◊pyret-id[ "big-bang" "world" ], will be called every time a
     key is pressed. The function is called with the current world state
-    and a ◊secref[(tag-name "<global>" "String")] representing the pressed
+    and a ◊pyret-id[  "String" "<global>"] representing the pressed
     key. For most keys, this is just the corresponding single character.
 
     The special keys are:
@@ -173,17 +170,15 @@ big-bang(10, on-tick(increment))
 
   }
   ◊function["on-mouse"
-            #:contract (a-arrow (a-arrow "a"
-                                         N N S
-                                         "a")
-                                WC)
+            #:contract (a-ftype (a-var-type "mouse-handler" (a-arrow "a" N N S "a"))
+                                (a-app WC "a"))
             #:return (a-app WC "a")
             #:args (list '("mouse-handler" ""))]{
     Consumes a function and returns a handler that, when passed to
-    ◊secref[(tag-name "world" "big-bang")], will be called on every sampled
+    ◊pyret-id[ "big-bang" "world"], will be called on every sampled
     mouse movement. The function will receive the world state, the current
-    ◊pyret{x} and ◊pyret{y} positions of the mouse, and a ◊secref[(tag-name
-    "<global>" "String")] representing a mouse event. Possible mouse
+    ◊pyret{x} and ◊pyret{y} positions of the mouse, and a ◊pyret-id[
+    "String" "<global>" ] representing a mouse event. Possible mouse
     events are:
 
     ◊itemlist[(item (pyret "\"button-down\"") 
@@ -200,25 +195,25 @@ big-bang(10, on-tick(increment))
                     " signals that the computer user has moved the mouse out of the canvas area.")]
   }
   ◊function["stop-when"
-            #:contract (a-arrow (a-arrow "a" B)
-                                WC)
+            #:contract (a-ftype (a-var-type "stopper" (p-a-arrow "a" B))
+                                (a-app WC "a"))
             #:return (a-app WC "a")
             #:args (list '("stopper" ""))]{
     Consumes a function and returns a handler that, when passed to
-    ◊secref[(tag-name "world" "big-bang")], will be called to determine if
+    ◊pyret-id[  "big-bang" "world"], will be called to determine if
     the world should stop running. If the function returns ◊pyret{true},
-    then no other handlers will be called. The ◊secref[(tag-name "world" "big-bang")] 
+    then no other handlers will be called. The ◊pyret-id["big-bang" "world"]
     function will return this last world state.
   }
   ◊function["is-world-config"
-            #:contract (a-arrow "Any" B)
+            #:contract (a-ftype (a-var-type "v" A) B)
             #:return (a-app WC "a")
             #:args (list '("v" ""))]{
-    Tests if the input is of type ◊secref[(tag-name "world" "WorldConfig")].
+    Tests if the input is of type ◊pyret-id[ "WorldConfig" "world"].
   }
   ◊function["is-key-equal"
-            #:contract (a-arrow S
-                                S
+            #:contract (a-ftype (a-var-type "key1" S)
+                                (a-var-type "key2" S)
                                 B)
             #:return (a-app WC "a")
             #:args (list '("key1" "")

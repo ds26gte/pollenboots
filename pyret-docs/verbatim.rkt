@@ -118,7 +118,7 @@
     ; (printf "*** x= ~s\n" x)
     x))
 
-(define (function #:contract [contract ""] #:args [args #f]
+(define (function #:contract [contract #f] #:args [args #f]
                   #:return [return "return"]
                   #:examples [examples "examples"]
                   #:alt-docstrings [alt-docstrings "alt-docstrings"]
@@ -128,7 +128,7 @@
         ,(make-gloss name)
         (pre ([class "pyret-display"])
              ,(ref-gloss name) " :: "
-             ,(if args
+             ,(if (not contract)
                   `(span ()
                         "(" ,@(add-between
                                 (map (lambda (arg)

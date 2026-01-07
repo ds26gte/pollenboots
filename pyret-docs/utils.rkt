@@ -115,6 +115,9 @@
     ; (printf "### a-arrow produced ~s\n" res)
     res))
 
+(define (p-a-arrow . typs)
+  `(span () "(" ,(apply a-arrow typs) ")"))
+
 (define (a-app base . typs)
   ; (printf "doing a-app base= ~s typs= ~s\n" base typs )
   (set! typs (map (lambda (typ)
