@@ -111,7 +111,7 @@ end
 ◊section{Configuring and Running a Reactor}
 
 ◊function["interact"
-  #:contract (a-arrow (R-of "a") (R-of "a"))
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) (R-of "a"))
   #:args '(("r" #f))
   #:return (R-of "a")
 ]{
@@ -146,7 +146,7 @@ function should return the same type.  So for a ◊(R-of "a"), the type of the
 on-tick handler is:
 
 ◊tt{
-on-tick :: ◊(a-arrow "a" "a")
+on-tick :: ◊(p-a-arrow "a" "a")
 }
 
 This function is called every time the reactor's clock ticks, which happens by
@@ -182,7 +182,7 @@ type of the to-draw handler is:
 ◊(image "to-draw.gif")
 
 ◊tt{
-to-draw :: ◊(a-arrow "a" Image)
+to-draw :: ◊(p-a-arrow "a" Image)
 }
 
 This function is called each time the reactor's value changes, and is displayed
@@ -198,7 +198,7 @@ The ◊pyret{on-key} handler expects to be given a function of two arguments,
 which describe the current reactor state and a key event:
 
 ◊tt{
-on-key :: ◊(a-arrow "a" S "a")
+on-key :: ◊(a-ftype "a" S "a")
 }
 
 The string describes a single keypress.  Most keys map directly to
@@ -238,7 +238,7 @@ The ◊pyret{on-mouse} handler expects to be given a function of four arguments,
 which describe the current reactor state and a mouse event:
 
 ◊tt{
-on-mouse :: ◊(a-arrow "a" N N S "a")
+on-mouse :: ◊(p-a-arrow "a" N N S "a")
 }
 
 The two numbers indicate the x and y coordinates of the mouse, and the string
@@ -264,7 +264,7 @@ The ◊pyret{stop-when} handler expects to be given a function of one argument.
 The argument is the reactor state, and it should return a ◊|B|:
 
 ◊tt{
-stop-when :: ◊(a-arrow "a" B)
+stop-when :: ◊(p-a-arrow "a" B)
 }
 
 This function is called each time the reactor changes its state.  If it returns
@@ -305,7 +305,7 @@ of a reactor.  This can be used to simulate an interaction for testing or
 exploration.
 
 ◊function["get-value"
-  #:contract (a-arrow (R-of "a") "a")
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) "a")
   #:args '(("r" #f))
   #:return "a"]{
 
@@ -326,7 +326,7 @@ end
 }
 
 ◊function["react"
-  #:contract (a-arrow (R-of "a") Event (R-of "a"))
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) (a-var-type "event" Event) (R-of "a"))
   #:args '(("r" #f) ("event" #f))
   #:return (R-of "a")]{
 
@@ -356,7 +356,7 @@ end
   }
 
 ◊function["draw"
-  #:contract (a-arrow (R-of "a") Image)
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) Image)
   #:args '(("r" #f))
   #:return Image]{
 
@@ -366,7 +366,7 @@ end
   }
 
 ◊function["is-stopped"
-  #:contract (a-arrow (R-of "a") B)
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) B)
   #:args '(("r" #f))
   #:return B]{
 
@@ -399,7 +399,7 @@ Several functions control ◊emph{tracing} the evaluation of a reactor to provid
 the history of states as data.
 
 ◊function["interact-trace"
-  #:contract (a-arrow (R-of "a") TA)
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) TA)
   #:args '(("r" #f))
   #:return TA]{
 
@@ -414,7 +414,7 @@ the history of states as data.
 
 
 ◊function["simulate-trace"
-  #:contract (a-arrow (R-of "a") N TA)
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) (a-var-type "limit" N) TA)
   #:args '(("r" #f) ("limit" #f))
   #:return TA]{
 
@@ -427,7 +427,7 @@ the history of states as data.
   }
 
 ◊function["start-trace"
-  #:contract (a-arrow (R-of "a") (R-of "a"))
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) (R-of "a"))
   #:args '(("r" #f))
   #:return (R-of "a")]{
 
@@ -439,7 +439,7 @@ current state will be saved to a list in the reactor, for later extraction with
   }
 
 ◊function["stop-trace"
-  #:contract (a-arrow (R-of "a") (R-of "a"))
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) (R-of "a"))
   #:args '(("r" #f))
   #:return (R-of "a")]{
 
@@ -451,7 +451,7 @@ memory for if states are large or an interaction is long-running.
 
 
 ◊function["get-trace"
-  #:contract (a-arrow (R-of "a") (L-of "a"))
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) (L-of "a"))
   #:args '(("r" #f))
   #:return (L-of "a")]{
 
@@ -460,7 +460,7 @@ Returns a ◊L of the traced states of the reactor.
   }
 
 ◊function["get-trace-as-table"
-  #:contract (a-arrow (R-of "a") TA)
+  #:contract (a-ftype (a-var-type "r" (R-of "a")) TA)
   #:args '(("r" #f))
   #:return TA]{
 

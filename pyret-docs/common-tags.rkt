@@ -120,9 +120,18 @@
 (define (image #:scale [scale 1] file)
   `(img ([src ,file])))
 
-(define (pyret-method ign1 x . z)
-  (define name (if (null? z) x (car z)))
-  `(tt () ,(string-append "." name)))
+(define pyret-method
+  (case-lambda
+    [(ig2 name)
+     (ref-gloss (string-append "." name))]
+    [(ig1 ig2 name mod)
+     (ref-mod-gloss mod (string-append "." name))]
+    [(ig1 ig2 name)
+     (ref-gloss (string-append "." name))]))
+
+; (define (pyret-method ign1 x . z)
+;   (define name (if (null? z) x (car z)))
+;   `(tt () ,(string-append "." name)))
 
 (define (collection-doc #:contract [contract #f]
                         #:show-ellipses [show-ellipses #f]
@@ -276,9 +285,12 @@
                     data-name var-name name
                     . elems)
   ; (printf "*** method-doc\n")
-  (unless contract (set! contract "contract"))
-  `(div ([class "pyret-display"]) (tt () ,(string-append "." name) " :: " ,contract))
-  )
+  (define methname (string-append "." name))
+  (unless contract (set! contract "unspecified_contract"))
+  `(div ()
+        ,(make-gloss methname)
+        (pre ([class "pyret-display"])
+             ,methname " :: " ,contract)))
 
 (define (method-spec #:params [params #f] #:contract [contract #f] #:return [return #f]
                      #:doc [doc #f]

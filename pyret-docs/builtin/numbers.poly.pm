@@ -2,8 +2,6 @@
 
 ◊docmodule["numbers" #:noimport #t #:friendly-title "Numbers"]{
 
---- ◊hyperlink["https://pyret.org/docs/latest/_global_.html"]{Original doc link}
-
 Pyret numbers are of two kinds: exact numbers, or ◊pyret{Exactnum}s,
 and rough numbers or ◊pyret{Roughnum}s. Both are
 real; finite; and written in base ten.
@@ -195,7 +193,7 @@ Comparison operators. See ◊seclink["inequalities"].
 
 ◊section{Number Functions}
 
-◊function["num-equal" #:contract (a-arrow N N B) #:return B]{
+◊function["num-equal" #:contract (a-ftype (a-var-type "n1" N) (a-var-type "n2" N) B) #:return B]{
 If both arguments are ◊pyret{Exactnum}s, returns a ◊pyret{Boolean}.
 If either argument is ◊pyret{Roughnum}, raises an error.
 
@@ -212,7 +210,7 @@ end
 }
 
   }
-  ◊function["num-max" #:contract (a-arrow N N N) #:return N]{
+  ◊function["num-max" #:contract (a-ftype (a-var-type "n1" N) (a-var-type "n2" N) N) #:return N]{
 Returns the greater of the two arguments.
 
 ◊examples{
@@ -226,7 +224,7 @@ end
 }
 
   }
-  ◊function["num-min" #:contract (a-arrow N N N) #:return N]{
+  ◊function["num-min" #:contract (a-ftype (a-var-type "n1" N) (a-var-type "n2" N) N) #:return N]{
 Returns the lesser of the two arguments.
 
 ◊examples{
@@ -240,7 +238,7 @@ end
 }
 
   }
-  ◊function["num-abs" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-abs" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 Returns the absolute value of the argument. The result is an
   ◊pyret{Exactnum} only if the argument is.
 
@@ -254,7 +252,7 @@ end
 }
 
   }
-  ◊function["num-sin" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-sin" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 
 Returns the sine of the argument (an angle in radians), usually as a ◊pyret{Roughnum}.
   If the argument is ◊pyret{Exactnum} 0, the result is ◊pyret{Exactnum} 0 too.
@@ -266,7 +264,7 @@ check:
 end
 }
   }
-  ◊function["num-cos" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-cos" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 
 Returns the cosine of the argument (an angle in radians), usually as a ◊pyret{Roughnum}. If
 the argument is ◊pyret{Exactnum} 0, the result is ◊pyret{Exactnum} 1.
@@ -278,7 +276,7 @@ check:
 end
 }
   }
-  ◊function["num-tan" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-tan" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 Returns the tangent of the argument (an angle in radians), usually as a ◊pyret{Roughnum}. If
 the argument is ◊pyret{Exactnum} 0, the result is ◊pyret{Exactnum} 1.
 
@@ -290,7 +288,7 @@ end
 }
 
   }
-  ◊function["num-asin" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-asin" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 
 Returns the arcsine of the argument as an angle in radians in the range [-π/2,
 π/2], usually as a ◊pyret{Roughnum}. If the argument is ◊pyret{Exactnum} 0, the
@@ -304,7 +302,7 @@ end
 }
 
   }
-  ◊function["num-acos" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-acos" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 
 Returns the arccosine of the argument as an angle in radians in the range [0,
 π], usually as a ◊pyret{Roughnum}. However, if the argument is
@@ -317,7 +315,7 @@ check:
 end
 }
   }
-  ◊function["num-atan" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-atan" #:contract (a-ftype (a-var-type "n" N) N) #:return N]{
 
 Returns the arctangent of the argument as an angle in radians in the range
 (-π/2, π/2), usually as a ◊pyret{Roughnum}. However, if the argument is
@@ -334,7 +332,7 @@ end
 }
   }
 
-  ◊function["num-atan2" #:contract (a-arrow N N N) #:return N]{
+  ◊function["num-atan2" #:contract (a-ftype (a-var-type "dy" N) (a-var-type "dx" N) N) #:return N]{
 
 The ◊pyret{num-atan} function takes a tangent value and returns ◊emph{a}
 corresponding angle, but it is not clear which angle to return: for example,
@@ -368,7 +366,7 @@ end
 }
   }
 
-  ◊function["num-modulo" #:contract (a-arrow N N N) #:return N]{
+  ◊function["num-modulo" #:contract (a-ftype (a-var-type "n" N) (a-var-type "divisor" N) N) #:return N]{
 Returns the modulus of the first argument with respect to the
 second, i.e. the remainder when dividing the first number by the second.
 
@@ -396,7 +394,7 @@ end
 }
 
   }
-  ◊function["num-truncate" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-truncate" #:contract (a-ftype (a-var-type "n" N)  N) #:return N]{
 
 Returns the integer part of its argument by cutting off any
 decimal part. Does not do any rounding.
@@ -411,7 +409,7 @@ end
 }
 
   }
-  ◊function["num-sqrt" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-sqrt" #:contract (a-ftype (a-var-type "n" N)  N) #:return N]{
 
 Returns the square root of the given argument.  If the argument is an ◊pyret{Exactnum} and a perfect
 square, the result is an ◊pyret{Exactnum}, otherwise, it is a ◊pyret{Roughnum}.
@@ -427,7 +425,7 @@ check:
 end
 }
   }
-  ◊function["num-sqr" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-sqr" #:contract (a-ftype (a-var-type "n" N)  N) #:return N]{
 
 Returns the square of the given argument.
 
@@ -442,7 +440,7 @@ end
 }
 
   }
-  ◊function["num-ceiling" #:contract (a-arrow N EN) #:return EN]{
+  ◊function["num-ceiling" #:contract (a-ftype (a-var-type "n" N)  EN) #:return EN]{
 
 Returns the smallest integer ◊pyret{Exactnum} greater than or equal to the
 argument.
@@ -455,7 +453,7 @@ end
 }
 
   }
-  ◊function["num-floor" #:contract (a-arrow N EN) #:return EN]{
+  ◊function["num-floor" #:contract (a-ftype (a-var-type "n" N)  EN) #:return EN]{
 
 Returns the largest integer ◊pyret{Exactnum} less than or equal to the argument.
 
@@ -466,7 +464,7 @@ check:
 end
 }
   }
-  ◊function["num-round" #:contract (a-arrow N EN) #:return EN]{
+  ◊function["num-round" #:contract (a-ftype (a-var-type "n" N)  EN) #:return EN]{
 
 Returns the closest integer ◊pyret{Exactnum} to the argument.
 
@@ -490,7 +488,7 @@ end
 }
 
   }
-  ◊function["num-round-even" #:contract (a-arrow N EN) #:return EN]{
+  ◊function["num-round-even" #:contract (a-ftype (a-var-type "n" N)  EN) #:return EN]{
 
 Similar to ◊pyret{num-round}, except that if the argument is
 midway between integers, returns the even integer ◊pyret{Exactnum}.
@@ -502,7 +500,7 @@ check:
 end
 }
 
-  }  ◊function["num-log" #:contract (a-arrow N N) #:return N]{
+  }  ◊function["num-log" #:contract (a-ftype (a-var-type "n" N)  N) #:return N]{
 
 Returns the natural logarithm (ln) of the argument, usually as a ◊pyret{Roughnum}.
 If the argument is ◊pyret{Exactnum} 1, the
@@ -520,7 +518,7 @@ end
 }
 
   }
-  ◊function["num-exp" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-exp" #:contract (a-ftype (a-var-type "n" N)  N) #:return N]{
 
 Returns e raised to the argument, usually as a ◊pyret{Roughnum}.  However, if the
 argument is ◊pyret{Exactnum} 0, the result is
@@ -537,7 +535,7 @@ end
 }
 
   }
-  ◊function["num-expt" #:contract (a-arrow N N N) #:return N]{
+  ◊function["num-expt" #:contract (a-ftype (a-var-type "base" N) (a-var-type "exponent" N) N) #:return N]{
 
 Returns the first argument raised to the second argument.  An error
 is thrown if the first argument is 0 and the second is negative.
@@ -560,7 +558,7 @@ end
   }
 
 
-  ◊function["num-to-roughnum" #:contract (a-arrow N RN) #:return RN]{
+  ◊function["num-to-roughnum" #:contract (a-ftype (a-var-type "n" N) RN) #:return RN]{
 
 Given a number, returns the ◊pyret{Roughnum} version.
 
@@ -571,7 +569,7 @@ check:
 end
 }
   }
-  ◊function["num-is-integer" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-integer" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 Returns ◊pyret{true} if argument is an ◊pyret{Exactnum} integer.
 
 ◊examples{
@@ -584,7 +582,7 @@ end
 }
 
   }
-  ◊function["num-is-rational" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-rational" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 
 Returns ◊pyret{true} if argument is an ◊pyret{Exactnum} rational.
 
@@ -598,7 +596,7 @@ end
 }
 
   }
-  ◊function["num-is-roughnum" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-roughnum" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 Returns ◊pyret{true} if argument is a ◊pyret{Roughnum}.
 ◊examples{
 check:
@@ -610,7 +608,7 @@ end
 }
 
   }
-  ◊function["num-is-positive" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-positive" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 
 Returns ◊pyret{true} if argument is greater than zero.
 
@@ -625,7 +623,7 @@ check:
 end
 }
   }
-  ◊function["num-is-negative" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-negative" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 
 Returns ◊pyret{true} if argument is less than zero.
 
@@ -641,7 +639,7 @@ end
 }
 
   }
-  ◊function["num-is-non-positive" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-non-positive" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 
 Returns ◊pyret{true} if argument is less than or equal to zero.
 ◊examples{
@@ -656,7 +654,7 @@ end
 }
 
   }
-  ◊function["num-is-non-negative" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-non-negative" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 
 Returns ◊pyret{true} if argument is greater than or equal to zero.
 
@@ -671,7 +669,7 @@ check:
 end
 }
   }
-  ◊function["num-to-string" #:contract (a-arrow N S) #:return S]{
+  ◊function["num-to-string" #:contract (a-ftype (a-var-type "n" N) S) #:return S]{
 Returns a ◊pyret{String} representing a literal form of the number.
 
 ◊examples{
@@ -684,7 +682,7 @@ check:
 end
 }
   }
-  ◊function["num-to-string-digits" #:contract (a-arrow N N S) #:return S]{
+  ◊function["num-to-string-digits" #:contract (a-ftype (a-var-type "n" N) (a-var-type "digits" N) S) #:return S]{
 
 Converts the number to a ◊pyret{String}, providing ◊pyret{digits} precision in the
 output.  If ◊pyret{digits} is positive, provides that many digits to the right
@@ -707,7 +705,7 @@ check:
 end
 }
   }
-  ◊function["num-within-abs" #:contract (a-arrow N (a-arrow N N B))]{
+  ◊function["num-within-abs" #:contract (a-ftype (a-var-type "tol" N) (a-arrow N N B))]{
 
 Returns a predicate that checks if the difference of its two
 arguments is less than ◊pyret{tol}.
@@ -728,7 +726,7 @@ end
 }
 
   }
-  ◊function["num-within-rel" #:contract (a-arrow N (a-arrow N N B))]{
+  ◊function["num-within-rel" #:contract (a-ftype (a-var-type "tol" N) (a-arrow N N B))]{
 
 Returns a predicate that checks that its first number argument
 is no more than the fraction ◊pyret{tol} off from its second
@@ -743,32 +741,32 @@ end
 }
   }
 
-  ◊function["num-within" #:contract (a-arrow N (a-arrow N N B))]{
+  ◊function["num-within" #:contract (a-ftype (a-var-type "tol" N) (a-arrow N N B))]{
 An alias for ◊pyret-id["num-within-rel" "numbers"], much as ◊pyret-id["within"
 "equality"] and ◊pyret-id["within-rel" "equality"] are synonyms.
 }
 
 
-  ◊function["within" #:contract (a-arrow N eqfun)]
-  ◊function["within-abs" #:contract (a-arrow N eqfun)]
-  ◊function["within-rel" #:contract (a-arrow N eqfun)]
-  ◊function["within-abs-now" #:contract (a-arrow N eqfun)]
-  ◊function["within-rel-now" #:contract (a-arrow N eqfun)]
+  ◊function["within" #:contract (a-ftype (a-var-type "tol" N) eqfun)]
+  ◊function["within-abs" #:contract (a-ftype (a-var-type "tol" N) eqfun)]
+  ◊function["within-rel" #:contract (a-ftype (a-var-type "tol" N) eqfun)]
+  ◊function["within-abs-now" #:contract (a-ftype (a-var-type "tol" N) eqfun)]
+  ◊function["within-rel-now" #:contract (a-ftype (a-var-type "tol" N) eqfun)]
 
   These comparison functions compare both numbers and structures, and are
   documented in ◊seclink["s:bounded-equalities"].
 
-  ◊function["within-abs3" #:contract (a-arrow N eq3fun)]
-  ◊function["within-rel3" #:contract (a-arrow N eq3fun)]
-  ◊function["within-abs-now3" #:contract (a-arrow N eq3fun)]
-  ◊function["within-rel-now3" #:contract (a-arrow N eq3fun)]
+  ◊function["within-abs3" #:contract (a-ftype (a-var-type "tol" N) eq3fun)]
+  ◊function["within-rel3" #:contract (a-ftype (a-var-type "tol" N) eq3fun)]
+  ◊function["within-abs-now3" #:contract (a-ftype (a-var-type "tol" N) eq3fun)]
+  ◊function["within-rel-now3" #:contract (a-ftype (a-var-type "tol" N) eq3fun)]
 
   These comparison functions are like the ones above, but return
   ◊pyret-id["EqualityResult" "equality"]s, and are documented in ◊seclink["s:total-equality-predicates"].
 
 ◊section{Random Numbers}
 
-  ◊function["num-random" #:contract (a-arrow N N) #:return N]{
+  ◊function["num-random" #:contract (a-ftype (a-var-type "max" N) N) #:return N]{
 
   Returns a pseudo-random integer from ◊pyret{0} to ◊pyret{max - 1}.
 
@@ -788,7 +786,7 @@ end
 }
 
   }
-  ◊function["num-random-seed" #:contract (a-arrow N No) #:return No]{
+  ◊function["num-random-seed" #:contract (a-ftype (a-var-type "seed" N) No) #:return No]{
 
   Sets the random seed.  Setting the seed to a particular number makes all
   future uses of random produce the same sequence of numbers.  Useful for
@@ -829,7 +827,7 @@ end
   A few other number functions are useful in limited cases that don't come up
   in most programs.
 
-  ◊function["num-is-fixnum" #:contract (a-arrow N B) #:return B]{
+  ◊function["num-is-fixnum" #:contract (a-ftype (a-var-type "n" N) B) #:return B]{
 
 Returns ◊pyret{true} if the argument is represented directly as a
 primitive
@@ -850,8 +848,8 @@ and hence even small rationals such as 1.5 are considered non-◊tt{fixnum},
 although they could be represented as JavaScript doubles.}
 
   }
-  ◊function["num-exact" #:contract (a-arrow N EN) #:return EN]
-  ◊function["num-to-rational" #:contract (a-arrow N EN) #:return EN]
+  ◊function["num-exact" #:contract (a-ftype (a-var-type "n" N) EN) #:return EN]
+  ◊function["num-to-rational" #:contract (a-ftype (a-var-type "n" N) EN) #:return EN]
 
 
 Given a ◊pyret{Roughnum}, returns an ◊pyret{Exactnum} number most equal to it. Given
