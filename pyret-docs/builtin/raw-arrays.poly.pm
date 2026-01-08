@@ -178,7 +178,7 @@ end
 }
 
 
-  ◊function["raw-array-build" #:contract (a-ftype (a-var-type "f" (a-arrow N "a")) (a-var-type "size" N) (RA-of "a")) #:return (RA-of "a")]
+  ◊function["raw-array-build" #:contract (a-ftype (a-var-type "f" (p-a-arrow N "a")) (a-var-type "size" N) (RA-of "a")) #:return (RA-of "a")]
 
     Constructs an array of length ◊pyret{size}, and fills it with the result of
     calling the function ◊pyret{f} with each index from ◊pyret{0} to ◊pyret{size - 1}.
@@ -191,7 +191,7 @@ end
   }
 
 
-  ◊function["raw-array-build-opt" #:contract (a-ftype (a-var-type "f" (a-arrow N (O-of A))) (a-var-type "size" N) (RA-of "a")) #:return (RA-of A)]
+  ◊function["raw-array-build-opt" #:contract (a-ftype (a-var-type "f" (p-a-arrow N (O-of A))) (a-var-type "size" N) (RA-of "a")) #:return (RA-of A)]
   
     Constructs an array based on the results of
     calling the function ◊pyret{f} with each index from ◊pyret{0} to ◊pyret{size
@@ -211,7 +211,7 @@ check:
 end    
    } 
   
-  ◊function["raw-array-map" #:contract (a-ftype (a-var-type "f" (a-arrow "a" "b")) (a-var-type "array" (RA-of "a")) (RA-of "a")) #:return (RA-of "b")]
+  ◊function["raw-array-map" #:contract (a-ftype (a-var-type "f" (p-a-arrow "a" "b")) (a-var-type "array" (RA-of "a")) (RA-of "a")) #:return (RA-of "b")]
 
   Creates a new array by applying ◊pyret{f} to each element of the array.
   Similar to ◊pyret-id["map" "lists"]. Has an argument order that works with
@@ -232,7 +232,7 @@ end
   ◊pyret-id["equal-always" "equality"], they are ◊pyret-id["equal-now"
   "equality"].
   
-  ◊function["raw-array-filter" #:contract (a-ftype (a-var-type "f" (a-arrow "a" B)) (a-var-type "array" (RA-of "a")) (RA-of "a")) #:return (RA-of "a")]
+  ◊function["raw-array-filter" #:contract (a-ftype (a-var-type "f" (p-a-arrow "a" B)) (a-var-type "array" (RA-of "a")) (RA-of "a")) #:return (RA-of "a")]
 
   Applies function ◊pyret{f} to each element of ◊pyret{array} from left to right,
   constructing a new ◊pyret{RawArray} out of the elements for which ◊pyret{f}
@@ -269,7 +269,7 @@ check:
 end
 }
 
-  ◊function["raw-array-sort-by" #:contract (a-ftype (a-var-type "array" (RA-of "a")) (a-var-type "key" (a-arrow "a" N)) (a-var-type "asc" B) (RA-of "a")) #:return (RA-of "a")]
+  ◊function["raw-array-sort-by" #:contract (a-ftype (a-var-type "array" (RA-of "a")) (a-var-type "key" (p-a-arrow "a" N)) (a-var-type "asc" B) (RA-of "a")) #:return (RA-of "a")]
 
   Creates a new array containing the sorted contents of the given array. The sort
   order is determined by calling the ◊pyret{key} function on each element to
@@ -293,7 +293,7 @@ end
 }
   
 
-  ◊function["raw-array-fold" #:contract (a-ftype (a-var-type "f"(a-arrow "b" "a" N "b")) (a-var-type "init" "b") (a-var-type "array" (RA-of "a")) (a-var-type "start-index" N) "b") #:return "b"]
+  ◊function["raw-array-fold" #:contract (a-ftype (a-var-type "f" (p-a-arrow "b" "a" N "b")) (a-var-type "init" "b") (a-var-type "array" (RA-of "a")) (a-var-type "start-index" N) "b") #:return "b"]
 
   Combines the elements in the array with a function that accumulates each
   element with an intermediate result.
