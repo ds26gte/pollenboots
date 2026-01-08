@@ -157,7 +157,7 @@
                   "!→ means this function is not stack safe")
             (pre () ,@elems))
       `(div ()
-            (pre () ,@elems)
+            (pre ([class "pyret-display"]) ,@elems)
             )))
 
 (define (margin-note* . elems)
