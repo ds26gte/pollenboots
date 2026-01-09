@@ -6,7 +6,7 @@ This section documents the language forms in Pyret, as well as a number of
 Pyret-specific libraries and concepts, like ◊seclink["testing"] and
 ◊seclink["equality" "Equality"].
 
---- ◊hyperlink["https://pyret.org/docs/latest"]{Original doc link}
+◊; --- ◊hyperlink["https://pyret.org/docs/latest"]{Original doc link}
 
 ◊(table-of-contents)
 

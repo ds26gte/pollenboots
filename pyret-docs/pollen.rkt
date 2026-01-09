@@ -14,7 +14,7 @@
 (require "nice-paragraphs.rkt")
 (require "common-tags.rkt")
 (require "verbatim.rkt")
-(require "toc.rkt")
+(require "make-toc.rkt")
 (require "make-glossary.rkt")
 (require "make-xref.rkt")
 (require "abbrevs.rkt")
@@ -29,7 +29,7 @@
                        "nice-paragraphs.rkt"
                        "common-tags.rkt"
                        "verbatim.rkt"
-                       "toc.rkt"
+                       "make-toc.rkt"
                        "make-glossary.rkt"
                        "make-xref.rkt"
                        "abbrevs.rkt"])

@@ -11,9 +11,9 @@
 ;ToC
 
 (define (table-of-contents)
+  ; (printf "### table-of-contents of ~s\n" (select-from-metas 'here-path (current-metas)))
   ; (txexpr 'table-of-contents-1 '() '())
-  `(table-of-contents-1 ())
-  )
+  `(table-of-contents-1 ()))
 
 ; ToDo: if table-of-contents called, don't insert include-section bodily, otherwise do
 
@@ -33,7 +33,7 @@
              [idoc (get-doc file)])
         (define-values (_ section-txs)
           (splitf-txexpr idoc
-            (λ (x) (and (txexpr? x)
+            (lambda (x) (and (txexpr? x)
                         (string=? (attr-ref x 'tocentry "no") "yes")))))
         (for ([tx section-txs])
           (let ([level (attr-ref tx 'toclevel)]
@@ -54,14 +54,15 @@
     (for ([tx section-txs])
       (case (get-tag tx)
         [(title-1 section-1)
-         (let ([level (attr-ref tx 'level)]
+         #f
+         #;(let ([level (attr-ref tx 'level)]
                [id (attr-ref tx 'id)]
                [title (get-elements tx)])
-           (toc-entries (cons (list level (string-append "#" id) title) (toc-entries))))]
+           (toc-entries (cons (list level (string-append "#" id) title) (toc-entries))))
+         ]
         [(include-section-1)
          (let ([file (attr-ref tx 'incfile)])
-           (collect-toc-entries-from-include-section file))]))
-    )
+           (collect-toc-entries-from-include-section file))])))
 
   (collect-toc-entries doc)
 
@@ -96,12 +97,21 @@
       [(include-section-1)
        (if toc-used? `(span ([class "includesection"]))
            (let* ([incfile (attr-ref tx 'incfile)]
-                  [idoc (get-doc incfile)]
-                  [idoc (change-tag idoc 'root 'div)]
-                  [idoc (change-tag idoc 'title 'h1)]
+                  [htmlfile (regexp-replace "\\.poly.pm$" incfile ".html")]
+                  [doc (get-doc incfile)]
+                  [link-text (doc-title doc)]
                   )
-             idoc
-             ))]
+             ; (printf "### incfile = ~s\n" incfile)
+             `(div () (a ((href ,htmlfile)) ,link-text))
+             )
+           ; (let* ([incfile (attr-ref tx 'incfile)]
+           ;        [idoc (get-doc incfile)]
+           ;        [idoc (change-tag idoc 'root 'div)]
+           ;        [idoc (change-tag idoc 'title 'h1)]
+           ;        )
+           ;   idoc
+           ;   )
+           )]
 
       [else tx]))
 

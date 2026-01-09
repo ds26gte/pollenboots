@@ -195,3 +195,14 @@
     #:exists 'replace))
 
 (define pollen-postlude write-globals)
+
+(define (doc-title doc)
+  ; (printf "doc is now ~s\n" doc)
+  ; (printf "title = ~s\n" (select 'title doc))
+  ; (printf "h1 = ~s\n" (select 'h1 doc))
+  (or (select 'title doc)
+      (select 'h1 doc)
+      (let ([div1 (select 'div doc)])
+        ; (printf "div1 = ~s\n" div1)
+        (and div1 (txexpr? div1) (attr-ref div1 'id)))
+      "Untitled"))
