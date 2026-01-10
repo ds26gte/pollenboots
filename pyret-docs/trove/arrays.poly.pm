@@ -50,7 +50,7 @@ end
 
 ◊section{Constructing Arrays}
 
-◊collection-doc-2["array" #:args (a-var-type "value" "a") #:return (A-of "a")]
+◊collection-doc["array" #:fields (list (a-var-type "value" "a")) #:return (A-of "a")]
 
 Constructs an ◊pyret-id{Array} with the given elements.
 

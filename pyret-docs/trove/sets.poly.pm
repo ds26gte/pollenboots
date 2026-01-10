@@ -67,7 +67,7 @@ end
 
 ◊section{Constructing Sets}
 
-◊collection-doc-2["list-set" #:args (a-var-type "elt" "a") #:return (S-of "a")]
+◊collection-doc["list-set" #:fields (list (a-var-type "elt" "a")) #:return (S-of "a")]
 
 Constructs a set out of the ◊pyret{elt}s, representing them as a list. Raises an exception
 if the elements don't support equality.
@@ -88,7 +88,7 @@ end
 
 An empty set, represented as a list.
 
-◊collection-doc-2["tree-set" #:args (a-var-type "elt" "a") #:return (S-of "a")]
+◊collection-doc["tree-set" #:fields (list (a-var-type "elt" "a")) #:return (S-of "a")]
 
 Constructs a set out of the ◊pyret{elt}s, representing them as a tree. Raises an exception
 if the elements don't support the ◊pyret{<} operator via ◊pyret{_lessthan}.
@@ -108,7 +108,7 @@ end
 
 An empty set, represented as a tree.
 
-◊collection-doc-2["set" #:args (a-var-type "elt" "a") #:return (S-of "a")]
+◊collection-doc["set" #:fields (list (a-var-type "elt" "a")) #:return (S-of "a")]
 
 Another name for ◊pyret-id{list-set}.
 

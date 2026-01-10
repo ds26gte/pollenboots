@@ -60,11 +60,13 @@ Like ◊pyret{Vector}, but only allows 3-dimensional vectors.
 ◊type-spec["Nat" '()]{The type of natural numbers, i.e. non-negative integers.}
 ◊type-spec["NonZeroNat" '()]{The type of positive integers.}
 
-◊collection-doc["vector" #:contract `(a-arrow ("elt" ,N) ,vec-type)]
+◊collection-doc["vector" #:fields (list (a-var-type "elt" N)) #:return vec-type]
 
 Vector constructor which creates a vector instance with the given elements.
 
-◊collection-doc["vector3d" #:contract `(a-arrow ("elt1" ,N) ("elt2" ,N) ("elt3" ,N) ,vec-type) #:show-ellipses #f]
+◊collection-doc["vector3d"
+                     #:fields (list  (a-var-type "elt1" N) (a-var-type "elt2" N) (a-var-type "elt3" N))
+                     #:return vec-type #:show-ellipses #f]
 
 Vector constructor which only creates three-dimensional vector instances.
 
@@ -329,8 +331,11 @@ end
 
 ◊section{Matrix Constructors}
 
-◊collection-doc["matrix" #:contract `(a-arrow ("rows" ,NonZeroNat) ("cols" ,NonZeroNat)
-                                              (a-arrow ("elt" ,N) ,mtx-type))]
+◊collection-doc["matrix"
+                   #:args (list (a-var-type "rows" NonZeroNat) (a-var-type "cols" NonZeroNat))
+                   #:fields (list (a-var-type "elt" N))
+                   #:return mtx-type]
+
 
 Publicly exposed constructor which constructs a matrix of size 
 ◊pyret{rows} by ◊pyret{cols} with the given elements, entered row by row.
@@ -350,7 +355,8 @@ check:
 end
 }
 
-◊collection-doc["row-matrix" #:contract `(a-arrow ("elt" ,N) ,mtx-type)]
+◊collection-doc["row-matrix" #:fields (list  (a-var-type "elt" N))
+                   #:return mtx-type]
 
 Constructor which returns a one-row matrix containing the given entries.
 
@@ -362,7 +368,8 @@ check:
 end
 }
 
-◊collection-doc["col-matrix" #:contract `(a-arrow ("elt" ,N) ,mtx-type)]
+◊collection-doc["col-matrix" #:fields (list (a-var-type "elt" N))
+                                              #:return mtx-type]
 
 Constructor which returns a one-column matrix containing the given entries.
 

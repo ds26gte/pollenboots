@@ -33,7 +33,8 @@ continue to work.
 
      ◊section{RawArray Functions}
 
-◊collection-doc["raw-array" #:contract `(a-arrow ("value" "a") ,(RA-of "a"))]
+
+◊collection-doc["raw-array" #:fields (list (a-var-type "value" "a")) #:return  (RA-of "a")]
 
 Constructs a ◊pyret-id{RawArray} with the given elements.
 

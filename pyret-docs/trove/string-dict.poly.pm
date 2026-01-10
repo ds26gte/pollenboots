@@ -35,7 +35,7 @@ functions below.
 }
 ◊section{StringDict Constructor}
 
-◊collection-doc-2["string-dict" #:args (list (a-var-type "key" S) (a-var-type "elt" "a")) #:return (SD-of "a")]
+◊collection-doc["string-dict" #:fields (list (a-var-type "key" S) (a-var-type "elt" "a")) #:return (SD-of "a")]
 
 Creates a string-dict with the given ◊pyret{elt}s.
 
@@ -219,7 +219,7 @@ functions below.
 }
 ◊section{MutableStringDict Constructor}
 
-◊collection-doc-2["mutable-string-dict" #:args (a-var-type "elt" "a") #:return (MSD-of "a")]
+◊collection-doc["mutable-string-dict" #:fields (list (a-var-type "elt" "a")) #:return (MSD-of "a")]
 
 Creates an mutable string-dict with the given ◊pyret{elt}s.
 

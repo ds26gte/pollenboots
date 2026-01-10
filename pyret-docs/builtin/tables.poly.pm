@@ -702,7 +702,8 @@ tables programmatically.
 
 The type of all row values.
 }
-◊collection-doc-2["raw-row" #:args (a-var-type "elt" (a-tuple S "Col")) #:return Row]
+
+◊collection-doc["raw-row" #:fields (list (a-var-type "elt" (a-tuple S "Col"))) #:return Row]
 
 Takes a sequence of tuples and constructs a ◊pyret-id["Row"] value. Note that
 the type for each column may be different. The constructed row can be added to
@@ -760,7 +761,8 @@ containing the corresponding value if it's present, or ◊pyret-id["none"
 
 The type of all tables.
 }
-◊collection-doc-2["table-from-rows" #:args (a-var-type "elt" Row) #:return Table]
+
+◊collection-doc["table-from-rows" #:fields (list (a-var-type "elt" Row)) #:return Table]
 
 A collection constructor that creates tables from ◊pyret-id["Row"] values.
 
@@ -777,7 +779,9 @@ check:
 end
 }
 
-◊collection-doc-2["table-from-columns" #:args (a-var-type "elt" (a-tuple "String" (L-of "A"))) #:return Table]
+◊collection-doc["table-from-columns"
+                     #:args (list (a-var-type "elt" (a-tuple "String" (L-of "A"))))
+                     #:return Table]
 
 A collection constructor that creates tables from columns, where each column is
 specified as a tuple of its name (as a ◊pyret-id["String" "<global>"]) and a

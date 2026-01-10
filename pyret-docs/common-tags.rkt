@@ -118,24 +118,23 @@
     [(ig1 ig2 name)
      (ref-gloss (string-append "." name))]))
 
-; (define (pyret-method ign1 x . z)
-;   (define name (if (null? z) x (car z)))
-;   `(tt () ,(string-append "." name)))
 
-(define (collection-doc #:contract [contract #f]
-                        #:show-ellipses [show-ellipses #f]
-                        . ign-for-now)
-  "collection-doc")
 
-(define (collection-doc-2 name #:args [args ""] #:return [return ""])
-  ; (printf "collection-doc-2 args = ~s\n" args)
-  (if (and (list? args) (list? (car args)))
-      `(pre ([class "pyret-display"])
-            "[" ,name ": " ,@(add-between args ", ") ", ...] -> "
-            ,return)
-      `(pre ([class "pyret-display"])
-            "[" ,name ": " ,args ", ...] -> "
-            ,return)))
+(define (collection-doc name #:args [args #f] #:fields [fields '()] #:return [return ""] #:show-ellipses [show-ellipses #f])
+  ; (printf "### collection-doc-3 ~s args= ~s fields= ~s return= ~s\n" name args fields return)
+  (let ([x
+          `(div ()
+                ,(make-gloss name)
+                (pre ([class "pyret-display"])
+                "[" ,(ref-gloss name)
+                ,(if args `(span () "(" ,@(add-between args ", ") ")") `(span ()))
+                ": "
+                ,@(add-between fields ", ")
+                ", ...] -> "
+                ,return))])
+    ; (printf "### res = ~s\n" x)
+    x))
+
 
 (define (ignore . ign) "")
 

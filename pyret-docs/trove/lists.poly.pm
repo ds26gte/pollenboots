@@ -76,7 +76,7 @@ end
 
 ◊section{List Creation Functions}
 
-◊collection-doc-2["list" #:args (a-var-type "elt" "a") #:return (L-of "a")]
+◊collection-doc["list" #:fields (list (a-var-type "elt" "a")) #:return (L-of "a")]
 
 ◊margin-note{This illustrates the underlying structure created when
 you define a ◊pyret{List} with ◊pyret{[list: ...]}}
