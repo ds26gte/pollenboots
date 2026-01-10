@@ -25,9 +25,11 @@ ul.toclist {
 }
 
 .pyret-display {
-  border-top: 0.055em solid black;
+  /* border-top: 0.055em solid black; */
+  border-top: 1px solid #99b;
   font-style: monospace;
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
+  background-color: hsl(216, 78%, 95%);
 }
 
 .pyret-content {
@@ -49,12 +51,17 @@ ul.toclist {
 }
 
 .margin-note {
-  background-color: #fbfb88;
+  /* background-color: #fbfb88; */
+  background-color: hsl(60, 29%, 94%);
   float: right;
   width: 25%;
   margin: 0 0 1em 1em;
   font-size: 0.9em;
   color: #555;
+  padding-left: 0.75em;
+  padding-right: 1em;
+  border: 1px solid #ccb;
+  border-left: 0.4rem solid #ccb;
 }
 
 .author {

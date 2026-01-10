@@ -149,7 +149,7 @@
             )))
 
 (define (margin-note* . elems)
-  `(span ([class "margin-note"])
+  `(div ([class "margin-note"])
          ,@elems))
 
 (define note margin-note*)
