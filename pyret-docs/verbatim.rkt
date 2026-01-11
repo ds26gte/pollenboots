@@ -18,13 +18,13 @@
   (if show-try-it
       `(div ()
             (p () (b () "Examples:"))
-            (pre () ,@elems)
+            (pre ([class "pyret-highlight"]) ,@elems)
             (a ([class "show-embed"]
                 [code ,(string-join elems " ")])
                "(Try it!)"))
       `(div ()
             (p () (b () "Examples:"))
-            (pre () ,@elems))))
+            (pre ([class "pyret-highlight"]) ,@elems))))
 
 (define (verbatim #:style [style "nothing_special"] #:show-try-it [show-try-it #f] . elems)
   ; (printf "@@@ doing verbatim ~s\n" elems)
@@ -33,7 +33,9 @@
 
 (define codedisp verbatim)
 
-(define pyret-block verbatim)
+(define (pyret-block #:style [style #f] #:show-try-it [show-try-it #f] . elems)
+  (define classes (string-append (if style (string-append style " ") "") "pyret-highlight"))
+  `(pre ([class ,classes]) ,@elems))
 
 (define (data-spec name . elems)
   ; (printf "*** data-spec ~s ~s \n" name elems)

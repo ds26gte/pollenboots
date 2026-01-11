@@ -292,7 +292,7 @@
   `(div ()
         ,@(map (lambda (elem)
                  `(div ()
-                      (pre ([class "repl-example"]) " " ,(caar elem))
+                      (pre ([class "repl-example pyret-highlight"]) " " ,(caar elem))
                       ,(cadr elem)))
                elems)))
 
