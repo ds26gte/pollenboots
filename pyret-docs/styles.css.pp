@@ -150,3 +150,38 @@ ul.glossary {
   list-style-type: none;
 }
 
+
+.repl-example  {
+  margin-left: 1.5em;
+  background-color: hsl(0,0%,95%);
+}
+
+.repl-example::before{
+  content: '\203a\203a\203a';
+  display: inline;
+  line-height: 1em;
+  float: left;
+}
+
+.paintBrush {
+   height: 2.1em;
+   margin-right: -0.5em;
+   position: relative;
+   z-index: 2;
+}
+.paintSpan {
+   display: inline-block;
+}
+.paintBlob {
+   width: 2.5em;
+   height: 1.5em;
+   position: relative;
+   z-index: 1;
+   vertical-align: baseline;
+   display: inline-block;
+   -webkit-mask-image: url(./paint.svg);
+   mask-image: url(./paint.svg);
+   -webkit-mask-size: contain;
+   mask-size: 100% 100%;
+   mask-type: luminance;
+}

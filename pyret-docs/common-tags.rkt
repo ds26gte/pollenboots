@@ -292,7 +292,7 @@
   `(div ()
         ,@(map (lambda (elem)
                  `(div ()
-                      (pre () ,(caar elem))
+                      (pre ([class "repl-example"]) " " ,(caar elem))
                       ,(cadr elem)))
                elems)))
 
