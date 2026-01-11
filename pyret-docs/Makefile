@@ -1,10 +1,10 @@
 all:
-	make clean
-	raco pollen render index.ptree
-	raco pollen render index.ptree
+	make once
+	make once
+	make once
 
 once:
-	make clean
+	find . -name compiled -type d -exec rm -fr {} \; || true
 	raco pollen render index.ptree
 
 tiny:
