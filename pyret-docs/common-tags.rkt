@@ -75,8 +75,8 @@
        ,(if noimport `(span ())
             `(div ()
                   (p () "Usage:")
-                  (p () (tt () "include " ,name))
-                  (p () (tt () "import " ,name " as ..."))))
+                  (pre ([class "pyret-highlight"]) "include " ,name)
+                  (pre ([class "pyret-highlight"]) "import " ,name " as ...")))
        ,@body))
 
 (define (itemlist . elems)
