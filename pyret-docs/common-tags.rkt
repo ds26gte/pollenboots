@@ -171,18 +171,26 @@
 (define (tabular #:sep [sep #f]
                  #:column-properties [column-properties #f]
                  #:row-properties [row-properties #f]
+                 #:cell-properties [cell-properties #f]
                  #:style [style #f]
                  . rows)
-  ; (printf "doing tabular of ~s\n" rows)
-  ; (for-each (lambda (row) (printf "doing row...\n")
-  ;             (for-each (lambda (cell) (printf "cell is ~s\n" cell)) row))
-  ;           rows)
-  `(table ()
-     ,@(for/list ([row (car rows)])
-         `(tr ()
-            ,@(for/list ([cell row])
-                `(td ()
-                     (span () ,(if (list? cell) (car cell) cell))))))))
+  ; (printf "### doing tabular of ~s\n" rows)
+  (define table-class "table table-sm")
+  #;(for-each
+    (lambda (row)
+      (printf "### doing row...\n")
+      (for-each
+        (lambda (cell)
+          (printf "### cell is ~s\n" cell))
+        row))
+    rows)
+  `(table ([class ,table-class])
+          (tbody ()
+            ,@(for/list ([row (car rows)])
+                `(tr ()
+                     ,@(for/list ([cell row])
+                         ; (printf "### cell is ~s\n" cell)
+                         `(td () ,cell)))))))
 
 (define (form a b . elems)
   ; (printf "doing form a = ~s\nb = ~s\nelems = ~s\n" a b elems)
@@ -325,3 +333,14 @@
 
 (define (py-prod e)
   `(ref-gloss ,(format "‹~a›" e)))
+
+(define (add-paras info)
+     ; (printf "### add-paras ~s\n" info)
+     ; (printf "### first info = ~s\n" (car info))
+     ; (printf "### rest info = ~s\n" (add-between (cdr info) (para)))
+     (let ([result
+             `(,(car info) ,@(add-between (cdr info) (para)))]
+             )
+       ; (printf "### add-paras result = ~s\n" result)
+       result
+       ))

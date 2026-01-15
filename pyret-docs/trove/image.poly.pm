@@ -6,9 +6,6 @@
 ◊(define (transpose . args) (apply map list args))
 
 ◊(define (type-versions v1 v2)
-   (define (add-paras info)
-     (cons (first info)
-           (add-between (rest info) ◊para{})))
    ◊tabular[#:sep ◊hspace[4]
             #:row-properties '((center bottom-border) (top))
             (transpose (add-paras v1) (add-paras v2))])
