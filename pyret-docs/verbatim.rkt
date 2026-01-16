@@ -5,12 +5,10 @@
 (provide (all-defined-out))
 
 (define (pyret #:style [style #f] . elems)
-  `(tt ([class "pyretexpr"]) ,@elems))
+  `(span ([class "pyret-highlight"]) (tt ([class "pyretexpr"]) ,@elems)))
 
 (define (pyret-id item [mod #f])
   (ref-gloss item (pyret item) #:mod mod))
-
-
 
 (define tt pyret)
 
@@ -38,7 +36,7 @@
   `(pre ([class ,classes]) ,@elems))
 
 (define (data-spec name . elems)
-  ; (printf "*** data-spec ~s ~s \n" name elems)
+  ; (printf "### data-spec ~s ~s \n" name elems)
   `(div ()
         (pre () "data-spec")
         ,@elems))
@@ -70,7 +68,7 @@
         ,@elems))
 
 ; (define (data-spec name type-vars variants shared)
-;   ; (printf "*** data-spec ~s ~s ~s \n" name type-varss variants  shared )
+;   ; (printf "### data-spec ~s ~s ~s \n" name type-varss variants  shared )
 ;   `(pre () (tt () ,(format "~a~a:"
 ;                     name
 ;                     (if deps (format "<~a>" (add-between deps ", ")) "")))
@@ -84,7 +82,7 @@
 ;           (tt () "end")))
 
 (define (data-spec2 #:no-toc [no-toc #f] name deps clauses)
-  ; (printf "*** doing data-spec2 ~s deps=~s ~s\n" name deps clauses)
+  ; (printf "### doing data-spec2 ~s deps=~s ~s\n" name deps clauses)
   `(pre ([class "pyret-display"])
         ,(make-gloss name)
         (span ()
@@ -105,7 +103,7 @@
   `(span () ,name))
 
 (define (constructor-spec cname name args)
-  ; (printf "*** constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)
+  ; (printf "### constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)
   (let ([x
           `(span () ,(ref-gloss name)
                  "(" ,@(add-between
@@ -117,7 +115,7 @@
                               args)
                          ", ")
                  ")")])
-    ; (printf "*** x= ~s\n" x)
+    ; (printf "### x= ~s\n" x)
     x))
 
 (define (function #:contract [contract #f] #:args [args #f]

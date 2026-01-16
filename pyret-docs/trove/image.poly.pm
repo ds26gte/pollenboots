@@ -40,14 +40,16 @@
 
 
 ◊(define (paint-swatch name css-color)
-  ◊; (printf "*** make-paint-swatch ~a ~a \n" name css-color)
-  `(span ([style "font-size: initial"])
-         (img ([class "paintBrush"] [src "brush.svg"]))
-         (span ([class "paintSpan"])
-               (span ([class "checkersBlob"]))
-               (span ([style ,(format "background-color: ~a; margin-right: 0.25em"
-               css-color)]
-                      [class "paintBlob"])))))
+         ◊; (printf "*** make-paint-swatch ~a ~a \n" name css-color)
+         `(span ()
+                (span ([style "font-size: initial; display: inline-block;"])
+                      (img ([class "paintBrush"] [src "brush.svg"]))
+                      (span ([class "paintSpan"])
+                            (span ([class "checkersBlob"]))
+                            (span ([class "paintBlob"]
+                                   [style ,(format "background-color: ~a; margin-right: 0.25em"
+                                             css-color)]))))
+                ,(pyret name)))
 
 ◊(define (old-paint-swatch color css-color)
    (list (html:span 'style: "font-size: initial; display: inline-block;"

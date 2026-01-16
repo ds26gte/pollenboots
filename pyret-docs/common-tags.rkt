@@ -280,7 +280,7 @@
                     #:args [args "args"] #:return [return "return"]
                     data-name var-name name
                     . elems)
-  ; (printf "*** method-doc\n")
+  ; (printf "### method-doc\n")
   (define methname (string-append "." name))
   (unless contract (set! contract "unspecified_contract"))
   `(div ()
@@ -292,28 +292,40 @@
                      #:doc [doc #f]
                      #:args [args #f] #:alt-docstrings [alt-docstrings #f]
                      #:examples [examples '()] name . elems)
-  ; (printf "*** method-spec ~s ~s\n" name elems)
+  ; (printf "### method-spec ~s ~s\n" name elems)
   `(div () (tt () ,(string-append "." name)) ,@elems))
 
 (define (repl-examples . elems)
-  ; (printf "*** repl-examples ~s\n" elems)
+  ; (printf "### repl-examples ~s\n" elems)
   `(div ()
         ,@(map (lambda (elem)
+                 ; (printf "### elem = ~s\n" elem)
+                 (define kar (car elem))
+                 (set! kar
+                   (map (lambda (x)
+                          (if (and (string? x)
+                                   (regexp-match-exact? #rx" +" x))
+                              (string-append "   " x)
+                              x))
+                        kar))
+                 ; (printf "### car elem = ~s\n" kar)
+                 ; (printf "### cdr elem = ~s\n" (cdr elem))
                  `(div ()
-                      (pre ([class "repl-example pyret-highlight"]) " " ,(caar elem))
-                      ,(cadr elem)))
+                      (pre ([class "repl-example pyret-highlight"])
+                           ,@kar)
+                      ,@(cdr elem)))
                elems)))
 
 (define (colorful-function-series)
-  ; (printf "*** colorful-function-series\n")
+  ; (printf "### colorful-function-series\n")
   `(pre () "colorful-function-series"))
 
 (define (a-chart-window)
-  ; (printf "*** a-chart-window\n")
+  ; (printf "### a-chart-window\n")
   `(pre () "a-chart-window"))
 
 (define (a-record . fields)
-  ; (printf "*** a-record ~s\n" fields)
+  ; (printf "### a-record ~s\n" fields)
   (append  '(span ())
            (list "{")
            (add-between fields ", ")
@@ -323,7 +335,7 @@
   ;   (apply string-append (add-between fields ", ")) "}")
 
 (define (a-field name type . desc)
-  ; (printf "*** a-field ~s ~s ~s\n" name type desc)
+  ; (printf "### a-field ~s ~s ~s\n" name type desc)
   `(span () ,name " :: " ,type))
 
   ; (string-append name " :: " type)
