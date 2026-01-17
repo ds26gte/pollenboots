@@ -45,10 +45,12 @@
                 (span ([style "font-size: initial; display: inline-block;"])
                       (img ([class "paintBrush"] [src "brush.svg"]))
                       (span ([class "paintSpan"])
-                            (span ([class "checkersBlob"]))
-                            (span ([class "paintBlob"]
-                                   [style ,(format "background-color: ~a; margin-right: 0.25em"
-                                             css-color)]))))
+                            (span ([class "checkersBlob"]
+                                   [style ,(format "background-color: ~a;" css-color)]))
+                            (span ([style ,(format "background-color: ~a; margin-right: 0.25em;"
+                                             css-color)]
+                                   [class "paintBlob"]
+                                   ))))
                 ,(pyret name)))
 
 ◊(define (old-paint-swatch color css-color)
