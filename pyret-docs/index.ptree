@@ -3,7 +3,6 @@
 ◊index.html{
   ◊getting-started.html{
     platforms/platforms.html
-    tour.html
   }
   ◊language-concepts.html{
     lang/forms.html
