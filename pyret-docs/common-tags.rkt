@@ -71,7 +71,7 @@
 (define (docmodule name #:friendly-title [friendly-title #f] #:noimport [noimport #f] . body)
   `(div ()
         (module-tag-1 () ,name)
-       ,(apply title #:tag name #:friendly-title friendly-title '())
+       ,(apply title #:tag name #:friendly-title (or friendly-title name) '())
        ,(if noimport `(span ())
             `(div ()
                   (p () "Usage:")

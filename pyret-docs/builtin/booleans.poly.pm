@@ -1,7 +1,7 @@
 #lang pollen
 
 
-◊title{Booleans}
+◊docmodule["booleans" #:noimport #t #:friendly-title "Booleans"]{
 
   ◊type-spec["Boolean"]{
 
@@ -69,4 +69,4 @@ end
   }
 }
 
-
+}

@@ -24,19 +24,19 @@ These are libraries of general interest to Pyret programmers.
 ◊include-section["trove/gdrive-sheets.poly.pm"]
 ◊include-section["trove/csv.poly.pm"]
 
-◊; ◊include-section["trove/color.poly.pm"]
-◊; ◊include-section["trove/image.poly.pm"]
+◊include-section["trove/color.poly.pm"]
+◊include-section["trove/image.poly.pm"]
 
-◊; ◊include-section["builtin/reactors.poly.pm"]
+◊include-section["builtin/reactors.poly.pm"]
 
-◊; ◊include-section["trove/chart.poly.pm"]
-◊; ◊include-section["trove/plot.poly.pm"]
+◊include-section["trove/chart.poly.pm"]
+◊include-section["trove/plot.poly.pm"]
 
-◊; ◊include-section["trove/statistics.poly.pm"]
-◊; ◊include-section["trove/math.poly.pm"]
-◊; ◊include-section["trove/matrices.poly.pm"]
+◊include-section["trove/statistics.poly.pm"]
+◊include-section["trove/math.poly.pm"]
+◊include-section["trove/matrices.poly.pm"]
 
-◊; ◊include-section["trove/timing.poly.pm"]
+◊include-section["trove/timing.poly.pm"]
 
-◊; ◊include-section["trove/fetch.poly.pm"]
-◊; ◊include-section["trove/filesystem.poly.pm"]
+◊include-section["trove/fetch.poly.pm"]
+◊include-section["trove/filesystem.poly.pm"]
