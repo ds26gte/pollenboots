@@ -23,12 +23,12 @@
     ◊(define prev-page (prefix-dir top-dir (previous here)))
     ◊(define next-page (prefix-dir top-dir (next here)))
     <hr/>
-    The current page is ◊|here|.
+    <!-- The current page is ◊|here|. -->
     ◊when/splice[prev-page]{
-    The previous page is <a href = "◊prev-page">◊|prev-page|</a>.
+    <a class="floatleft" href="◊prev-page">⏴⏴⏴</a>
     }
     ◊when/splice[next-page]{
-    The next page is <a href = "◊next-page">◊|next-page|</a>.
+    <a class="floatright" href="◊next-page">⏵⏵⏵</a>
     }
     </div>
   </body>
