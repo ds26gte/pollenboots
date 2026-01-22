@@ -356,3 +356,7 @@
        ; (printf "### add-paras result = ~s\n" result)
        result
        ))
+
+(define (bnf . terms)
+  "<<BNF pending>>"
+  )
