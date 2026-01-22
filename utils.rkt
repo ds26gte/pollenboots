@@ -50,7 +50,7 @@
       (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) tag)))))
   tx1)
 
-(define *distinguishing-part-of-containing-directory* "pyret-docs/")
+(define *distinguishing-part-of-containing-directory* "pyret-docs-pb/")
 
 (define (from-project-root pname)
   (regexp-replace (format ".*~a" *distinguishing-part-of-containing-directory*)
