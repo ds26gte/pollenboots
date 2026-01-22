@@ -1,62 +1,34 @@
 = README
 
-Goal: Controlling https://getbootstrap.com[Bootstrap Web Framework] elements from Pollen.
+This contains files (Racket, CSS, JS) for providing an enhanced
+Pollen syntax and output style. It is the responsibility of your
+repo containing Pollen-based docs to load this repo in the right
+place.
 
+A repo that uses pollenboots is
 
-== Pyret doc
+https://github.com/ds26gte/pyret-docs-pb
 
-The WIP Pollen version of the pyret documentation is in this
-repo's link:./pyret-docs[] subdirectory.
+which is the Pyret documentation written using Pollen (as opposed
+to Scribble).
 
-(To browse directly in GitHub:
-https://github.com/ds26gte/pollenboots/tree/main/pyret-docs).
-
-The rendered version of the Pollenized Pyret doc is at
-https://ds26gte.github.io/attic/pyret-docs.
-
-== How
+== Prerequisite
 
 Ensure you have the Pollen package installed in your Racket.
 
-Do
-
-   raco pollen render lorem.poly.pm
-
-and browse to thus created
-
-link:./lorem.html[]
-
 == What
 
-https://docs.racket-lang.org/pollen[Pollen] allows the use of Racket to create complicated Web pages in
-particular, and also other outputs. Since Bootstrap seems to be
-HTML only, we'll restrict ourselves to HTML. However, our source
-is preemptively in `poly` format, so we can go to other output
-formats if needed.
-
-TIP: If we know we're only targeting HTML, we could call our input
-file `lorem.html.pm` instead of `lorem.poly.pm`.
-
-
-Pollen allows multiple input document formats, e.g., HTML,
-Markdown, Pollen Markup. For the most extensibility, we probably
-want Pollen Markup. The input file has extension `.html.pm`. This
-suggests that the input format should be HTML, but we'll add a
-Pollen Racket file link:./pollen.rkt[] to allow for a more forgiving
-input style, e.g., with blank lines signifying paragraph separation,
+https://docs.racket-lang.org/pollen[Pollen] allows the use of
+Racket to create complicated Web pages in particular, and also
+other outputs. This repo provides a Pollen Racket file
+link:./pollen.rkt[] to allow a more forgiving or flexible input
+style, e.g., with blank lines signifying paragraph separation,
 automatic conversion to smart quotes and dashes, automatic
 creation of external title. (Very likely others as we learn more.)
 
-Also, I'm restricting myself to one input file, but we can add a
-_page tree_ of files with interconnecting nav bars later.
-
-Pollen markup provides all the well-known HTML tags, but with a
-different but easily deducible syntax.  See link:./lorem.poly.pm[]
-for some examples.
-
 We can use Pollen markup syntax to include classes and other
 attributes. These can be the Bootstrap-provided classes, as long
-as the template file link:./template.html.p[] adds in the Bootstrap-related CSS and JS.
+as the template file (template.html.p) adds in the Bootstrap-related CSS and JS.
 
 link:./pollen.rkt[] can be used to modify existing tags and create new tags
 -- examples of both are provided. Crucial Pollen Racket functions

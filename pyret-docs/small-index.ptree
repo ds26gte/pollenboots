@@ -1,8 +1,0 @@
-#lang pollen
-
-◊index.html{
-  ◊getting-started.html{
-    platforms/platforms.html
-    tour.html
-  }
-}
