@@ -1,49 +1,46 @@
 #lang racket
 
 (require txexpr)
+; (require pollen/core)
+; (require pollen/file)
 (require pollen/decode)
 (require pollen/misc/tutorial)
 (require pollen/tag)
-(require racket/date)
+; (require pollen/setup)
+; (require racket/date)
 
-(provide (all-defined-out))
+; remember to provide everything from here:
+(require "utils.rkt")
+(require "nice-paragraphs.rkt")
+(require "common-tags.rkt")
+(require "verbatim.rkt")
+(require "make-toc.rkt")
+(require "make-glossary.rkt")
+(require "make-xref.rkt")
+(require "abbrevs.rkt")
 
-(define (single-newline-is-just-space x)
-  (cond [(and (txexpr? x) (member (get-tag x) '(br))) " "]
-        [(list? x) (map single-newline-is-just-space x)]
-        [else x]))
+; (printf "## current-metas is ~s\n" (current-metas))
+
+; (printf "## processing ~s\n" here)
+
+(provide [all-defined-out])
+
+(provide [all-from-out "utils.rkt"
+                       "nice-paragraphs.rkt"
+                       "common-tags.rkt"
+                       "verbatim.rkt"
+                       "make-toc.rkt"
+                       "make-glossary.rkt"
+                       "make-xref.rkt"
+                       "abbrevs.rkt"])
 
 (define (root . elts)
-  (txexpr 'root empty
-          (single-newline-is-just-space
-            (decode-elements elts
-                             #:txexpr-elements-proc decode-paragraphs
-                             #:string-proc (compose1 smart-quotes smart-dashes)))))
-
-(define (strong . elts)
-  ;render strong as em
-  (txexpr 'em empty elts))
-
-(define author "ds26gte")
-(define-tag-function (br attrs elts)
-                     `(span ,attrs ,@elts))
-
-(define-tag-function (strong-og attrs elts)
-                     `(strong ,attrs ,@elts))
-
-(define-tag-function (new-em attrs elts)
-                     `(em ,attrs ,@elts))
-
-(define ul
-  (default-tag-function 'ul #:class "list-group"))
-
-(define li
-  (default-tag-function 'li #:class "list-group-item"))
-
-(define (get-date)
-  (date->string (current-date)))
-
-(define (hyperlink url . elts)
-  `(a ((href ,url)) ,@elts))
-
-(define link hyperlink)
+  (let* ([doc `(root ,@elts)]
+         [doc (toc-handler doc)]
+         [doc (glossary-handler doc)]
+         [doc (xref-handler doc)])
+    ; (printf "starting root decode of ~s\n" doc)
+    (decode doc ;decode-elements elts?
+            #:txexpr-elements-proc decode-paragraphs-1
+            #:exclude-tags '(pre)
+            #:string-proc (compose1 smart-quotes smart-dashes))))
