@@ -8,7 +8,7 @@
 (provide (all-defined-out))
 
 (define (seclink #:tag-prefixes [tag-prefixes #f] . elems)
-  ; (printf "*** seclink tp= ~s ee= ~s\n" tag-prefixes elems)
+  ; (printf "### seclink tp= ~s ee= ~s\n" tag-prefixes elems)
   (cond [(not tag-prefixes) `(seclink-1 () ,@elems)]
         [(list? tag-prefixes) `(seclink-1 ([tag-prefixes ,(car tag-prefixes)]) ,@elems)]
         [else `(seclink-1 ([tag-prefixes ,tag-prefixes]) ,@elems)]))
@@ -31,7 +31,7 @@
 
   (for ([tx name-defs])
     (let ([xref-name (attr-ref tx 'id)])
-      ; (printf "*** calling string-join on ~s\n" (get-elements tx))
+      ; (printf "### calling string-join on ~s\n" (get-elements tx))
       (set! xref-name-entries
         (cons (list xref-name 
                     (string-append
@@ -63,6 +63,7 @@
                )
        (define this-tag-elems (get-elements tx))
        (define num-this-tag-elems (length this-tag-elems))
+       ; (printf "### this-tag-elems = ~s\n" this-tag-elems)
        (let* ([name (first this-tag-elems)]
               [xref (assoc name xref-entries)]
               [url (if xref (second xref) "UnDeFiNeD")]
@@ -72,6 +73,7 @@
                            (add-between (cdr this-tag-elems) " ")]
                           [xref (third xref)]
                           [else (list "UnDeFiNeD")])])
+         (set! url (string-append project-root-from-here url))
          ; (printf "text is ~s\n" text)
          `(a ([href ,url]) ,@text))]
       [else tx]))
