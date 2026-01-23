@@ -10,7 +10,8 @@
 (define (pyret-id item [mod #f])
   (ref-gloss item (pyret item) #:mod mod))
 
-(define tt pyret)
+(define (tt . elems)
+  `(tt () ,@elems))
 
 (define (examples #:show-try-it [show-try-it #f] . elems)
   (if show-try-it

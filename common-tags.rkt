@@ -343,9 +343,6 @@
 (define (append-gen-docs . desc)
   "")
 
-(define (py-prod e)
-  `(ref-gloss ,(format "‹~a›" e)))
-
 (define (add-paras info)
      ; (printf "### add-paras ~s\n" info)
      ; (printf "### first info = ~s\n" (car info))
@@ -366,6 +363,8 @@
 
 (define (nt elem)
   `(span () ,(ref-gloss (format "~a-~a" *bnf-type* elem) (string-append "‹" elem "›")))) 
+
+(define py-prod nt)
 
 (define (tm elem)
   `(b () ,elem))
