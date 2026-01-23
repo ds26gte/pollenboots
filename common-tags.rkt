@@ -360,3 +360,37 @@
 (define (bnf . terms)
   "<<BNF pending>>"
   )
+
+(define (nd elem)
+  `(span () ,(make-gloss (format "~a-~a" *bnf-type* elem)) "‹" ,elem "›"))
+
+(define (nt elem)
+  `(span () ,(ref-gloss (format "~a-~a" *bnf-type* elem) (string-append "‹" elem "›")))) 
+
+(define (tm elem)
+  `(b () ,elem))
+
+(define (tmi elem)
+  `(b () (i () ,elem)))
+
+(define *bnf-type* 'bnf-type)
+
+(define (ebnf type . elems)
+  (set! *bnf-type* type)
+  (set! elems (map (lambda (s)
+                     (if (string? s)
+                         (cond [(string=? s "\n") `(br ())]
+                               [(regexp-match "^ +" s)
+                                (regexp-replace "^" s "  ")]
+                               [else s])
+                         s))
+                   elems))
+  ; (printf "### ebnf elems = ~s\n" elems)
+  `(div ([class "bnf"])
+       ,@elems))
+
+(define (lbrace)
+  `(span () "{"))
+
+(define (rbrace)
+  `(span () "}"))

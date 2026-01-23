@@ -243,3 +243,8 @@ h2 {
 h3 {
   font-size: 20px;
 }
+
+.bnf {
+  border-left: 2px solid gray;
+  padding-left: 1em;
+}

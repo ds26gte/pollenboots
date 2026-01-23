@@ -184,8 +184,8 @@
     ))
 
   (define (output-ref-gloss xx)
-    ; (printf "*** output-ref-gloss ~s ~s\n" xx curr-mod)
-    ; (printf "*** *sorted-glossary* = ~s\n" *sorted-glossary*)
+    ; (printf "### output-ref-gloss ~s ~s\n" xx curr-mod)
+    ; (printf "### *sorted-glossary* = ~s\n" *sorted-glossary*)
     (let* ([item-alpha (first xx)]
            [item-mod (let ([y (second xx)])
                        (if (string=? y "nodoc") curr-mod y))]
@@ -194,10 +194,10 @@
            [items-gloss (assoc mod:item *sorted-glossary*)]
            [href (if (list? items-gloss) (fourth items-gloss) "missing_gloss")]
            )
-      ; (printf "(*** mod:item = ~s\n" mod:item)
+      ; (printf "### mod:item = ~s\n" mod:item)
       (set! href (string-append project-root-from-here-path href))
-      ; (printf "*** items-gloss = ~s\n" items-gloss)
-      ; (printf "*** href = ~s\n" href)
+      ; (printf "### items-gloss = ~s\n" items-gloss)
+      ; (printf "### href = ~s\n" href)
       `(a ([href ,href]) ,item)))
 
   (define (process-glossary tx)
