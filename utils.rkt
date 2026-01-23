@@ -50,10 +50,14 @@
       (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) tag)))))
   tx1)
 
-(define *distinguishing-part-of-containing-directory* "pyret-docs-pb/")
+(define *distinguishing-part-of-containing-directory*
+  (let ([md (getenv "MAKE_DIR")])
+    (cond [md (set! md (regexp-replace "/$" md ""))
+              (path->string (file-name-from-path md))]
+          [else "pyret-docs-pb"])))
 
 (define (from-project-root pname)
-  (regexp-replace (format ".*~a" *distinguishing-part-of-containing-directory*)
+  (regexp-replace (format ".*~a/" *distinguishing-part-of-containing-directory*)
                   pname ""))
 
 (define (to-project-root pname)
