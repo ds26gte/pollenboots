@@ -379,15 +379,12 @@
   (set! *bnf-type* type)
   (set! elems (map (lambda (s)
                      (if (string? s)
-                         (cond [(string=? s "\n") `(br ())]
-                               [(regexp-match "^ +" s)
-                                (regexp-replace "^" s "  ")]
-                               [else s])
+                         (if (string=? s "\n") `(br ())
+                             s)
                          s))
                    elems))
-  ; (printf "### ebnf elems = ~s\n" elems)
   `(div ([class "bnf"])
-       ,@elems))
+        ,@elems))
 
 (define (lbrace)
   `(span () "{"))
