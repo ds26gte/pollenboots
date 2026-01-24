@@ -362,9 +362,11 @@
   `(span () ,(make-gloss (format "~a-~a" *bnf-type* elem)) "‹" ,elem "›"))
 
 (define (nt elem)
-  `(span () ,(ref-gloss (format "~a-~a" *bnf-type* elem) (string-append "‹" elem "›")))) 
+  `(span () ,(ref-gloss (format "~a-~a" *bnf-type* elem) (string-append "‹" elem "›"))))
 
-(define py-prod nt)
+(define (py-prod elem)
+  ; (printf "### py-prod ~s\n" elem)
+  `(span () ,(ref-gloss (format "~a-~a" "Pyret" elem) (string-append "‹" elem "›"))))
 
 (define (tm elem)
   `(b () ,elem))

@@ -11,7 +11,7 @@
 
 (define (make-index-element style content tag plainseq entryseq desc)
   ; using, for now: tag plainseq entryseq
-  ; (printf "*** make-index-element ~s ~s ~s\n" tag plainseq entryseq)
+  ; (printf "### make-index-element ~s ~s ~s\n" tag plainseq entryseq)
   (define alpha-tag (first plainseq))
   (define tag-1 (second tag))
   (make-gloss alpha-tag tag-1 (first entryseq)))
@@ -47,8 +47,8 @@
     (splitf-txexpr doc
       (lambda (tx) (and (txexpr? tx) (eq? (get-tag tx) 'gloss-1)))))
 
-  ; (printf "*** here-path-from-project-root = ~s\n" here-path-from-project-root)
-  ; (printf "*** project-root-from-here-path = ~s\n" project-root-from-here-path)
+  ; (printf "### here-path-from-project-root = ~s\n" here-path-from-project-root)
+  ; (printf "### project-root-from-here-path = ~s\n" project-root-from-here-path)
 
   (for ([tx glossary-defs])
     (let* ([item-values (get-elements tx)]
@@ -191,7 +191,9 @@
                        (if (string=? y "nodoc") curr-mod y))]
            [item (third xx)]
            [mod:item (string-append item-mod ":" item-alpha)]
-           [items-gloss (assoc mod:item *sorted-glossary*)]
+           [nodoc:item (string-append "nodoc:" item-alpha)]
+           [items-gloss (or (assoc mod:item *sorted-glossary*)
+                            (assoc nodoc:item *sorted-glossary*))]
            [href (if (list? items-gloss) (fourth items-gloss) "missing_gloss")]
            )
       ; (printf "### mod:item = ~s\n" mod:item)
