@@ -4,7 +4,7 @@
 
 (provide (all-defined-out))
 
-(define A "Any")
+(define A (a-id "Any" (xref "<global>" "Any")))
 (define N (a-id "Number" (xref "<global>" "Number")))
 (define EN (a-id "Exactnum" (xref "numbers" "Exactnum")))
 (define RN (a-id "Roughnum" (xref "numbers" "Roughnum")))
@@ -29,4 +29,4 @@
 (define eqfun (a-arrow A A B))
 (define eq3fun (a-arrow A A eq))
 
-(define T "EqualityResult")
+; (define T (a-id "EqualityResult" (xref "equality" "EqualityResult")))

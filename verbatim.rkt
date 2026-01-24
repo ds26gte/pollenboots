@@ -101,7 +101,7 @@
           (tt () "end")))
 
 (define (singleton-spec2 cname name)
-  `(span () ,name))
+  `(span () ,(ref-gloss name)))
 
 (define (constructor-spec cname name [args #f])
   ; (printf "### constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)

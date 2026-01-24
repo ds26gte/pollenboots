@@ -249,7 +249,7 @@
 (define (singleton-doc #:style [style ""] typename1 fieldname typename . elems)
   `(div ()
         ,(make-gloss fieldname)
-        (pre ([class "pyret-display"]) ,fieldname " :: " ,typename)
+        (pre ([class "pyret-display"]) ,(ref-gloss fieldname) " :: " ,typename)
         ,@elems))
 
 (define (a-var-type val typ)
