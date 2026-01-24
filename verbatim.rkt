@@ -103,19 +103,21 @@
 (define (singleton-spec2 cname name)
   `(span () ,name))
 
-(define (constructor-spec cname name args)
+(define (constructor-spec cname name [args #f])
   ; (printf "### constructor-spec cname= ~s name= ~s args= ~s\n" cname name args)
   (let ([x
-          `(span () ,(ref-gloss name)
-                 "(" ,@(add-between
-                         (map (lambda (arg)
-                                (define fname (first arg))
-                                (define contract (second (third arg)))
-                                ; (printf "fname= ~s contract= ~s\n" fname contract)
-                                `(span () ,fname " :: " ,contract))
-                              args)
-                         ", ")
-                 ")")])
+          (if (not args)
+              `(span () ,(ref-gloss name))
+              `(span () ,(ref-gloss name)
+                     "(" ,@(add-between
+                             (map (lambda (arg)
+                                    (define fname (first arg))
+                                    (define contract (second (third arg)))
+                                    ; (printf "fname= ~s contract= ~s\n" fname contract)
+                                    `(span () ,fname " :: " ,contract))
+                                  args)
+                             ", ")
+                     ")"))])
     ; (printf "### x= ~s\n" x)
     x))
 
