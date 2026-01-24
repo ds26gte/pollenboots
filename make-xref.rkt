@@ -56,14 +56,14 @@
   (define project-root-from-here (point-to-project-root here-path-from-project-root))
 
   (define (replace-secrefs tx)
-    ; (printf "doing replace-secrefs ~s\n" tx)
     (define this-tag (get-tag tx))
     (case this-tag
       [(secref seclink-1 ;xxref-1
                )
+       ; (printf "### doing replace-secrefs ~s\n" tx)
        (define this-tag-elems (get-elements tx))
-       (define num-this-tag-elems (length this-tag-elems))
        ; (printf "### this-tag-elems = ~s\n" this-tag-elems)
+       (define num-this-tag-elems (length this-tag-elems))
        (let* ([name (first this-tag-elems)]
               [xref (assoc name xref-entries)]
               [url (if xref (second xref) "UnDeFiNeD")]
@@ -74,7 +74,7 @@
                           [xref (third xref)]
                           [else (list "UnDeFiNeD")])])
          (set! url (string-append project-root-from-here url))
-         ; (printf "text is ~s\n" text)
+         ; (printf "### text is ~s\n" text)
          `(a ([href ,url]) ,@text))]
       [else tx]))
 
