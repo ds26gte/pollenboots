@@ -20,12 +20,6 @@
           [else (set! s "unnamed")])
     (string-replace s " " "-")))
 
-(define counter 0)
-
-(define (get-counter)
-  (set! counter (+ counter 1))
-  (string-append "-" (number->string counter)))
-
 (define (change-tag tx from to)
   (define-values (tx1 _)
     (splitf-txexpr tx
@@ -61,7 +55,7 @@
                   pname ""))
 
 (define (to-project-root pname)
-  ; (printf "*** to-project-root ~s\n" pname)
+  ; (printf "### to-project-root ~s\n" pname)
   (let ([x ""])
     (let loop ([i (- (string-length pname) 1)])
       (unless (< i 0)
@@ -99,7 +93,7 @@
 (define (ref-gloss item-alpha [item #f] #:mod [mod #f])
   (unless mod (set! mod "nodoc"))
   (unless item (set! item item-alpha))
-  ; (printf "*** ref-gloss ~s ~s\n" item-alpha item)
+  ; (printf "### ref-gloss ~s ~s\n" item-alpha item)
   `(ref-gloss-1 () ,item-alpha ,mod ,item))
 
 (define (ref-mod-gloss mod item)
@@ -141,7 +135,7 @@
     x))
 
 ; (define (in-link item)
-;   (printf "*** in-link ~s\n" item)
+;   (printf "### in-link ~s\n" item)
 ;   `(xxref-1 () ,item))
 
 ;true globals
@@ -183,7 +177,7 @@
         (reverse res))))
 
 (define (write-globals)
-  ; (printf "*** write-globals\n")
+  ; (printf "### write-globals\n")
   (define *saved-items* '(glossary xref))
   (call-with-output-file *globals-file*
     (lambda (o)
