@@ -13,7 +13,7 @@
 (define (tt . elems)
   `(tt () ,@elems))
 
-(define (examples #:show-try-it [show-try-it #f] . elems)
+(define (examples #:show-try-it [show-try-it #t] . elems)
   (if show-try-it
       `(div ()
             (p () (b () "Examples:"))
