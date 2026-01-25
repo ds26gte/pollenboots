@@ -233,13 +233,16 @@
 (define (a-ftype #:ml [ml #f] . typs)
   (let* ([arg-typs (drop-right typs 1)]
          [ret-typ (car (take-right typs 1))])
-    (if ml
-        `(span ()  "(\n  "
-              ,@(add-between arg-typs ",\n  ")
-              "\n)\n-> "
-              ,ret-typ)
-        `(span () "(" (span () ,@(add-between arg-typs ", ")) ") -> "
-               ,ret-typ))))
+    (cond [ml
+            `(span ()  "(\n  "
+                   ,@(add-between arg-typs ",\n  ")
+                   "\n)\n-> "
+                   ,ret-typ)]
+          [(null? arg-typs)
+           `(span () " -> " ,ret-typ)]
+          [else
+            `(span () "(" (span () ,@(add-between arg-typs ", ")) ") -> "
+                   ,ret-typ)])))
 
 (define (p-a-ftype . typs)
   `(span () "(" ,(apply a-ftype typs) ")"))

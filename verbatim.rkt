@@ -5,7 +5,7 @@
 (provide (all-defined-out))
 
 (define (pyret #:style [style #f] . elems)
-  `(span ([class "pyret-highlight"]) (tt ([class "pyretexpr"]) ,@elems)))
+  `(tt ([class "pyret-highlight"]) ,@elems))
 
 (define (pyret-id item [mod #f])
   (ref-gloss item (pyret item) #:mod mod))
