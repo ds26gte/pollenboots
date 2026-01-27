@@ -227,8 +227,10 @@ ul.toclist {
   margin-bottom: 1em;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  margin-left: -1em;
+@media (min-width: 800px) {
+  h1,h2,h3,h4,h5,h6 {
+    margin-left: -1em;
+  }
 }
 
 h1 {
