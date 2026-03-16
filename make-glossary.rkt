@@ -146,12 +146,12 @@
                   (cons `(div ([class "glossary-sep"]) (a ([name ,glossary-anchor])))
                         glossary-exp))
                 (set! glossary-exp
-                  (cons `(li ()  (a ([href ,(fourth first-glossary-entry)])
+                  (cons `(li ()  (a ([href ,(fourth first-glossary-entry)] [class "indexlink"])
                                 ,(third first-glossary-entry)))
                         glossary-exp))
                 (for ([glossary-entry (rest glossary)])
                   (set! glossary-exp
-                    (cons `(li () (a ([href ,(fourth glossary-entry)])
+                    (cons `(li () (a ([href ,(fourth glossary-entry)] [class "indexlink"])
                                      ,(third glossary-entry)))
                           glossary-exp)))))
 
@@ -170,9 +170,10 @@
             ; `(div ())
 
             `(div ()
-                  (div ([class "nested"])
+                  (a ([name "(part._.Glossary)"]))
+                  (div ([class "nested alpha-row"])
                        ,@(add-between alpha-row-exp '(span ([class "quad"]) " · ")))
-                  (ul ([class "glossary"])
+                  (ul ([class "glossary content-body"])
                       ,@glossary-exp))
 
             ; `(div ()
