@@ -80,7 +80,7 @@ also include a wrapper for convenient writing, viz., blank lines
 for signifying paragraph separation, automatic inserting of smart
 quotes and dashes, and deduction of the external title.
 
-In addition, these repo's pollen.rkt provides utility Racket
+In addition, this repo's pollen.rkt provides utility Racket
 functions that can be used by an outside pollen.rkt to create new
 functionality. For instance, we can have directives that, in
 addition to some rendering task, also automatically insert anchor
