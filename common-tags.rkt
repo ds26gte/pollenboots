@@ -21,3 +21,7 @@
 
 (define li
   (default-tag-function 'li #:class "list-group-item"))
+
+(define (url link)
+  `(a ([href ,link]) ,link))
+
