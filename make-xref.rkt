@@ -68,7 +68,7 @@
               [xref (assoc name xref-entries)]
               [url (if xref (second xref) "UnDeFiNeD")]
               [text (cond [(and (eq? this-tag 'seclink-1)
-                                (>= num-this-tag-elems 1))
+                                (>= num-this-tag-elems 2))
                            ; (printf "this-tag-elems = ~s\n" this-tag-elems)
                            (add-between (cdr this-tag-elems) " ")]
                           [xref (third xref)]
